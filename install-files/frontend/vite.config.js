@@ -4,13 +4,13 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 // import sveltePreprocess from 'svelte-preprocess';
 
 import { resolveSrcPath,
-         resolveLibPath } from "./devtools-hk/js/helpers/paths.js";
+         resolveLibPath } from "./devtools-hk/js-include/devtool-helper.mjs";
 
-import { getAliases as getHkBaseAliases }
-  from "./lib/jslib-hk-base/build-config/vite.aliases.js";
+// import { getAliases as getHkBaseAliases }
+//   from "./lib/jslib-hk-base/build-config/vite.aliases.js";
 
-import { getAliases as getHkFrontendAliases }
-  from "./lib/jslib-hk-fe/build-config/vite.aliases.js";
+// import { getAliases as getHkFrontendAliases }
+//   from "./lib/jslib-hk-fe/build-config/vite.aliases.js";
 
 //
 // @see https://vitejs.dev/config/
@@ -100,9 +100,9 @@ export default defineConfig({
 
       // -- Libs
 
-      ...getHkBaseAliases( { resolveLibPath } ),
+      // ...getHkBaseAliases( { resolveLibPath } ),
 
-      ...getHkFrontendAliases( { resolveLibPath } )
+      // ...getHkFrontendAliases( { resolveLibPath } )
     ]
   },
   plugins: [
