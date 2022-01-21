@@ -6,10 +6,9 @@
   "license": "SEE LICENSE IN LICENSE.txt",
   "type": "module",
   "scripts": {
-    "dev": "./scripts/run-dev.sh",
-    "build": "./scripts/build.sh",
-    "preview": "./scripts/preview.js",
-    "setup": "./scripts/setup.js",
+    "dev": "./devtools-hk/scripts/backend/run-dev.sh",
+    "build": "./devtools-hk/scripts/backend/build.sh",
+    "preview": "./devtools-hk/scripts/backend/preview-dist.js",
     "postinstall": "npm dedup"
   },
   "devDependencies": {

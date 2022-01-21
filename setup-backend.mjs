@@ -5,7 +5,7 @@
 
 import { packageJsonExists,
          ensureLibPath,
-         copyFrontendFiles,
+         copyBackendFiles,
          runNpmInstall } from "./js-include/devtool-helper.mjs";
 
 // -----------------------------------------------------------------------------
