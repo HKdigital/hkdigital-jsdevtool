@@ -30,7 +30,7 @@ git push
 Open a terminal and go to the project folder where you just installed `devtools-hk` and run the setup script.
 
 ```bash
-./devtools-hk/setup.js frontend
+./devtools-hk/setup-frontend.mjs
 ```
 
 To run the frontend:
@@ -44,7 +44,7 @@ To run the frontend:
 The backend is the part of the application that may store the application's files, data in a database and may contains business logic of functionality that can better be done on a server.
 
 ```bash
-./devtools-hk/setup.js backend
+./devtools-hk/setup-backend.mjs
 ```
 
 To run the backend:
