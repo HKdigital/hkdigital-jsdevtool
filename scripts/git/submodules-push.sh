@@ -7,7 +7,7 @@ case "$response" in
     [yY][eE][sS]|[yY])
         echo ""
         exec git submodule foreach --quiet --recursive \
-            '${toplevel}/devtools-hk/scripts/git/include/git-submodule-push.sh'
+            '${toplevel}/hkdigital-devtool/scripts/git/include/git-submodule-push.sh'
         ;;
     *)
         echo "Bye"

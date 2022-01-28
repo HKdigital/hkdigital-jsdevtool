@@ -1,60 +1,56 @@
-# Devtools-HK
+# Howto setup hkdigital-devtool
 
 ## About
 
-This project contains o.a. scripts that can be used to setup and manage ES projects.
+This project contains scripts, config and other code that can be used to setup and manage your ES projects. There are scripts and setups for both `frontend` development, as well as for `backend` projects.
 
-The scripts are intended to work on `linux like` OS'es (including Mac OS).
+The scripts are intended to work on OS'es that support `linux like` shells (this includes Mac OS).
 
-## Setup: add devtools-hk to a project
+The scripts use `git` and `nodejs (npm, npx)`, make sure you have that configured on your system first.
 
-### Create a new git project (optional)
+### Install dependencies
 
-Open a terminal and type the following to create a new git project:
+#### git
+Follow the instructions on `https://git-scm.com/`
+
+#### Node.js
+Follow the instructions on `https://nodejs.org/`
+
+#### n
+The nodejs version manager `n` is also recommended so you can test your nodejs scripts against different Node.js versions.
+
+```bash
+npm install -g n
+```
+
+@see https://www.npmjs.com/package/n
+
+
+## Create a project from scratch
+
+### Create a project folder and install the devtool
+Open a terminal, create a project folder, goto that folder and install the devtools.
 
 ```bash
 mkdir my-project
 cd my-project
-git init
+npx degit --mode=git git@bitbucket.org:hk-digital/hkdigital-devtool#main
 ```
 
-### Add submodule to folder `devtools-hk`
+@note `--mode=git` is (only) needed for private repositories
+
+### Option 1: setup a SVELTE frontend project
+Run the frontend setup script.
 
 ```bash
-git submodule add git@bitbucket.org:hk-digital/devtools-hk.git devtools-hk
-git commit
-git push
+./hkdigital-devtool/setup-svelte-frontend.mjs
 ```
-
-### Setup a frontend project (option 1)
-Open a terminal and go to the project folder where you just installed `devtools-hk` and run the setup script.
-
-```bash
-./devtools-hk/setup-frontend.mjs
-```
-
-To run the frontend:
+### Option 2: setup a NodeJS backend project
+Run the backend setup script.
 
 ```bash
-./launch-frontend
-```
-
-### Setup a backend project (option 2)
-
-The backend is the part of the application that may store the application's files, data in a database and may contains business logic of functionality that can better be done on a server.
-
-```bash
-./devtools-hk/setup-backend.mjs
-```
-
-To run the backend:
-
-```bash
-./launch-backend
+./hkdigital-devtool/setup-nodejs-backend.mjs
 ```
 
 ## Next steps
-
-Use the scripts installed by `devtools-hk` to manage your project.
-
-@see `doc/Using devtools scripts.md` 
+Checkout the `README.md` that was installed in yout project's root folder

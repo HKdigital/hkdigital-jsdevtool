@@ -10,12 +10,12 @@
     "dev": "vite --port 8888 --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --port 8888 --host 0.0.0.0",
-    "submodule-add": "./devtools-hk/scripts/git/submodule-add.sh",
-    "submodules-init": "./devtools-hk/scripts/git/submodules-init.sh",
-    "submodules-status": "./devtools-hk/scripts/git/submodules-status.sh",
-    "submodules-pull": "./devtools-hk/scripts/git/submodules-pull.sh",
-    "submodules": "./devtools-hk/scripts/git/submodules.sh",
-    "npm-install-recursive": "./devtools-hk/scripts/npm/npm-install-recursive.sh"
+    "submodule-add": "./hkdigital-devtool/scripts/git/submodule-add.sh",
+    "submodules-init": "./hkdigital-devtool/scripts/git/submodules-init.sh",
+    "submodules-status": "./hkdigital-devtool/scripts/git/submodules-status.sh",
+    "submodules-pull": "./hkdigital-devtool/scripts/git/submodules-pull.sh",
+    "submodules": "./hkdigital-devtool/scripts/git/submodules.sh",
+    "npm-install-recursive": "./hkdigital-devtool/scripts/npm/npm-install-recursive.sh"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",

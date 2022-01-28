@@ -4,7 +4,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 // import sveltePreprocess from 'svelte-preprocess';
 
 import { resolveSrcPath,
-         resolveLibPath } from "./devtools-hk/js-include/devtool-helper.mjs";
+         resolveLibPath } from "./hkdigital-devtool/helper/index.mjs";
 
 // import { getAliases as getHkBaseAliases }
 //   from "./lib/jslib-hk-base/build-config/vite.aliases.js";

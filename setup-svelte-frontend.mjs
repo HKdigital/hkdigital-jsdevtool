@@ -6,7 +6,9 @@
 import { packageJsonExists,
          ensureLibPath,
          copyFrontendFiles,
-         runNpmInstall } from "./js-include/devtool-helper.mjs";
+         runGitInit,
+         mergePackageJsons,
+         runNpmInstall } from "./helper/index.mjs";
 
 // -----------------------------------------------------------------------------
 // Run setup
@@ -24,9 +26,13 @@ import { packageJsonExists,
     return;
   }
 
+  await runGitInit();
+
   await ensureLibPath();
 
   await copyFrontendFiles();
+
+  await mergePackageJsons();
 
   await runNpmInstall();
 })();
