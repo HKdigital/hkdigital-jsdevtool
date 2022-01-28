@@ -2,18 +2,14 @@
 import { resolveProjectPath,
          resolveDevToolsPath } from "./paths.mjs";
 
-import { isFolder,
-         isFile,
-         copyFile,
-         listFolderNames,
-         ensureFolder } from "./fs.mjs";
+import { copyFile } from "./fs.mjs";
 
 import { execAsync } from "./shell.mjs";
 
 const SVELTE_FRONTEND_INSTALL_FILES_PATH = "install-files/svelte-frontend";
-const NODEJS_BACKEND_INSTALL_FILES_PATH = "./install-files/nodejs-backend";
+const NODEJS_BACKEND_INSTALL_FILES_PATH = "install-files/nodejs-backend";
 
-// ---------------------------------------------------------------------- Method
+// -------------------------------------------------------------------- Function
 
 /**
  * Copy files from `hkdigital-devtool/install-files/frontend`` to project root
@@ -36,9 +32,11 @@ export async function copyFrontendFiles( silent=false )
     "${installFilesFolder}/./" "${projectRootPath}" > /dev/null 2>&1`;
 
   await execAsync( cmd );
+
+  await copyDevTool();
 }
 
-// ---------------------------------------------------------------------- Method
+// -------------------------------------------------------------------- Function
 
 /**
  * Copy files from `hkdigital-devtool/install-files/backend`` to project root
@@ -61,4 +59,18 @@ export async function copyBackendFiles( silent=false )
     "${installFilesFolder}/./" "${projectRootPath}" > /dev/null 2>&1`;
 
   await execAsync( cmd );
+
+  await copyDevTool();
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Copy `devtool` script into project root folder
+ */
+async function copyDevTool()
+{
+  await copyFile(
+    resolveDevToolsPath( "install-files/devtool.mjs" ),
+    resolveProjectPath( "devtool.mjs") );
 }

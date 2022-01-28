@@ -1,9 +1,10 @@
 {
-  "name": "hkdigital-example-be",
-  "description": "HKdigital example backend",
+  "name": "hkdigital-devtool-nodejs-be",
+  "description": "hkdigital-devtool-nodejs-be",
   "version": "1.0.0",
   "author": "Jens Kleinhout (https://hkdigital.nl)",
   "license": "SEE LICENSE IN LICENSE.txt",
+  "private": true,
   "type": "module",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.2",
