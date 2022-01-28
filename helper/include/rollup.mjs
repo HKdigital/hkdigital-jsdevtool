@@ -1,8 +1,13 @@
 
-import { rollup, watch } from 'rollup';
+// ----------------------------------------------------------- On demand imports
 
-import run from '@rollup/plugin-run';
-import sourcemaps from 'rollup-plugin-sourcemaps';
+let rollup;
+let watch;
+
+let run;
+let sourcemaps;
+
+// --------------------------------------------------------------------- Imports
 
 import { resolveProjectPath,
          resolveConfigPath,
@@ -22,6 +27,8 @@ import { mergePackageJsons } from "./npm.mjs";
  */
 export async function runInDevelopmentMode()
 {
+  await importRollupDependencies();
+
   await checkPackageJsonExists();
 
   // ---------------------------------------------------------------------------
@@ -112,6 +119,8 @@ export async function runInDevelopmentMode()
  */
 export async function buildDist()
 {
+  await importRollupDependencies();
+
   const startedAt = Date.now();
 
   await checkPackageJsonExists();
@@ -189,6 +198,8 @@ export async function previewProjectFromDist()
     console.log();
     process.exit(1);
   }
+
+  console.log();
 
   await import( distIndexJsPath );
 }
@@ -406,4 +417,20 @@ async function checkPackageJsonExists()
     console.log( message );
     process.exit(1);
   }
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Dynamically import rollup dependencies
+ */
+async function importRollupDependencies()
+{
+  const rollupModule = await import("rollup");
+
+  rollup = rollupModule.rollup;
+  watch = rollupModule.watch;
+
+  run = (await import( "@rollup/plugin-run" )).default;
+  sourcemaps = (await import("rollup-plugin-sourcemaps")).default;
 }

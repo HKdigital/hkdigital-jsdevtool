@@ -46,6 +46,9 @@ export async function mergePackageJsons( params )
   {
     outputPath = rootPackageJsonPath;
   }
+  else {
+    outputPath = rootPackageJsonPath;
+  }
 
   if( params && "silent" in params )
   {
@@ -107,8 +110,6 @@ export async function mergePackageJsons( params )
 
   const newPackageJsonContents = JSON.stringify(packageJson, null, 2);
 
-  // outputPath
-
   let existingJsonContents = null;
 
   if( outputPath === rootPackageJsonPath )
@@ -130,6 +131,10 @@ export async function mergePackageJsons( params )
     await writeFile( outputPath, newPackageJsonContents, 'utf8' );
 
     return { updated: true };
+  }
+  else if( !silent )
+  {
+    console.log("* No update needed for [package.json]");
   }
 
   return { updated: false };

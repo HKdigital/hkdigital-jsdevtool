@@ -1,8 +1,6 @@
 #!/usr/local/bin/node
 
 import {
-  // resolveDevToolsPath,
-  // setEnvVarsFromConfigFiles,
   runInDevelopmentMode,
   buildDist,
   previewProjectFromDist,

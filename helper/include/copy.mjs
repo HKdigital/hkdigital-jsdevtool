@@ -10,6 +10,9 @@ import { isFolder,
 
 import { execAsync } from "./shell.mjs";
 
+const SVELTE_FRONTEND_INSTALL_FILES_PATH = "install-files/svelte-frontend";
+const NODEJS_BACKEND_INSTALL_FILES_PATH = "./install-files/nodejs-backend";
+
 // ---------------------------------------------------------------------- Method
 
 /**
@@ -25,7 +28,8 @@ export async function copyFrontendFiles( silent=false )
 
   const projectRootPath = resolveProjectPath();
 
-  const installFilesFolder = resolveDevToolsPath("./install-files/frontend");
+  const installFilesFolder =
+    resolveDevToolsPath( SVELTE_FRONTEND_INSTALL_FILES_PATH );
 
   const cmd =
     `rsync --ignore-existing --archive --relative \
@@ -49,7 +53,8 @@ export async function copyBackendFiles( silent=false )
 
   const projectRootPath = resolveProjectPath();
 
-  const installFilesFolder = resolveDevToolsPath("./install-files/backend");
+  const installFilesFolder =
+    resolveDevToolsPath( NODEJS_BACKEND_INSTALL_FILES_PATH );
 
   const cmd =
     `rsync --ignore-existing --archive --relative \

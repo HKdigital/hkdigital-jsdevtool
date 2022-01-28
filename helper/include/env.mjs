@@ -72,7 +72,7 @@ export async function setEnvVarsFromConfigFiles( silent=false )
   if( !silent && Object.keys(mergedEnvVars).length > 0 )
   {
     // console.log( "* Set environment variables:", mergedEnvVars );
-    console.log( "* Set environment variables" );
+    console.log( "* Set environment variables from [config] folder" );
   }
 }
 
