@@ -118,7 +118,7 @@ export function resolveSrcPath()
  *
  * @returns {string} full path
  */
-export function resolveLibPath( path="." )
+export function resolveLibPath()
 {
   return resolveProjectPath( LIB_ROOT_NAME, ...arguments );
 }
@@ -149,6 +149,32 @@ export async function listLibNames()
   const libRoot = resolveLibPath();
 
   return await listFolderNames( libRoot );
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Return the path without the project path prefix
+ *
+ * @param {string} path
+ *
+ * @returns {string} stipped path
+ */
+export function stripProjectPath( path )
+{
+  const projectPath = resolveProjectPath();
+
+  if( path.startsWith( projectPath ) )
+  {
+    path = path.slice( projectPath.length );
+
+    if( path.startsWith("/") || path.startsWith("\\") )
+    {
+      path = path.slice(1);
+    }
+  }
+
+  return path;
 }
 
 // ---------------------------------------------------------------------- Method

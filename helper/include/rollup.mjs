@@ -27,7 +27,7 @@ import { mergePackageJsons } from "./npm.mjs";
  */
 export async function runInDevelopmentMode()
 {
-  await importRollupDependencies();
+  await importDependencies();
 
   await checkPackageJsonExists();
 
@@ -119,7 +119,7 @@ export async function runInDevelopmentMode()
  */
 export async function buildDist()
 {
-  await importRollupDependencies();
+  await importDependencies();
 
   const startedAt = Date.now();
 
@@ -419,13 +419,18 @@ async function checkPackageJsonExists()
   }
 }
 
-// -------------------------------------------------------------------- Function
+// ------------------------------------------------------------------- Internals
 
 /**
- * Dynamically import rollup dependencies
+ * Dynamically import dependencies
  */
-async function importRollupDependencies()
+async function importDependencies()
 {
+  if( rollup )
+  {
+    return;
+  }
+
   const rollupModule = await import("rollup");
 
   rollup = rollupModule.rollup;

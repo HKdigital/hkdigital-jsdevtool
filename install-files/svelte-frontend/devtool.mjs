@@ -1,10 +1,10 @@
 #!/usr/local/bin/node
 
 import {
-  runInDevelopmentMode,
-  buildDist,
-  previewProjectFromDist,
-  installDeps } from "./hkdigital-devtool/helper/index.mjs";
+  viteRunInDevelopmentMode,
+  viteBuildDist,
+  vitePreviewProjectFromDist,
+  installDeps } from "./hkdigital-devtool/helper/svelte-frontend.mjs";
 
 /* --------------------------------------------------- Process program params */
 
@@ -20,15 +20,15 @@ if( !argv.length )
 switch( argv[0] )
 {
   case "run":
-    /* async */ runInDevelopmentMode();
+    /* async */ viteRunInDevelopmentMode();
     break;
 
   case "build":
-    /* async */ buildDist();
+    /* async */ viteBuildDist();
     break;
 
-  case "run-dist":
-    /* async */ previewProjectFromDist();
+  case "preview":
+     /* async */  vitePreviewProjectFromDist();
     break;
 
   case "install-deps":
@@ -61,7 +61,7 @@ function showUsageAndExit()
 
   build               Build a production version in the [dist] folder
 
-  run-dist            Run the production version from the [dist] folder
+  preview             Run the production version from the [dist] folder
                       - Build the project first
                       - Development environment variables from the config
                         folder will be set

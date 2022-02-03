@@ -33,7 +33,7 @@ export async function copyFrontendFiles( silent=false )
 
   await execAsync( cmd );
 
-  await copyDevTool();
+  // await copyDevTool();
 }
 
 // -------------------------------------------------------------------- Function
@@ -60,7 +60,7 @@ export async function copyBackendFiles( silent=false )
 
   await execAsync( cmd );
 
-  await copyDevTool();
+  // await copyDevTool();
 }
 
 // -------------------------------------------------------------------- Function
@@ -68,9 +68,9 @@ export async function copyBackendFiles( silent=false )
 /**
  * Copy `devtool` script into project root folder
  */
-async function copyDevTool()
-{
-  await copyFile(
-    resolveDevToolsPath( "install-files/devtool.mjs" ),
-    resolveProjectPath( "devtool.mjs") );
-}
+// async function copyDevTool()
+// {
+//   await copyFile(
+//     resolveDevToolsPath( "install-files/devtool.mjs" ),
+//     resolveProjectPath( "devtool.mjs") );
+// }

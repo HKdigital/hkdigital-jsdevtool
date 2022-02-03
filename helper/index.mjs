@@ -7,3 +7,4 @@ export * from "./include/shell.mjs";
 export * from "./include/env.mjs";
 export * from "./include/copy.mjs";
 export * from "./include/rollup.mjs";
+export * from "./include/readme.mjs";

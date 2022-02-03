@@ -1,5 +1,13 @@
 # Howto setup hkdigital-devtool
 
+## Status
+
+**ALPHA 0.1**
+
+```
+This project is under development, has not been completed yet and may contain  bugs.
+```
+
 ## About
 
 This project contains scripts, config and other code that can be used to setup and manage your ES projects. There are scripts and setups for both `frontend` development, as well as for `backend` projects.

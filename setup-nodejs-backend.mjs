@@ -8,7 +8,8 @@ import { packageJsonExists,
          copyBackendFiles,
          runGitInit,
          mergePackageJsons,
-         runNpmInstall } from "./helper/index.mjs";
+         runNpmInstall,
+         showReadme } from "./helper/index.mjs";
 
 // -----------------------------------------------------------------------------
 // Run setup
@@ -35,4 +36,6 @@ import { packageJsonExists,
   await mergePackageJsons();
 
   await runNpmInstall();
+
+  await showReadme();
 })();
