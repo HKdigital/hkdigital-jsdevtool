@@ -31,7 +31,7 @@ Follow the instructions on `https://git-scm.com/`
 Follow the instructions on `https://nodejs.org/`
 
 ### n
-The nodejs version manager `n` is also recommended so you can test your nodejs scripts against different Node.js versions.
+The nodejs version manager `n` is also recommended so you can test your NodeJs scripts against different NodeJs versions.
 
 ```bash
 npm install -g n
