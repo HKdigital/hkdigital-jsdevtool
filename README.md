@@ -1,22 +1,28 @@
-# Howto setup hkdigital-devtool
+# How to use the `hkdigital-devtool`
 
 ## Status
 
-**ALPHA 0.1**
+This project is under development.
 
-```
-This project is under development, has not been completed yet and may contain  bugs.
-```
+### What works
+- Setup script `setup-nodejs-backend.mjs` creates a NodeJS program setup
+- Setup script `setup-svelte-frontend.mjs` creates a SVELTE frontend setup
+- The installed `devtool.mjs` can be used to `run`, `build` and `preview` your project
+- The installed `devtool.mjs` can be used to install (merge) dependencies recursively from `package.json`'s found in the lib folder.
+
+### What's missing
+- Manage git submodules using `devtool.mjs`
+- ...
 
 ## About
 
 This project contains scripts, config and other code that can be used to setup and manage your ES projects. There are scripts and setups for both `frontend` development, as well as for `backend` projects.
 
-The scripts are intended to work on OS'es that support `linux like` shells (this includes Mac OS).
-
-The scripts use `git` and `nodejs (npm, npx)`, make sure you have that configured on your system first.
+The scripts should work on OS'es with `linux like` shells (including Mac OS).
 
 ### Install dependencies
+
+The scripts use `git` and `nodejs (npm, npx)`, make sure you have that configured on your system before using this project.
 
 #### git
 Follow the instructions on `https://git-scm.com/`
