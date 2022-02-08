@@ -43,12 +43,12 @@ npm install -g n
 ## Create a project from scratch
 
 ### Create a project folder and install the devtool
-Open a terminal, create a project folder, goto that folder and install the devtools.
+Open a terminal, create a project folder, goto that folder and install the devtools into the subfolder `hkdigital-devtool`.
 
 ```bash
 mkdir my-project
 cd my-project
-npx degit git@github.com:HKdigital/hkdigital-devtool.git
+npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
 ```
 
 ### Option 1: setup a SVELTE frontend project
