@@ -65,4 +65,4 @@ Run the backend setup script.
 ```
 
 ## Next steps
-Checkout the `README.md` that was installed in yout project's root folder
+Checkout the `README-DEVTOOL.md` that was installed in yout project's root folder
