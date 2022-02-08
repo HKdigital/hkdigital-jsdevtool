@@ -4,7 +4,7 @@ import {
   viteRunInDevelopmentMode,
   viteBuildDist,
   vitePreviewProjectFromDist,
-  installDeps } from "./hkdigital-devtool/helper/svelte-frontend.mjs";
+  installDeps } from "./hkdigital-devtool/helper/index.mjs";
 
 /* --------------------------------------------------- Process program params */
 
