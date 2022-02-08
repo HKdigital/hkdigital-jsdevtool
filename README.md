@@ -20,17 +20,17 @@ This project is under development.
 - Manage git submodules using `devtool.mjs`
 - ...
 
-### Install dependencies
+## Install dependencies
 
 The scripts use `git` and `nodejs (npm, npx)`, make sure you have that configured on your system before using this project.
 
-#### git
+### git
 Follow the instructions on `https://git-scm.com/`
 
-#### Node.js
+### Node.js
 Follow the instructions on `https://nodejs.org/`
 
-#### n
+### n
 The nodejs version manager `n` is also recommended so you can test your nodejs scripts against different Node.js versions.
 
 ```bash
