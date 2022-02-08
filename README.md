@@ -1,4 +1,10 @@
-# How to use the `hkdigital-devtool`
+# Setup and manage Javascript projects
+
+## About
+
+This project contains scripts, config and other code that can be used to setup and manage Javascript projects. There are scripts and setups for both `frontend` development, as well as for `backend` projects.
+
+The scripts should work on OS'es with `linux like` shells (including Mac OS).
 
 ## Status
 
@@ -13,12 +19,6 @@ This project is under development.
 ### What's missing
 - Manage git submodules using `devtool.mjs`
 - ...
-
-## About
-
-This project contains scripts, config and other code that can be used to setup and manage your ES projects. There are scripts and setups for both `frontend` development, as well as for `backend` projects.
-
-The scripts should work on OS'es with `linux like` shells (including Mac OS).
 
 ### Install dependencies
 
@@ -48,10 +48,8 @@ Open a terminal, create a project folder, goto that folder and install the devto
 ```bash
 mkdir my-project
 cd my-project
-npx degit --mode=git git@bitbucket.org:hk-digital/hkdigital-devtool#main
+npx degit git@github.com:HKdigital/hkdigital-devtool.git
 ```
-
-@note `--mode=git` is (only) needed for private repositories
 
 ### Option 1: setup a SVELTE frontend project
 Run the frontend setup script.
