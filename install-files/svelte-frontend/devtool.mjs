@@ -7,8 +7,15 @@ import { existsSync } from "fs";
 let viteRunInDevelopmentMode;
 let viteBuildDist;
 let vitePreviewProjectFromDist;
+
 let installDeps;
-// from "./hkdigital-devtool/helper/index.mjs";
+
+let gitAddSubmodule;
+let gitRemoveSubmodule;
+
+let gitDisplaySubmodulesStatus;
+let gitSubmodulesPull;
+let gitSubmodulesPush;
 
 /**
  * Dynamically import dependencies
@@ -29,6 +36,13 @@ async function importDependencies()
   vitePreviewProjectFromDist = helperModule.vitePreviewProjectFromDist;
 
   installDeps = helperModule.installDeps;
+
+  gitAddSubmodule = helperModule.gitAddSubmodule;
+  gitRemoveSubmodule = helperModule.gitRemoveSubmodule;
+
+  gitDisplaySubmodulesStatus = helperModule.gitDisplaySubmodulesStatus;
+  gitSubmodulesPull = helperModule.gitSubmodulesPull;
+  gitSubmodulesPush = helperModule.gitSubmodulesPush;
 }
 
 /* --------------------------------------------------------------------- Main */
@@ -64,6 +78,36 @@ async function main()
       /* async */ installDeps();
       break;
 
+    case "submodule-add":
+      {
+        const repositoryUrl = argv[1];
+        const libFolderName = argv[2];
+
+        /* async */ gitAddSubmodule( repositoryUrl, libFolderName );
+      }
+      break;
+
+    case "submodule-remove":
+      {
+        const libFolderName = argv[1];
+        const force = argv[2] === "force";
+
+        /* async */ gitRemoveSubmodule( libFolderName, force );
+      }
+      break;
+
+    case "submodules-status":
+      /* async */ gitDisplaySubmodulesStatus();
+      break;
+
+    case "submodules-pull":
+      /* async */ gitSubmodulesPull();
+      break;
+
+    case "submodules-push":
+      /* async */ gitSubmodulesPush();
+      break;
+
     default:
       showUsageAndExit();
   }
@@ -97,6 +141,22 @@ function showUsageAndExit()
                       - Build the project first
                       - Development environment variables from the config
                         folder will be set
+
+  submodule-add <repository-url> [<lib-folder-name>]
+
+                      Add a git submodule to the [lib] folder. A repository url
+                      is required. A custom lib folder name is optional.
+
+  submodule-remove <lib-folder-name> [force]
+
+                      Remove a git submodule from the [lib] folder. A lib folder
+                      name is required. [force] is required if the sub module
+                      contains changes.
+
+  submodules-status   Displays the git status for all submodules
+
+  submodules-pull     Pull changes for all submodules from remote repository
+  submodules-push     Pull changes in all submodules to their remote repositories
   `;
 
   console.log( message );
