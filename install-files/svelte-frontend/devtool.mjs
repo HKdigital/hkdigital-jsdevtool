@@ -9,6 +9,7 @@ let viteBuildDist;
 let vitePreviewProjectFromDist;
 
 let installDeps;
+let updateDevtool;
 
 let gitAddSubmodule;
 let gitRemoveSubmodule;
@@ -36,6 +37,7 @@ async function importDependencies()
   vitePreviewProjectFromDist = helperModule.vitePreviewProjectFromDist;
 
   installDeps = helperModule.installDeps;
+  updateDevtool = helperModule.updateDevtool;
 
   gitAddSubmodule = helperModule.gitAddSubmodule;
   gitRemoveSubmodule = helperModule.gitRemoveSubmodule;
@@ -108,6 +110,10 @@ async function main()
       /* async */ gitSubmodulesPush();
       break;
 
+    case "update-devtool":
+      /* async */ updateDevtool( "svelte-frontend" );
+      break;
+
     default:
       showUsageAndExit();
   }
@@ -157,6 +163,9 @@ function showUsageAndExit()
 
   submodules-pull     Pull changes for all submodules from remote repository
   submodules-push     Pull changes in all submodules to their remote repositories
+
+  update-devtool      Copy the current devtool script from the install files
+                      folder.
   `;
 
   console.log( message );

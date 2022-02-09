@@ -7,7 +7,9 @@ import { existsSync } from "fs";
 let rollupRunInDevelopmentMode;
 let rollupBuildDist;
 let rollupPreviewProjectFromDist;
+
 let installDeps;
+let updateDevtool;
 
 let gitAddSubmodule;
 let gitRemoveSubmodule;
@@ -35,6 +37,7 @@ async function importDependencies()
   rollupPreviewProjectFromDist = helperModule.rollupPreviewProjectFromDist;
 
   installDeps = helperModule.installDeps;
+  updateDevtool = helperModule.updateDevtool;
 
   gitAddSubmodule = helperModule.gitAddSubmodule;
   gitRemoveSubmodule = helperModule.gitRemoveSubmodule;
@@ -107,6 +110,10 @@ async function main()
       /* async */ gitSubmodulesPush();
       break;
 
+    case "update-devtool":
+      /* async */ updateDevtool( "nodejs-backend" );
+      break;
+
     default:
       showUsageAndExit();
   }
@@ -132,6 +139,7 @@ function showUsageAndExit()
                       into the a single [package.json] in the project root and
                       runs [npm install] in the project root folder.
 
+
   run                 Run in development mode
 
   build               Build a production version in the [dist] folder
@@ -156,6 +164,9 @@ function showUsageAndExit()
 
   submodules-pull     Pull changes for all submodules from remote repository
   submodules-push     Pull changes in all submodules to their remote repositories
+
+  update-devtool      Copy the current devtool script from the install files
+                      folder.
   `;
 
   console.log( message );

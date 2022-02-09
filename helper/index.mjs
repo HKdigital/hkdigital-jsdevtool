@@ -10,3 +10,4 @@ export * from "./include/copy.mjs";
 export * from "./include/rollup.mjs";
 export * from "./include/vite.mjs";
 export * from "./include/readme.mjs";
+export * from "./include/update.mjs";
