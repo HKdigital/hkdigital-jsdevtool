@@ -65,4 +65,24 @@ Run the backend setup script.
 ```
 
 ## Next steps
-Checkout the `README-DEVTOOL.md` that was installed in yout project's root folder
+Checkout the `README-DEVTOOL.md` that was installed in your project's root folder
+
+
+## Reinstallation or updating
+
+Installation of a missing `hkdigital-devtool` folder is sometimes needed:
+
+E.g. the folder is in the `.gitignore` file, so won't be added to your git project. So when you clone your project using git, you'll notice that the folder is missing.
+
+If you want to update `hkdigital-devtool`:
+
+- Remove the existing folder
+- Install a new `hkdigital-devtools` folder.
+
+### Howto install missing `hkdigital-devtool`
+
+Run the following command in your terminal if your `hkdigital-devtool` folder is missing.
+
+```bash
+npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
+```
