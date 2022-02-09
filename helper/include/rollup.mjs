@@ -25,7 +25,7 @@ import { mergePackageJsons } from "./npm.mjs";
 /**
  * Watch source code, build and run project in development mode
  */
-export async function runInDevelopmentMode()
+export async function rollupRunInDevelopmentMode()
 {
   await importDependencies();
 
@@ -117,7 +117,7 @@ export async function runInDevelopmentMode()
 /**
  * Build source code and write output to the `dist` folder
  */
-export async function buildDist()
+export async function rollupBuildDist()
 {
   await importDependencies();
 
@@ -181,7 +181,7 @@ export async function buildDist()
 /**
  * Execute the distribution output file (index.mjs) in the dist folder
  */
-export async function previewProjectFromDist()
+export async function rollupPreviewProjectFromDist()
 {
   // const distPackageJsonPath = resolveDistPath("package.json");
   // await checkPackageJsonExists( distPackageJsonPath );
@@ -193,7 +193,7 @@ export async function previewProjectFromDist()
   if( !await isFile( distIndexJsPath ) )
   {
     // Missing index file -> build first
-    // await buildDist();
+    // await rollupBuildDist();
     console.log(`- Missing [${distIndexJsPath}]. Build project first.`);
     console.log();
     process.exit(1);

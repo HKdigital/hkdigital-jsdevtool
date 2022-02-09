@@ -1,43 +1,74 @@
 #!/usr/local/bin/node
 
-import {
-  runInDevelopmentMode,
-  buildDist,
-  previewProjectFromDist,
-  installDeps } from "./hkdigital-devtool/helper/index.mjs";
+import { existsSync } from "fs";
 
-/* --------------------------------------------------- Process program params */
+/* ---------------------------------------------------------- Dynamic imports */
 
-const argv = process.argv.slice(2); // remove 'node' and 'devtool.js'
+let rollupRunInDevelopmentMode;
+let rollupBuildDist;
+let rollupPreviewProjectFromDist;
+let installDeps;
 
-// console.log("devtool-new", argv);
-
-if( !argv.length )
+/**
+ * Dynamically import dependencies
+ */
+async function importDependencies()
 {
-  showUsageAndExit();
+  const helperPath = "./hkdigital-devtool/helper/index.mjs";
+
+  if( !existsSync( helperPath ) )
+  {
+    showInstallHowtoAndExit();
+  }
+
+  const helperModule = await import( helperPath );
+
+  rollupRunInDevelopmentMode = helperModule.rollupRunInDevelopmentMode;
+  rollupBuildDist = helperModule.rollupBuildDist;
+  rollupPreviewProjectFromDist = helperModule.rollupPreviewProjectFromDist;
+
+  installDeps = helperModule.installDeps;
 }
 
-switch( argv[0] )
+/* --------------------------------------------------------------------- Main */
+
+async function main()
 {
-  case "run":
-    /* async */ runInDevelopmentMode();
-    break;
+  await importDependencies();
 
-  case "build":
-    /* async */ buildDist();
-    break;
+  const argv = process.argv.slice(2); // remove 'node' and 'devtool.js'
 
-  case "preview":
-    /* async */ previewProjectFromDist();
-    break;
+  // console.log("devtool-new", argv);
 
-  case "install-deps":
-    /* async */ installDeps();
-    break;
-
-  default:
+  if( !argv.length )
+  {
     showUsageAndExit();
+  }
+
+  switch( argv[0] )
+  {
+    case "run":
+      /* async */ rollupRunInDevelopmentMode();
+      break;
+
+    case "build":
+      /* async */ rollupBuildDist();
+      break;
+
+    case "preview":
+      /* async */ rollupPreviewProjectFromDist();
+      break;
+
+    case "install-deps":
+      /* async */ installDeps();
+      break;
+
+    default:
+      showUsageAndExit();
+  }
 }
+
+main();
 
 // -------------------------------------------------------------------- Function
 
@@ -66,6 +97,31 @@ function showUsageAndExit()
                       - Development environment variables from the config
                         folder will be set
   `;
+
+  console.log( message );
+  process.exit(0);
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Show [hkdigital-devtool] installation instructions and exit
+ */
+function showInstallHowtoAndExit()
+{
+  const message =
+    `
+    Missing [hkdigital-devtool] folder. Please add the devtool to your project first.
+
+    Run the following command in your terminal:
+
+    --
+    npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
+    --
+
+    More information:
+    https://github.com/HKdigital/hkdigital-devtool
+    `;
 
   console.log( message );
   process.exit(0);

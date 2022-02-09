@@ -1,43 +1,75 @@
 #!/usr/local/bin/node
 
-import {
-  viteRunInDevelopmentMode,
-  viteBuildDist,
-  vitePreviewProjectFromDist,
-  installDeps } from "./hkdigital-devtool/helper/index.mjs";
+import { existsSync } from "fs";
 
-/* --------------------------------------------------- Process program params */
+/* ---------------------------------------------------------- Dynamic imports */
 
-const argv = process.argv.slice(2); // remove 'node' and 'devtool.js'
+let viteRunInDevelopmentMode;
+let viteBuildDist;
+let vitePreviewProjectFromDist;
+let installDeps;
+// from "./hkdigital-devtool/helper/index.mjs";
 
-// console.log("devtool-new", argv);
-
-if( !argv.length )
+/**
+ * Dynamically import dependencies
+ */
+async function importDependencies()
 {
-  showUsageAndExit();
+  const helperPath = "./hkdigital-devtool/helper/index.mjs";
+
+  if( !existsSync( helperPath ) )
+  {
+    showInstallHowtoAndExit();
+  }
+
+  const helperModule = await import( helperPath );
+
+  viteRunInDevelopmentMode = helperModule.viteRunInDevelopmentMode;
+  viteBuildDist = helperModule.viteBuildDist;
+  vitePreviewProjectFromDist = helperModule.vitePreviewProjectFromDist;
+
+  installDeps = helperModule.installDeps;
 }
 
-switch( argv[0] )
+/* --------------------------------------------------------------------- Main */
+
+async function main()
 {
-  case "run":
-    /* async */ viteRunInDevelopmentMode();
-    break;
+  await importDependencies();
 
-  case "build":
-    /* async */ viteBuildDist();
-    break;
+  const argv = process.argv.slice(2); // remove 'node' and 'devtool.js'
 
-  case "preview":
-     /* async */  vitePreviewProjectFromDist();
-    break;
+  // console.log("devtool-new", argv);
 
-  case "install-deps":
-    /* async */ installDeps();
-    break;
-
-  default:
+  if( !argv.length )
+  {
     showUsageAndExit();
+  }
+
+  switch( argv[0] )
+  {
+    case "run":
+      /* async */ viteRunInDevelopmentMode();
+      break;
+
+    case "build":
+      /* async */ viteBuildDist();
+      break;
+
+    case "preview":
+       /* async */  vitePreviewProjectFromDist();
+      break;
+
+    case "install-deps":
+      /* async */ installDeps();
+      break;
+
+    default:
+      showUsageAndExit();
+  }
 }
+
+main();
 
 // -------------------------------------------------------------------- Function
 
@@ -66,6 +98,31 @@ function showUsageAndExit()
                       - Development environment variables from the config
                         folder will be set
   `;
+
+  console.log( message );
+  process.exit(0);
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Show [hkdigital-devtool] installation instructions and exit
+ */
+function showInstallHowtoAndExit()
+{
+  const message =
+    `
+    Missing [hkdigital-devtool] folder. Please add the devtool to your project first.
+
+    Run the following command in your terminal:
+
+    --
+    npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
+    --
+
+    More information:
+    https://github.com/HKdigital/hkdigital-devtool
+    `;
 
   console.log( message );
   process.exit(0);
