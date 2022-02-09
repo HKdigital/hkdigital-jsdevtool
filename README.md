@@ -86,3 +86,9 @@ Run the following command in your terminal if your `hkdigital-devtool` folder is
 ```bash
 npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
 ```
+
+# Buy me a coffee
+
+If you like our work and would like us to share some more code, please support us:
+
+[Buy me a coffee](https://www.buymeacoffee.com/hkdigital)
