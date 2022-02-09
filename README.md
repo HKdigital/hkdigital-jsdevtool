@@ -79,6 +79,7 @@ Link your local project folder to the remote repository.
 
 ```bash
 git remote add origin <remote-git-repository-url>
+git remote -v # to check
 ```
 
 Stage your code, commit your code and push it to the remote repository.
