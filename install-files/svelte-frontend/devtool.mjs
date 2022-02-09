@@ -164,8 +164,9 @@ function showUsageAndExit()
   submodules-pull     Pull changes for all submodules from remote repository
   submodules-push     Pull changes in all submodules to their remote repositories
 
-  update-devtool      Copy the current devtool script from the install files
-                      folder.
+  update-devtool      Copy the devtool script from the install files folder
+                      to the project folder. Run this if you installed a new
+                      [hkdigital-devtool] folder.
   `;
 
   console.log( message );

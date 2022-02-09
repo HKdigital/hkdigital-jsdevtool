@@ -8,7 +8,7 @@ The scripts should work on OS'es with `linux like` shells (including Mac OS).
 
 ## Status
 
-This project is under development.
+This project is under development but should be mostly functional.
 
 ### What works
 - Setup script `setup-nodejs-backend.mjs` creates a NodeJS program setup
@@ -17,7 +17,6 @@ This project is under development.
 - The installed `devtool.mjs` can be used to install (merge) dependencies recursively from `package.json`'s found in the lib folder.
 
 ### What's missing
-- Manage git submodules using `devtool.mjs`
 - ...
 
 ## Install dependencies
