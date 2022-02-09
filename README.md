@@ -65,8 +65,29 @@ Run the backend setup script.
 ```
 
 ## Next steps
-Checkout the `README-DEVTOOL.md` that was installed in your project's root folder
 
+### Read the `README-DEVTOOL.md`
+A file called `README-DEVTOOL.md` is installed in your project's root folder after running one of the setup scripts.
+
+### Store your code on a remote git repository
+First create an empty git project on e.g. [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/).
+
+- When creating the project: do not create a `.gitignore` file or a `README.md`!
+- You need to choose a name for the default branch. `main` is a commonly used option.
+
+Link your local project folder to the remote repository.
+
+```bash
+git remote add origin <remote-git-repository-url>
+```
+
+Stage your code, commit your code and push it to the remote repository.
+
+```bash
+git add .
+git commit
+git push origin main -u
+```
 
 ## Reinstallation or updating
 
@@ -92,3 +113,9 @@ npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
 If you like our work and would like us to share some more code, please support us:
 
 [Buy me a coffee](https://www.buymeacoffee.com/hkdigital)
+
+## Support cancer research
+
+Alpe d'HuZes is a unique sporting event where as much money as possible is raised for cancer research and for improving the quality of life of people with cancer. On a single day, 5000 participants will bike, hike or run the Alpe d'Huez. Attempting a maximum of six climbs, under the motto 'giving up is not an option'. 
+
+https://www.opgevenisgeenoptie.nl/fundraisers/JensKleinhout
