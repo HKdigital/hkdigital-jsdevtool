@@ -235,10 +235,8 @@ async function readViteConfig( configFileName )
         {
           if( current.find && current.replacement )
           {
-            // debugAliases.push(
-            //   `${current.find} => ${stripProjectPath(current.replacement)}` );
             debugAliases.push(
-              `${current.find} => ${current.replacement}` );
+              `${current.find} => ${stripProjectPath(current.replacement)}` );
           }
         }
         else if( typeof current === "string" ) {
