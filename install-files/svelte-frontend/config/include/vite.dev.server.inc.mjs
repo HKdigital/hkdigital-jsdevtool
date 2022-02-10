@@ -24,9 +24,10 @@ export async function generateServerConfig()
     //
     //
     //
-    // ### Option 1: disable HMR
+    // ### Option 1: enable or disable HMR
     //
     // hmr: false,
+    hmr: true,
     //
     //
     // ### Option 2: use local HMR
@@ -43,14 +44,14 @@ export async function generateServerConfig()
     //
     // ### Option 3: use HMR via external proxy (e.g. ngrok)
     //
-    hmr: {
-      // URL: wss://XXXX-000-000-000-000.ngrok.io[:443]/hmr
-      protocol: "wss",
-      host: '75bb-80-100-99-199.ngrok.io',
-      path: "/hmr",
-      port: 443,
-      timeout: 10000
-    },
+    // hmr: {
+    //   // URL: wss://XXXX-000-000-000-000.ngrok.io[:443]/hmr
+    //   protocol: "wss",
+    //   host: 'XXXX-000-000-000-000.ngrok.io',
+    //   path: "/hmr",
+    //   port: 443,
+    //   timeout: 10000
+    // },
 
     open: false // open browser window on start
                 // tip: use CMD-click on the url in iTerm2
