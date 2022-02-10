@@ -119,9 +119,10 @@ export async function viteGetAliasesFromLib( libName )
    *
    * @returns {string} path
    */
-  const resolveCurrentLibPath = () => {
+  function resolveCurrentLibPath()
+  {
     return resolveLibPath( libName, ...arguments );
-  };
+  }
 
   return await module_.generateAliases( { resolveCurrentLibPath } );
 }
@@ -220,25 +221,35 @@ async function readViteConfig( configFileName )
 
     if( resolve.alias instanceof Array )
     {
-      const alias = resolve.alias;
+      const resolveAlias = resolve.alias;
 
-      const labels = [];
+      const debugAliases = [];
 
-      for( const current of alias )
+      for( const current of resolveAlias )
       {
-        if( current instanceof Object && current.find )
+        if( typeof current === "function" )
         {
-          labels.push( current.find );
+          debugAliases.push(`(custom resolver)`);
         }
-      }
+        else if( current instanceof Object  )
+        {
+          if( current.find && current.replacement )
+          {
+            // debugAliases.push(
+            //   `${current.find} => ${stripProjectPath(current.replacement)}` );
+            debugAliases.push(
+              `${current.find} => ${current.replacement}` );
+          }
+        }
+        else if( typeof current === "string" ) {
+          debugAliases.push( `${stripProjectPath(current)}` );
+        }
+        else {
+          debugAliases.push(`unknown alias type (${typeof current})`);
+        }
+      } // end for
 
-      if( labels.length === alias.length )
-      {
-        debugConfig.aliases = labels.join(", ");
-      }
-      else {
-        debugConfig.aliases = `(${alias.length})`;
-      }
+      debugConfig.aliases = debugAliases;
     }
   }
 
@@ -261,6 +272,8 @@ async function readViteConfig( configFileName )
       debugConfig.distFolder = stripProjectPath( build.outDir );
     }
   }
+
+  // console.log("Full config", config);
 
   console.log();
   console.log( "Main configuration:" );

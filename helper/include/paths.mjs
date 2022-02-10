@@ -64,7 +64,18 @@ export function resolveProjectPath()
     detectPaths();
   }
 
-  return resolve( paths.projectFolder, ...arguments );
+  // Split path parts that contain path separator "/"
+
+  const parts = [];
+
+  for( let j = 0, n = arguments.length; j < n; j = j + 1 )
+  {
+    const part = arguments[ j ];
+
+    parts.push( ...part.split( "/" ) );
+  }
+
+  return resolve( paths.projectFolder, ...parts );
 }
 
 // ---------------------------------------------------------------------- Method
