@@ -6,7 +6,7 @@
  *
  * @returns {object} config section
  */
-export function generateServerConfig()
+export async function generateServerConfig()
 {
   return /* config.server */ {
     port: 8888,

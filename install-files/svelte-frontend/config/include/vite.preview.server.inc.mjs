@@ -12,9 +12,9 @@ import { generateServerConfig } from "./vite.dev.server.inc.mjs";
  *
  * @returns {object} config section
  */
-export function generatePreviewConfig()
+export async function generatePreviewConfig()
 {
-  const server = generateServerConfig();
+  const server = await generateServerConfig();
 
   return /* config.preview */ {
     port: server.port || 8888,

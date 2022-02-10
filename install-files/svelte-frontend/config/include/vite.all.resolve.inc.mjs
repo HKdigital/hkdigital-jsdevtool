@@ -2,13 +2,9 @@
 /* ------------------------------------------------------------------ Imports */
 
 import { resolveSrcPath,
-         resolveLibPath } from "../../../hkdigital-devtool/helper/index.mjs";
-
-// import { getAliases as getHkBaseAliases }
-//   from "./lib/jslib-hk-base/build-config/vite.aliases.js";
-
-// import { getAliases as getHkFrontendAliases }
-//   from "./lib/jslib-hk-fe/build-config/vite.aliases.js";
+         resolveLibPath,
+         /*viteGetAliasesFromLib*/ }
+          from "../../hkdigital-devtool/helper/index.mjs";
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -19,8 +15,10 @@ import { resolveSrcPath,
  *
  * @returns {object} config section
  */
-export function generateResolveConfig()
+export async function generateResolveConfig()
 {
+  // console.log( await viteGetAliasesFromLib( "jslib-hk-base" ) );
+
   return /* config.resolve */ {
 
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.css'],
@@ -54,9 +52,7 @@ export function generateResolveConfig()
 
       // -- Libs
 
-      // ...getHkBaseAliases( { resolveLibPath } ),
-
-      // ...getHkFrontendAliases( { resolveLibPath } )
+      // ...(await viteGetAliasesFromLib( "jslib-hk-base" ))
     ]
 
   };

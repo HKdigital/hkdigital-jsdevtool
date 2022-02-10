@@ -5,9 +5,9 @@ let viteModule;
 
 /* ------------------------------------------------------------------ Imports */
 
-import { resolveProjectPath,
-         resolveConfigPath,
+import { resolveConfigPath,
          resolveSrcPath,
+         resolveLibPath,
          resolveDistPath,
          stripProjectPath } from "./paths.mjs";
 
@@ -75,6 +75,57 @@ export async function vitePreviewProjectFromDist()
   await viteModule.preview( config );
 }
 
+// -------------------------------------------------------------------- Function
+
+/**
+ * Get aliases for Vite from a lib in the libs folder
+ * - The lib should contain a file [build-config/vite.aliases.mjs]
+ * - That file should export a function called [generateAliases], which returns
+ *   an array of aliases that can be used by Vite.
+ * - The function [generateAliases] receives a parameter [{resolveLibPath}],
+ *   that can be used to generate the correct paths for the aliases.
+ *
+ * @param {string} libName - Name of the lib
+ *
+ * @returns {array} list of vite aliases
+ */
+export async function viteGetAliasesFromLib( libName )
+{
+  await importDependencies();
+
+  const path = resolveLibPath( libName, "build-config", "vite.aliases.mjs" );
+
+  if( !await isFile( path ) )
+  {
+    console.log(`- Missing config file [${path}].`);
+    console.log();
+    process.exit(1);
+  }
+
+  const module_ = await import( path );
+
+  if( typeof module_.generateAliases !== "function" )
+  {
+    console.log(
+      `- Config file [${path}] should export a function [generateAliases].`);
+    console.log();
+    process.exit(1);
+  }
+
+  /**
+   * Helper function to generate paths inside the current lib
+   *
+   * @param {...string} pathParts
+   *
+   * @returns {string} path
+   */
+  const resolveCurrentLibPath = () => {
+    return resolveLibPath( libName, ...arguments );
+  };
+
+  return await module_.generateAliases( { resolveCurrentLibPath } );
+}
+
 /* ---------------------------------------------------------------- Internals */
 
 /**
@@ -100,7 +151,17 @@ async function readViteConfig( configFileName )
 
   await importDependencies();
 
-  const config = (await import( configFilePath )).default;
+  const defaultExport = (await import( configFilePath )).default;
+
+  let config;
+
+  if( typeof defaultExport === "function" )
+  {
+    config = await defaultExport();
+  }
+  else {
+    config = defaultExport;
+  }
 
   // -- Auto complete config
 

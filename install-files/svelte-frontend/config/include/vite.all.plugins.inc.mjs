@@ -14,7 +14,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
  *
  * @returns {object} config section
  */
-export function generatePluginsConfig()
+export async function generatePluginsConfig()
 {
   return /* config.plugins */ [
    svelte( {

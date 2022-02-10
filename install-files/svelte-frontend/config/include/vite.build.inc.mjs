@@ -10,7 +10,7 @@ import { resolveDistPath } from "../../hkdigital-devtool/helper/index.mjs";
  *
  * @returns {object} config section
  */
-export function generateBuildConfig()
+export async function generateBuildConfig()
 {
   // @see https://vitejs.dev/config/#build-target
 
