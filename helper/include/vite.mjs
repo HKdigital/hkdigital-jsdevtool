@@ -9,7 +9,8 @@ import { resolveConfigPath,
          resolveSrcPath,
          resolveLibPath,
          resolveDistPath,
-         stripProjectPath } from "./paths.mjs";
+         stripProjectPath,
+         listLibNames } from "./paths.mjs";
 
 import { isFile } from "./fs.mjs";
 
@@ -73,6 +74,34 @@ export async function vitePreviewProjectFromDist()
   const config = await readViteConfig( VITE_PREVIEW_FILE_NAME );
 
   await viteModule.preview( config );
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Get aliases for Vite from all libs in the libs folder
+ * - @see viteGetAliasesFromLib for more info
+ *
+ * @returns {array} list of vite aliases
+ */
+export async function viteGetAliasesFromAllLibs()
+{
+  const libNames = await listLibNames();
+
+  const allAliases = [];
+
+  for( const libName of libNames )
+  {
+    const entries = await viteGetAliasesFromLib( libName );
+
+    for( const entry of entries )
+    {
+      allAliases.push( entry );
+    }
+
+  }
+
+  return allAliases;
 }
 
 // -------------------------------------------------------------------- Function

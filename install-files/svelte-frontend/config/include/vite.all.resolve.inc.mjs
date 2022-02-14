@@ -3,6 +3,7 @@
 
 import { resolveSrcPath,
          resolveLibPath,
+         viteGetAliasesFromAllLibs
          /*viteGetAliasesFromLib*/ }
           from "../../hkdigital-devtool/helper/index.mjs";
 
@@ -24,35 +25,31 @@ export async function generateResolveConfig()
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.css'],
 
     alias: [
-      // {
-      //   find: '@',
-      //   replacement: resolveSrcPath(".")
-      // },
-
       // -- Platform (usually jslib-hk-fe or jslib-hk-be)
 
-      { find: "$platform",
-        replacement: resolveLibPath("jslib-hk-fe") },
+      // { find: "$platform",
+      //   replacement: resolveLibPath("jslib-hk-fe") },
 
       // -- Project
+
+      // { find: '@',
+      //   replacement: resolveSrcPath(".") },
 
       { find: "$src",
         replacement: resolveSrcPath(".") },
 
-      { find: "$theme",
-        replacement: resolveLibPath("jslib-hk-fe/theme") },
+      // { find: "$theme",
+      //   replacement: resolveSrcPath("theme") }
 
-      { find: "$fonts-and-icons-hk",
-        replacement: resolveLibPath("fonts-and-icons-hk") },
-
-      { find: "$content-panels",
-        replacement: resolveSrcPath("views/content-panels") },
+      // { find: "$theme",
+      //   replacement: resolveLibPath("my-theme-lib/theme") }
 
       // -- Custom
 
       // -- Libs
 
-      // ...(await viteGetAliasesFromLib( "jslib-hk-base" ))
+      ...(await viteGetAliasesFromAllLibs())
+      // ...(await viteGetAliasesFromLib( "my-lib" ))
     ]
 
   };
