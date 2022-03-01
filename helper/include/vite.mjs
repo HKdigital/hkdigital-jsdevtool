@@ -92,7 +92,7 @@ export async function viteGetAliasesFromAllLibs()
 
   for( const libName of libNames )
   {
-    const entries = await viteGetAliasesFromLib( libName );
+    const entries = await viteGetAliasesFromLib( libName, false );
 
     for( const entry of entries )
     {
@@ -115,10 +115,11 @@ export async function viteGetAliasesFromAllLibs()
  *   that can be used to generate the correct paths for the aliases.
  *
  * @param {string} libName - Name of the lib
+ * @param {boolean} [failOnMissing=true]
  *
  * @returns {array} list of vite aliases
  */
-export async function viteGetAliasesFromLib( libName )
+export async function viteGetAliasesFromLib( libName, failOnMissing=true )
 {
   await importDependencies();
 
@@ -127,6 +128,16 @@ export async function viteGetAliasesFromLib( libName )
   if( !await isFile( path ) )
   {
     console.log(`- Missing config file [${path}].`);
+    console.log();
+
+    if( !failOnMissing )
+    {
+      console.log(
+        `- No config file found in lib [${stripProjectPath(path)}].`);
+      return [];
+    }
+
+    console.log(`- Missing config file [${stripProjectPath(path)}].`);
     console.log();
     process.exit(1);
   }
