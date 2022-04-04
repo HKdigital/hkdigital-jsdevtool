@@ -33,26 +33,23 @@ export async function installDeps()
  *
  * @returns {object} { updated: <boolean> }
  */
-export async function mergePackageJsons( params )
+export async function mergePackageJsons(
+  {
+    outputPath=null,
+    includeDevDependencies=true,
+    silent=false
+  }={} )
 {
   const libNames = await listLibNames();
 
   const rootPackageJsonPath = resolveProjectPath("package.json" );
 
-  let outputPath;
-  let silent = false;
+  // let outputPath;
+  // let silent = false;
 
-  if( !params || !params.outputPath )
+  if( !outputPath )
   {
     outputPath = rootPackageJsonPath;
-  }
-  else {
-    outputPath = rootPackageJsonPath;
-  }
-
-  if( params && "silent" in params )
-  {
-    silent = params.silent;
   }
 
   // -- Read root `package.json`
@@ -63,7 +60,16 @@ export async function mergePackageJsons( params )
   const packageJson = JSON.parse( rootPackageJsonContents );
 
   const mergedDependencies = packageJson.dependencies || {};
-  const mergedDevDependencies = packageJson.devDependencies || {};
+
+  let mergedDevDependencies;
+
+  if( includeDevDependencies )
+  {
+    mergedDevDependencies = packageJson.devDependencies || {};
+  }
+  else {
+    delete packageJson.devDependencies;
+  }
 
   // -- Read `package.json` files from library folders
 
@@ -89,13 +95,16 @@ export async function mergePackageJsons( params )
           highest_version( version, mergedDependencies[ label ] );
       } // end for
 
-      for( const label in devDependencies )
+      if( includeDevDependencies )
       {
-        const version = devDependencies[ label ];
+        for( const label in devDependencies )
+        {
+          const version = devDependencies[ label ];
 
-        mergedDevDependencies[ label ] =
-          highest_version( version, mergedDevDependencies[ label ] );
-      } // end for
+          mergedDevDependencies[ label ] =
+            highest_version( version, mergedDevDependencies[ label ] );
+        } // end for
+      }
     }
     catch( e ) {
       if( e.code !== "ENOENT" )

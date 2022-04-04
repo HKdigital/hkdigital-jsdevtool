@@ -132,7 +132,7 @@ export async function rollupBuildDist()
         production: true
       } );
 
-  // console.log("DEBUG: rollup config", config);
+  console.log("DEBUG: rollup config", config);
 
   let bundle;
   let buildFailed = false;
@@ -164,6 +164,7 @@ export async function rollupBuildDist()
     await mergePackageJsons(
       {
         outputPath: resolveDistPath("package.json"),
+        includeDevDependencies: false,
         silent: true
       } );
 
@@ -354,10 +355,19 @@ async function normalizeConfig( config, { production=false } )
 
   const plugins = config.plugins;
 
+  // == Include source map plugin
+
+  plugins.push( sourcemaps() );
+  output.sourcemap = true;
+
+  // == Set output format `ejs`
+
   if( !("format" in output) )
   {
     output.format = "es";
   }
+
+  // == Production / dev dependent config
 
   if( production )
   {
@@ -381,14 +391,13 @@ async function normalizeConfig( config, { production=false } )
       output.file = "generated/index.mjs";
     }
 
-
-    plugins.push( sourcemaps() );
-    output.sourcemap = true;
+    // == Use `run` plugin to execute the program
 
     plugins.push( run(
-      {
-        execArgv: ['--enable-source-maps']
-      } ) );
+    {
+      execArgv: ['--enable-source-maps']
+    } ) );
+
   }
 
   return config;

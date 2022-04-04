@@ -1,12 +1,13 @@
 
 import commonjs from '@rollup/plugin-commonjs';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+// import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 import json from '@rollup/plugin-json';
 
 import alias from '@rollup/plugin-alias';
 
 import { resolveSrcPath,
+         resolveLibPath,
          createBannerFromPackageJson,
          onBootstrapReadyBannerCode,
          onBootstrapReadyFooterCode } from "../hkdigital-devtool/helper/index.mjs";
@@ -52,7 +53,10 @@ export async function createConfig()
     // @see https://github.com/rollup/plugins
 
     // Find files in `node_modules`
-    nodeResolve( { preferBuiltins: true } ),
+    //
+    // --> CRASHES GENERATED CODE!
+    //
+    // nodeResolve( { preferBuiltins: true } ),
 
     // Process JSON
     json(),
@@ -61,7 +65,7 @@ export async function createConfig()
     commonjs(),
 
     // Aliases to be used by import statements
-    alias( { entries: getAliasEntries( { resolveSrcPath } ) } )
+    alias( { entries: getAliasEntries( { resolveSrcPath, resolveLibPath } ) } )
   );
 
   // ---------------------------------------------------------------------------
