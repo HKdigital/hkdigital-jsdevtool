@@ -27,13 +27,81 @@ export async function copyFrontendFiles( silent=false )
   const installFilesFolder =
     resolveDevToolsPath( SVELTE_FRONTEND_INSTALL_FILES_PATH );
 
+
+  // let Rsync;
+
+  // try {
+  //   Rsync = (await import("rsync")).default;
+  // }
+  // catch(e)
+  // {
+  //   const cmd = "npm install";
+
+  //   try {
+  //     await execAsync( cmd );
+  //   }
+  //   catch( e )
+  //   {
+  //     console.log("Failed to load module [rsync] and failed to run [npm install]");
+  //     throw new Error(e);
+  //   }
+  // }
+
+  // // Build the command
+  // const rsync = new Rsync();
+
+  // console.log( { source: installFilesFolder, destination: projectRootPath } );
+
+  // rsync
+  //   // .shell('rsync')
+  //   .set("ignore-existing")
+  //   .set("archive")
+  //   .set("relative")
+  //   .source( installFilesFolder )
+  //   .destination( projectRootPath );
+
+  // console.log( { command: rsync.command() } );
+
+  // let resolve;
+  // let reject;
+
+  // const promise = new Promise( ( _resolve, _reject ) => {
+  //   resolve = _resolve;
+  //   reject = _reject;
+  // } );
+
+  // // Execute the command
+
+  // rsync.execute( function( error, code, cmd ) {
+  //     // we're done
+  //     if( error )
+  //     {
+  //       console.log( 123, error );
+  //       return reject( error )
+  //     }
+
+  //     resolve();
+  // });
+
+  // await promise;
+
   const cmd =
     `rsync --ignore-existing --archive --relative \
     "${installFilesFolder}/./" "${projectRootPath}" > /dev/null 2>&1`;
 
-  await execAsync( cmd );
+  try {
+    await execAsync( cmd );
+  }
+  catch( e )
+  {
+    console.log(
+      "- Failed to execute RSYNC command " +
+      "  (make sure rsync is installed on your system)\n");
 
-  // await copyDevTool();
+    throw e;
+  }
+
+  await copyDevTool();
 }
 
 // -------------------------------------------------------------------- Function

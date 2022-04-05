@@ -2,6 +2,8 @@
 import { resolveConfigPath } from "./paths.mjs";
 import { isFile } from "./fs.mjs";
 
+import { asyncImport } from "./import.mjs";
+
 // -------------------------------------------------------------------- Function
 
 /**
@@ -17,7 +19,7 @@ export async function setEnvVarsFromConfigFiles( silent=false )
 
   if( await isFile( defaultEnvVarsPath ) )
   {
-    const module_ = await import( defaultEnvVarsPath );
+    const module_ = await asyncImport( defaultEnvVarsPath );
 
     if( !(module_.default instanceof Object) )
     {
@@ -40,7 +42,7 @@ export async function setEnvVarsFromConfigFiles( silent=false )
 
   if( await isFile( localEnvVarsPath ) )
   {
-    const module_ = await import( localEnvVarsPath );
+    const module_ = await asyncImport( localEnvVarsPath );
 
     if( !(module_.default instanceof Object) )
     {

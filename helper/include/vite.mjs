@@ -181,7 +181,10 @@ export async function viteGetAliasesFromLib( libName, failOnMissing=true )
  */
 async function readViteConfig( configFileName )
 {
-  const configFilePath = resolveConfigPath( configFileName );
+  let configFilePath = resolveConfigPath( configFileName );
+  let configFileURI = resolveConfigPath( configFileName, { returnURI: true } );
+
+  console.log( { configFilePath } );
 
   if( !await isFile( configFilePath ) )
   {
@@ -192,7 +195,9 @@ async function readViteConfig( configFileName )
 
   await importDependencies();
 
-  const defaultExport = (await import( configFilePath )).default;
+  // configFilePath = new URL( configFilePath );
+
+  const defaultExport = (await import( configFileURI )).default;
 
   let config;
 

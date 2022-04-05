@@ -26,7 +26,8 @@ function detectPaths()
 {
   const currentFilePath = import.meta.url;
 
-  // console.log( { currentFilePath } );
+  // console.log( { currentFilePath,
+  //                CURRENT_SCRIPT_RELATIVE_PATH } );
 
   if( !currentFilePath.endsWith( CURRENT_SCRIPT_RELATIVE_PATH ) )
   {
@@ -35,14 +36,42 @@ function detectPaths()
       `Current file path should end with  [${CURRENT_SCRIPT_RELATIVE_PATH}]`);
   }
 
-  paths.projectFolder =
-    new URL( currentFilePath )
-      .pathname
-      .slice( 0, -( CURRENT_SCRIPT_RELATIVE_PATH.length + 1) );
+  // console.log( { test: new URL( currentFilePath ).pathname } );
 
-  paths.src = resolve( paths.projectFolder, SRC_ROOT_NAME );
+  let pathname = new URL( currentFilePath ).pathname;
 
-  paths.libRoot = resolve( paths.projectFolder, LIB_ROOT_NAME );
+  let protoPrefix = "";
+
+  if( pathname.charAt(0) === "/" && pathname.charAt(2) === ":" )
+  {
+    // on windows pathname looks like `/C:/Users/.../....`
+    // => remove first slash
+    pathname = pathname.slice( 1 );
+
+    // Windows doesn't like e.g. %20 for space
+    // => decode URI
+    pathname = decodeURI( pathname );
+
+    // pathname = "file://" + pathname;
+
+    protoPrefix = "file:////";
+  }
+
+  const projectFolder =
+    pathname
+    .slice( 0, -( CURRENT_SCRIPT_RELATIVE_PATH.length + 1) );
+
+  // console.log( { projectFolder } );
+
+  paths.protoPrefix = protoPrefix;
+
+  paths.projectFolder = projectFolder;
+
+  paths.src =
+    resolve( projectFolder, SRC_ROOT_NAME );
+
+  paths.libRoot =
+    resolve( projectFolder, LIB_ROOT_NAME );
 
   // console.log( paths );
 }
@@ -54,6 +83,7 @@ function detectPaths()
  * `projectRoot` folder
  *
  * @param {...string} [path] - Sub paths
+ * @param {object} [options={ returnURI:false }]
  *
  * @returns {string} full path
  */
@@ -64,6 +94,20 @@ export function resolveProjectPath()
     detectPaths();
   }
 
+  const n = arguments.length;
+
+  let returnURI = false;
+
+  if( n > 0 )
+  {
+    const options = arguments[ n - 1 ];
+
+    if( options )
+    {
+      returnURI = !!options.returnURI;
+    }
+  }
+
   // Split path parts that contain path separator "/"
 
   const parts = [];
@@ -72,10 +116,19 @@ export function resolveProjectPath()
   {
     const part = arguments[ j ];
 
-    parts.push( ...part.split( "/" ) );
+    if( typeof part === "string" )
+    {
+        parts.push( ...part.split( "/" ) );
+    }
   }
 
-  return resolve( paths.projectFolder, ...parts );
+  if( !returnURI )
+  {
+    return resolve( paths.projectFolder, ...parts );
+  }
+  else {
+    return paths.protoPrefix + resolve( paths.projectFolder, ...parts );
+  }
 }
 
 // ---------------------------------------------------------------------- Method
@@ -85,6 +138,7 @@ export function resolveProjectPath()
  * `config` folder
  *
  * @param {...string} [path] - Sub paths
+ * @param {object} [options={ returnURI:false }]
  *
  * @returns {string} full path
  */
@@ -100,6 +154,7 @@ export function resolveConfigPath()
  * `devtools` folder
  *
  * @returns {string} full path
+ * @param {object} [options={ returnURI:false }]
  */
 export function resolveDevToolsPath()
 {
@@ -112,6 +167,7 @@ export function resolveDevToolsPath()
  * Resolve (get) the full path of a folder that resides in the `src` folder
  *
  * @param {...string} [path] - Sub paths
+ * @param {object} [options={ returnURI:false }]
  *
  * @returns {string} full path
  */
@@ -126,6 +182,7 @@ export function resolveSrcPath()
  * Resolve (get) the full path of a folder that resides in the `lib` folder
  *
  * @param {...string} [path] - Sub paths
+ * @param {object} [options={ returnURI:false }]
  *
  * @returns {string} full path
  */
@@ -140,6 +197,7 @@ export function resolveLibPath()
  * Resolve (get) the full path of a folder that resides in the `dist` folder
  *
  * @param {...string} [path] - Sub paths
+ * @param {object} [options={ returnURI:false }]
  *
  * @returns {string} full path
  */

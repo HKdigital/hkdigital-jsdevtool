@@ -20,6 +20,8 @@ import { setEnvVarsFromConfigFiles } from "./env.mjs";
 
 import { mergePackageJsons } from "./npm.mjs";
 
+import { asyncImport } from "./import.mjs";
+
 // -------------------------------------------------------------------- Function
 
 /**
@@ -202,7 +204,7 @@ export async function rollupPreviewProjectFromDist()
 
   console.log();
 
-  await import( distIndexJsPath );
+  await asyncImport( distIndexJsPath );
 }
 
 // -------------------------------------------------------------------- Function
@@ -276,6 +278,9 @@ export function onBootstrapReadyFooterCode()
 
 /**
  * Read rollup config file that should be used for development mode
+ *
+ * @param {string} fileName
+ * @param {boolean} [production=false]
  */
 async function readConfig( { fileName, production=false })
 {
@@ -289,7 +294,7 @@ async function readConfig( { fileName, production=false })
     process.exit(1);
   }
 
-  const module_ = await import( configPath );
+  const module_ = await asyncImport( configPath );
 
   if( typeof module_.createConfig !== "function" )
   {

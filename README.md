@@ -29,8 +29,12 @@ Follow the instructions on `https://git-scm.com/`
 ### Node.js
 Follow the instructions on `https://nodejs.org/`
 
+### rsync
+Rsync is used by the devtool to copy files and therefore must be installed on your system. On most `linux like` systems this is already the case.
+
 ### n
 The nodejs version manager `n` is also recommended so you can test your NodeJs scripts against different NodeJs versions.
+
 
 ```bash
 npm install -g n
