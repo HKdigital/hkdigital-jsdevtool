@@ -1,17 +1,21 @@
 
 
-export function getAliasEntries( { resolveSrcPath } )
+export function getAliasEntries( { resolveSrcPath, resolveLibPath } )
 {
   return {
     entries: {
       "$src": resolveSrcPath()
 
-      // "$hk": join( LIB_PATH, 'jslib-hk-base' ),
-      // "$hk-be": join( LIB_PATH, 'jslib-hk-be' ),
-      // "$hk-media-be": join( LIB_PATH, 'jslib-hk-media-be' ),
+      // "$platform": resolveLibPath( "jslib-hk-be" ),
 
-      // "$fs": join( LIB_PATH, 'jslib-hk-be', 'fs' ),
-      // "$platform": join( LIB_PATH, 'jslib-hk-be' )
+      // "$hk": resolveLibPath( "jslib-hk-base" ),
+      // "$hk-be": resolveLibPath( "jslib-hk-be" ),
+
+      // "$fs": resolveLibPath( "jslib-hk-be", "fs" ),
+
+      // "$hk-be": resolveLibPath( "jslib-hk-be" ),
+
+      // "$hk-media-be": resolveLibPath( "jslib-hk-media-be" )
     }
   };
 }
