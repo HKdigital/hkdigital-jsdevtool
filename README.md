@@ -30,7 +30,7 @@ Follow the instructions on `https://git-scm.com/`
 Follow the instructions on `https://nodejs.org/`
 
 ### rsync
-Rsync is used by the devtool to copy files and therefore must be installed on your system. On most `linux like` systems this is already the case.
+Rsync is used by the devtool to copy files and therefore must be installed on your system. On most `linux like` systems rsync is usually installed or can be installed via the standard package managers. For windows, your best guess might be to install the `Windows Subsystem for Linux`, please use a search engine for more info. Getting rsync installed on Windows is painful. We'll try to remove the dependency from the devtool in next versions.
 
 ### n
 The nodejs version manager `n` is also recommended so you can test your NodeJs scripts against different NodeJs versions.
