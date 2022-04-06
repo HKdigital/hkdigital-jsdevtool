@@ -1,4 +1,4 @@
-# Development tool for NodeJS and SVELTE projects
+# Development tool for NodeJS and SVELTE
 
 ## About
 
