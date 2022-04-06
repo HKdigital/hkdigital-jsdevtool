@@ -3,24 +3,28 @@ import { resolveProjectPath } from "./paths.mjs";
 
 import { readFile } from "./fs.mjs";
 
-export async function showReadme()
+export async function showHowtoDevTool()
 {
   const projectPath = resolveProjectPath();
 
-  const text = await readFile( resolveProjectPath("README-DEVTOOL.md"), 'utf8' );
+  // const text = await readFile( resolveProjectPath("README-DEVTOOL.md"), 'utf8' );
 
+  // console.log();
+  // console.log("Displaying contents of the file README-DEVTOOL.md");
+  // console.log("-------------------------------------------------");
+  // console.log();
+  // console.log( text );
+  // console.log();
+  // console.log("-------------------------------------------------");
   console.log();
-  console.log("Displaying contents of the file README-DEVTOOL.md");
-  console.log("-------------------------------------------------");
+  console.log("Next steps:");
   console.log();
-  console.log( text );
+  console.log(`=> Change to project root folder`);
   console.log();
-  console.log("-------------------------------------------------");
+  console.log(`cd ..`);
   console.log();
-  console.log(`=> Now you can change to project root folder and run the devtool`);
+  console.log(`=> Run the devtool`);
   console.log();
-  console.log(`cd ${projectPath}`);
-
   if( !projectPath.includes(":/") )
   {
     console.log(`./devtool.mjs`);

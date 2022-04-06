@@ -10,7 +10,7 @@ import { packageJsonExists,
          runGitInit,
          mergePackageJsons,
          runNpmInstall,
-         showReadme } from "../helper/index.mjs";
+         showHowtoDevTool } from "../helper/index.mjs";
 
 // -----------------------------------------------------------------------------
 // Run setup
@@ -40,5 +40,5 @@ import { packageJsonExists,
 
   await runNpmInstall();
 
-  await showReadme();
+  await showHowtoDevTool();
 })();

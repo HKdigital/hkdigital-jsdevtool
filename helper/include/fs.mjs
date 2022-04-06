@@ -3,15 +3,127 @@ import pathTool from 'path';
 
 import { access,
          mkdirSync,
-         promises as fsPromises } from "fs";
+         promises as fsPromises,
+         createReadStream,
+         createWriteStream } from "fs";
 
 const stats = fsPromises.stat;
+
+const fsCopyFile = fsPromises.copyFile;
+
+import { promisify } from 'util';
+
+import stream from "stream";
+
+export const pipelineAsync = promisify( stream.pipeline );
+
+import { expectString,
+         expectObject } from "./expect.mjs";
+
+import { stripProjectPath,
+         sandboxPath,
+         dirname } from "./paths.mjs";
 
 // ------------------------------------------------------------------ Re-exports
 
 export const readFile = fsPromises.readFile;
 export const writeFile = fsPromises.writeFile;
-export const copyFile = fsPromises.copyFile;
+
+// ---------------------------------------------------------------------- Method
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Copy a folder and its contents to the specified location
+ * - Parent folders for the target location will be created if missing.
+ *
+ * @param {string} sourcePath - Path of the file to copy
+ * @param {string} targetPath - Destination path
+ *
+ * @param {object} [options] - Options
+ *
+ * @param {boolean} [options.overwrite=false]
+ *   If set to false and the target file exists, an exception is raised
+ *
+ * @param {string} [options.sandboxPath=ROOT_PATH]
+ *   The folder to empty should not be ouside the "sandboxPath"
+ *
+ * @param {boolean} [options.allowProjectParentFolderAccess=false]
+ *   By setting this option, the sandbox also allows paths within the
+ *   parent folder of the project
+ *
+ * @returns {boolean} true after the folder has been emptied
+ */
+export async function copyFile( sourcePath, targetPath, options )
+{
+  expectString( sourcePath, "Missing or invalid parameter [sourcePath]");
+  expectString( targetPath, "Missing or invalid parameter [targetPath]");
+
+  options = Object.assign(
+    {
+      overwrite: false,
+      sandboxPath: null,
+      allowProjectParentFolderAccess: false
+    },
+    options );
+
+  let overwrite = options.overwrite;
+
+  sourcePath = sandboxPath( sourcePath, options );
+  targetPath = sandboxPath( targetPath, options );
+
+  let targetFolder = dirname(targetPath);
+
+  // console.log("COPY FILE",
+  // {
+  //   sourcePath: sourcePath,
+  //   targetPath: targetPath,
+  //   targetFolder: targetFolder
+  // } );
+
+  await ensureFolder( targetFolder, options );
+
+  if( !await isFile( sourcePath, options ) )
+  {
+    throw new Error("Source file was not found at path ["+sourcePath+"]");
+  }
+
+  let targetFileExists = await isFile( targetPath, options );
+
+  if( !overwrite && targetFileExists )
+  {
+    // throw new Error(
+    //   "A file system node exists at path ["+targetPath+"], " +
+    //   "and overwrite is set to false");
+    console.log(
+      `Ignore copy over existing node [${stripProjectPath(targetPath)}]`);
+
+    return false;
+  }
+
+  if( !targetFileExists && await exists( targetPath, options ) )
+  {
+    throw new Error(
+      "A file system node exists at path ["+targetPath+"], " +
+      "but is not a file");
+  }
+
+  if( targetFileExists )
+  {
+    if( await compareFiles( sourcePath, targetPath, options ) )
+    {
+      // console.log("SAME FILE ALREADY EXISTS");
+      return true;
+    }
+  }
+
+  let sourceStream = await tryGetReadStream( sourcePath, options );
+
+  // await writeStream( targetPath, sourceStream, { overwrite } );
+  await writeStream( targetPath, sourceStream, options );
+
+  return true;
+}
 
 // ---------------------------------------------------------------------- Method
 
@@ -203,4 +315,350 @@ export async function ensureFolder( path, options )
   } );
 
   return promise;
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Read file contents and output data via a NodeJs Stream
+ * - The file contents are read as binary datas
+ *
+ * @param {string} path - Path of the file to read
+ *
+ * @param {object} [options] - Options
+ *
+ * @param {string} [options.sandboxPath=ROOT_PATH]
+ *   The folder to empty should not be ouside the "sandboxPath"
+ *
+ * @param {boolean} [options.allowProjectParentFolderAccess=false]
+ *   By setting this option, the sandbox also allows paths within the
+ *   parent folder of the project
+ *
+ * @returns {Stream} read stream
+ */
+export async function tryGetReadStream( path, options )
+{
+  if( !await isFile( path, options ) )
+  {
+    throw new Error(
+      `Cannot read file. No file found at path [${stripProjectPath(path)}].`);
+  }
+
+  try {
+    // default 64 * 1024, probably better: highWaterMark: 256 * 1024
+
+    return createReadStream( path, options );
+
+
+    // return await reader.getContentsAsStream( options );
+  }
+  catch( e )
+  {
+    /* @note ignore exceptions */
+    return null;
+  }
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Write file from file contents that is supplied as readble stream
+ *
+ * @param {string} path - File path
+ * @param {Stream} fileContents - Data to write
+ *
+ * @param {object} [options] - Options
+ *
+ * @param {string} [options.overwrite=false]
+ *   If false, the function will throw an exception on an overwrite attempt
+ *
+ * @param {string} [options.autoCreateParentFolders=true]
+ *   If true, auto create parent folders if missing
+ *
+ * @param {boolean} [options.append=false]
+ *   If set to true, data written to the file will be appended to existing
+ *   file contents.
+ *
+ * @param {string} [options.encoding='binary'] - Encoding of file contents
+ *
+ * @return {Promise} promise that resolves when the file has been written
+ */
+export async function writeStream( path, fileContents, options={} )
+{
+  expectString( path,
+    "Missing or invalid parameter [path]");
+
+  if( !isReadableStream( fileContents ) )
+  {
+    throw new Error(
+      "Missing or invalid parameter [fileContents] " +
+      "(expected readable stream)");
+  }
+
+  expectObject( options,
+    "Missing or invalid parameter [options]");
+
+  const writeParams = await _prepareWrite( path, options );
+
+  const writePath = writeParams.writePath;
+
+  //
+  // @note stream contents -> use 'binary' encoding by default
+  //
+  let encoding = writeParams.encoding || 'binary';
+
+  return _finalizeWrite( writeParams, new Promise( async function( resolve, reject )
+    {
+      let flags = writeParams.append ? 'a' : 'w';
+
+      //
+      // @note write streams are non-blocking
+      // @note flags 'w' creates a new file or truncates an existing file
+      //
+      let writeStream =
+        createWriteStream( writePath, { encoding, flags } );
+
+      writeStream.on('error', async ( err ) => {
+
+       await tryRemoveFile( writeParams.outputPath, options );
+
+       reject( err );
+      } );
+
+      // "close" event seems to work,
+      // "finish" is emitted before meta data is written
+      // -> to be sure, check both
+
+      let finished = false;
+      let closed = false;
+
+      async function tryFinish()
+      {
+        if( !finished || !closed )
+        {
+          return;
+        }
+
+        resolve();
+      }
+
+      writeStream.on('finish', () =>
+        {
+          finished = true;
+          tryFinish();
+        } );
+
+      writeStream.on('close', () =>
+        {
+          closed = true;
+          tryFinish();
+        } );
+
+      writeStream.on('error', ( err ) =>
+        {
+          reject( err )
+        } );
+
+      // fileContents.on('error', function ( err )
+      // {
+      //   reject( err );
+      // } );
+
+      // fileContents.on('end', function ()
+      // {
+      //   resolve({});
+      // } );
+
+      await pipelineAsync(
+        fileContents,
+        writeStream
+      );
+    } )
+  );
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Returns a promise that returns true if a file system node exists at
+ * the specified path.
+ *
+ * @param {string} path - Path to check
+ *
+ * @param {object} [options] - Options
+ *
+ * @param {string} [options.sandboxPath=ROOT_PATH]
+ *   The folder to empty should not be ouside the "sandboxPath"
+ *
+ * @param {boolean} [options.allowProjectParentFolderAccess=false]
+ *   By setting this option, the sandbox also allows paths within the
+ *   parent folder of the project
+ *
+ * @return {Promise<boolean>}
+ *   true if a file system node exists at the specified location
+ */
+export async function exists( path, options )
+{
+  path = sandboxPath( path, options );
+
+  return new Promise( function( resolve /*, reject*/ )
+    {
+      access( path, async function(err)
+        {
+          if( err && err.code === 'ENOENT')
+          {
+            // Does not exist
+            resolve(false);
+            return;
+          }
+          else {
+            // Exists
+            resolve(true);
+          }
+        });
+    } );
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Returns true if a stream is a readable stream
+ *
+ * @param {mixed} thing - Javascript value to check
+ *
+ * @returns {boolean} true if the specified thing is readable
+ */
+export function isReadableStream( thing )
+{
+  if( thing instanceof stream.Readable )
+  {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+
+/* --------------------------------------------------------- Helper functions */
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Prepare writing
+ * - Processes write options
+ * - Checks if writing is allowed
+ *
+ * @param {object} options
+ *
+ * @returns {object} write parameters
+ *  { path, outputPath, targetPath, ... }
+ */
+async function _prepareWrite( path, options )
+{
+  const writeParams =
+    Object.assign(
+      {
+        overwrite: false,
+        autoCreateParentFolders: true,
+        encoding: null,
+        append: false,
+        allowProjectParentFolderAccess: false
+      },
+      options );
+
+  if( writeParams.append )
+  {
+    writeParams.overwrite = true;
+    writeParams.useTmp = false;
+  }
+
+  const allowProjectParentFolderAccess =
+    writeParams.allowProjectParentFolderAccess;
+
+  // console.log("writeParams", writeParams);
+
+  const outputPath =
+    sandboxPath( path, { allowProjectParentFolderAccess } );
+
+  await _ensureAllowWrite( outputPath, writeParams.overwrite );
+
+  if( writeParams.autoCreateParentFolders )
+  {
+    let outputFolder = dirname( outputPath );
+
+    // console.log(`Create folder [${outputFolder}]`);
+
+    await ensureFolder( outputFolder, { allowProjectParentFolderAccess } );
+  }
+
+  writeParams.outputPath = outputPath;
+
+  writeParams.writePath = outputPath;
+
+  return writeParams;
+}
+
+// ---------------------------------------------------------------------- Method
+
+async function _finalizeWrite( writeParams, writeDonePromise )
+{
+  const { allowProjectParentFolderAccess } = writeParams;
+
+  try {
+    const writeDoneResult = await writeDonePromise;
+
+    if( writeDoneResult && writeDoneResult.hashSha1 )
+    {
+      writeParams.hashSha1 = writeDoneResult.hashSha1;
+
+      // Replace `${hash}` in output file name
+
+      writeParams.outputPath =
+        writeParams.outputPath.replace( /\${hash}/, writeParams.hashSha1 );
+
+      // console.log( "_finalizeWrite", writeParams );
+    }
+  }
+  catch( e )
+  {
+    console.log("ERROR", e);
+
+    await tryRemoveFile(
+      writeParams.outputPath, { allowProjectParentFolderAccess } );
+
+    return null;
+  }
+
+  return writeParams;
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Throws an exception if no file can be written at the specified path
+ *
+ * @param {string} path
+ * @param {boolean} [overwrite=false]
+ *   If set to true, overwriting an existing file is permitted
+ */
+async function _ensureAllowWrite( path, overwrite=false )
+{
+  let allowProjectParentFolderAccess = true;
+
+  if( !overwrite )
+  {
+    if( await exists( path, { allowProjectParentFolderAccess } ) )
+    {
+      throw new Error(
+        `Cannot write file [${path}] (a file system node already exists)`);
+    }
+  }
+  else if( !await isFileOrDoesNotExist(
+                      path, { allowProjectParentFolderAccess } ) )
+  {
+    throw new Error(
+      `Cannot write file [${path}] (a file node already exists that ` +
+      "is not a regular file)");
+  }
 }

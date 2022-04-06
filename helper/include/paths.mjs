@@ -1,9 +1,20 @@
 
-import { resolve } from "path";
+import { default as pathTool, resolve } from "path";
 
 import { isFolder,
          ensureFolder,
          listFolderNames } from "./fs.mjs";
+
+import { expectString } from "./expect.mjs";
+
+/* --------------------------------------------------------------- Re-exports */
+
+export const joinPaths = pathTool.join;
+export const normalizePath = pathTool.normalize;
+export const dirname = pathTool.dirname;
+export const isAbsolute = pathTool.isAbsolute;
+export const SEPARATOR = pathTool.sep;
+
 
 /* ---------------------------------------------------------------- Internals */
 
@@ -288,3 +299,135 @@ export async function ensureLibPath( silent=false )
     console.log(`* Created lib folder [${stripProjectPath(libRoot)}]`);
   }
 }
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Returns a normalized path that is ensured to be inside the
+ * sandboxPath
+ *
+ * - Converts a relative path to an absolute path relative to the
+ *   sandboxPath
+ * - Throws an exception if the path is outside of the sandbox limits
+ *
+ * @param {string} path - Path to normalize and check
+ *
+ * @param {object} [options] - Options
+ *
+ * @param {string} [options.sandboxPath=ROOT_PATH]
+ *   Custom "sandboxPath"
+ *
+ * @param {boolean} [options.allowProjectParentFolderAccess=false]
+ *   By setting this option, the sandbox also allows paths within the
+ *   parent folder of the project
+ *   - The path prefixed to relative paths is [ROOT_PATH]
+ */
+export function sandboxPath( path, options )
+{
+  expectString( path,
+    "Missing or invalid parameter [path] (expected string)");
+
+  let ROOT_PATH = resolveProjectPath();
+
+  let sandboxPath = ROOT_PATH
+  let prefixPath = ROOT_PATH;
+
+  let allowRoot = false;
+
+  if( options )
+  {
+    if( options.allowRoot )
+    {
+      allowRoot = true;
+    }
+
+    if( options.sandboxPath )
+    {
+      let hardLimitedSandboxPath;
+
+      if( !options.allowProjectParentFolderAccess )
+      {
+        hardLimitedSandboxPath = ROOT_PATH;
+      }
+      else {
+        sandboxPath = pathTool.dirname( ROOT_PATH );
+        hardLimitedSandboxPath = sandboxPath;
+      }
+
+      sandboxPath = normalizePath(options.sandboxPath);
+
+      if( sandboxPath !== ROOT_PATH )
+      {
+        if( !isAbsolute(sandboxPath) )
+        {
+          // Relative sandbox path -> prefix ROOT_PATH and normalize
+
+          sandboxPath =
+            joinPaths( ROOT_PATH, sandboxPath );
+        }
+        else {
+          // Absolute sandbox path
+          sandboxPath = normalizePath( sandboxPath );
+        }
+      }
+
+      if( !sandboxPath.startsWith( hardLimitedSandboxPath ) )
+      {
+        throw new Error(
+          `Invalid parameter [sandboxPath=${sandboxPath}], ` +
+          `should be inside [${hardLimitedSandboxPath}]`);
+      }
+
+      prefixPath = sandboxPath;
+    }
+    else if( options.allowProjectParentFolderAccess )
+    {
+      sandboxPath = pathTool.dirname( ROOT_PATH );
+      prefixPath = ROOT_PATH;
+    }
+  }
+  else {
+    // No custom sandboxPath supplied
+    sandboxPath =
+      prefixPath = ROOT_PATH;
+  }
+
+  // console.log("sandboxPath", { path, ROOT_PATH, prefixPath } );
+  // console.log("sandboxPath:options", options );
+
+  path = normalizePath(path);
+
+  // console.log("sandboxPath:after normalizePath", path );
+
+  if( isAbsolute(path) )
+  {
+    if( sandboxPath.length > 1 )
+    {
+      let expectedStartsWithPath;
+
+      if( !allowRoot )
+      {
+        expectedStartsWithPath = sandboxPath + SEPARATOR;
+      }
+      else {
+        expectedStartsWithPath = sandboxPath;
+      }
+
+      if( !path.startsWith( expectedStartsWithPath ) )
+      {
+        throw new Error(
+          "Path ["+path+"] is not inside the sandboxPath ["+sandboxPath+"]");
+      }
+    }
+  }
+  else {
+    // Relative path -> prefix prefixPath
+    path = joinPaths( prefixPath, path );
+  }
+
+  // console.log("sandboxPath:result", path );
+
+  return path;
+}
+
+

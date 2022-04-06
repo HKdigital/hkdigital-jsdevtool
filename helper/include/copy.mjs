@@ -1,10 +1,13 @@
 
 import { resolveProjectPath,
-         resolveDevToolsPath } from "./paths.mjs";
+         resolveDevToolsPath,
+         SEPARATOR } from "./paths.mjs";
 
 import { copyFile } from "./fs.mjs";
 
 import { execAsync } from "./shell.mjs";
+
+import { expandGlobs, copyUsingGlobs } from "./glob.mjs";
 
 const SVELTE_FRONTEND_INSTALL_FILES_PATH = "install-files/svelte-frontend";
 const NODEJS_BACKEND_INSTALL_FILES_PATH = "install-files/nodejs-backend";
@@ -27,9 +30,22 @@ export async function copyFrontendFiles( silent=false )
   const installFilesFolder =
     resolveDevToolsPath( SVELTE_FRONTEND_INSTALL_FILES_PATH );
 
+  const sourceBasePath =
+    resolveDevToolsPath( SVELTE_FRONTEND_INSTALL_FILES_PATH );
+
+  // const files =
+  await copyUsingGlobs(
+    {
+      sourceGlob: `${sourceBasePath}/**/*`,
+      sourceBasePath,
+      targetFolder: `${projectRootPath}`,
+      overwrite: false
+    } );
+
+  // console.log( files );
+
   const cmd =
-    `rsync --ignore-existing --archive --relative \
-    "${installFilesFolder}/./" "${projectRootPath}" > /dev/null 2>&1`;
+    `chmod +x "${projectRootPath}/devtool.mjs" > /dev/null 2>&1`;
 
   try {
     await execAsync( cmd );
@@ -37,10 +53,7 @@ export async function copyFrontendFiles( silent=false )
   catch( e )
   {
     console.log(
-      "- Failed to execute RSYNC command " +
-      "  (make sure rsync is installed on your system)\n");
-
-    throw e;
+      "- Failed to make devtool executable (use node devtool.mjs to run)\n");
   }
 }
 
@@ -62,9 +75,20 @@ export async function copyBackendFiles( silent=false )
   const installFilesFolder =
     resolveDevToolsPath( NODEJS_BACKEND_INSTALL_FILES_PATH );
 
+  const sourceBasePath =
+    resolveDevToolsPath( NODEJS_BACKEND_INSTALL_FILES_PATH );
+
+  // const files =
+  await copyUsingGlobs(
+    {
+      sourceGlob: `${sourceBasePath}/**/*`,
+      sourceBasePath,
+      targetFolder: `${projectRootPath}`,
+      overwrite: false
+    } );
+
   const cmd =
-    `rsync --ignore-existing --archive --relative \
-    "${installFilesFolder}/./" "${projectRootPath}" > /dev/null 2>&1`;
+    `chmod +x "${projectRootPath}/devtool.mjs" > /dev/null 2>&1`;
 
   try {
     await execAsync( cmd );
@@ -72,10 +96,7 @@ export async function copyBackendFiles( silent=false )
   catch( e )
   {
     console.log(
-      "- Failed to execute RSYNC command " +
-      "  (make sure rsync is installed on your system)\n");
-
-    throw e;
+      "- Failed to make devtool executable (use node devtool.mjs to run)\n");
   }
 }
 
