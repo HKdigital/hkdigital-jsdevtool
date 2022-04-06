@@ -40,7 +40,7 @@ cd my-project
 npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
 ```
 
-### Setup a SVELTE frontend project
+### Setup a SVELTE (frontend) project
 - Open a terminal and go to the `hkdigital-devtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
@@ -51,7 +51,7 @@ npm run setup-svelte
 cd ..
 node devtool.mjs
 ```
-### Setup a NodeJS backend project
+### Setup a NodeJS (backend) project
 - Open a terminal and go to the `hkdigital-devtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
