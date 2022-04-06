@@ -1,47 +1,33 @@
-# Setup and manage Javascript projects
+# Development tool for NodeJS and SVELTE projects
 
 ## About
 
-This project contains scripts, config and other code that can be used to setup and manage Javascript projects. There are scripts and setups for both `frontend` development, as well as for `backend` projects.
+This project contains scripts, config and other code that can be used to setup and manage Javascript projects. There are scripts and setups for both `NodeJS` (backend), as well as for `SVELTE` (frontend) projects.
 
-The scripts should work on OS'es with `linux like` shells (including Mac OS).
+The development tool has been developed to work on `linux like` operating systems (including Mac OS). Support for Windows has been added and should be functional, but should be tested a bit more.
 
 ## Status
 
 This project is under development but should be mostly functional.
 
-### What works
-- Setup script `setup-nodejs-backend.mjs` creates a NodeJS program setup
-- Setup script `setup-svelte-frontend.mjs` creates a SVELTE frontend setup
-- The installed `devtool.mjs` can be used to `run`, `build` and `preview` your project
-- The installed `devtool.mjs` can be used to install (merge) dependencies recursively from `package.json`'s found in the lib folder.
-
-### What's missing
-- ...
+If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-devtool/issues).
 
 ## Install dependencies
 
 The scripts use `git` and `nodejs (npm, npx)`, make sure you have that configured on your system before using this project.
 
 ### git
-Follow the instructions on `https://git-scm.com/`
+Follow the instructions on [git-scm.com](https://git-scm.com/).
 
 ### Node.js
-Follow the instructions on `https://nodejs.org/`
+Follow the instructions on [NodeJS.org](https://nodejs.org/`)
 
-### rsync
-Rsync is used by the devtool to copy files and therefore must be installed on your system. On most `linux like` systems rsync is usually installed or can be installed via the standard package managers. For windows, your best guess might be to install the `Windows Subsystem for Linux`, please use a search engine for more info. Getting rsync installed on Windows is painful. We'll try to remove the dependency from the devtool in next versions.
-
-### n
-The nodejs version manager `n` is also recommended so you can test your NodeJs scripts against different NodeJs versions.
-
+### n (optional)
+The nodejs version manager `n` is also recommended so you can test your NodeJs scripts against different NodeJs versions, see [github tj/n](https://github.com/tj/n).
 
 ```bash
 npm install -g n
 ```
-
-@see https://www.npmjs.com/package/n
-
 
 ## Create a project from scratch
 
@@ -54,17 +40,27 @@ cd my-project
 npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
 ```
 
-### Option 1: setup a SVELTE frontend project
-Run the frontend setup script.
+### Setup a SVELTE frontend project
+- Open a terminal and go to the `hkdigital-devtool` folder
+- Run the setup script
+- Go to the project root folder and run the installed `devtool` script to manage your project
 
 ```bash
-./hkdigital-devtool/setup-svelte-frontend.mjs
+cd hkdigital-devtool
+npm run setup-svelte
+cd ..
+node devtool.mjs
 ```
-### Option 2: setup a NodeJS backend project
-Run the backend setup script.
+### Setup a NodeJS backend project
+- Open a terminal and go to the `hkdigital-devtool` folder
+- Run the setup script
+- Go to the project root folder and run the installed `devtool` script to manage your project
 
 ```bash
-./hkdigital-devtool/setup-nodejs-backend.mjs
+cd hkdigital-devtool
+npm run setup-nodejs
+cd ..
+node devtool.mjs
 ```
 
 ## Next steps
@@ -82,7 +78,7 @@ Link your local project folder to the remote repository.
 
 ```bash
 git remote add origin <remote-git-repository-url>
-git remote -v # to check
+git remote -v # to check the location of the repository server
 ```
 
 Stage your code, commit your code and push it to the remote repository.
@@ -95,14 +91,15 @@ git push origin main -u
 
 ## Reinstallation or updating
 
-Installation of a missing `hkdigital-devtool` folder is sometimes needed:
+If your project is missing the `hkdigital-devtool` folder, e.g. after cloning the project from a repository, you will need to reinstall the folder.
 
-E.g. the folder is in the `.gitignore` file, so won't be added to your git project. So when you clone your project using git, you'll notice that the folder is missing.
+Note that the `hkdigital-devtool` folder is in the `.gitignore` file, so won't be added to your git project. So when you clone your project using git, you'll notice that the folder is missing.
 
-If you want to update `hkdigital-devtool`:
+If you want to update `hkdigital-devtool`, you can safely remove the folder and reinstall it.
 
 - Remove the existing folder
-- Install a new `hkdigital-devtools` folder.
+- Install a new `hkdigital-devtools` folder
+- Run `node devtool.mjs `
 
 ### Howto install missing `hkdigital-devtool`
 

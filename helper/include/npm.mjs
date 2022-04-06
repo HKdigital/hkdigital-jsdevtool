@@ -1,7 +1,9 @@
 
-import { resolveProjectPath,
+import { resolveDevToolsPath,
+         resolveProjectPath,
          resolveLibPath,
-         listLibNames } from "./paths.mjs";
+         listLibNames,
+         stripProjectPath } from "./paths.mjs";
 
 import { isFile,
          readFile,
@@ -29,7 +31,9 @@ export async function installDeps()
  * root folder
  *
  * @param {object} [{outputPath}] - Root package.json path by default
- * @param {boolean} [{silent=false}]
+ *
+ * @param {boolean} [silent=false]
+ *   If set, no console output will be generated
  *
  * @returns {object} { updated: <boolean> }
  */
@@ -153,11 +157,33 @@ export async function mergePackageJsons(
 
 /**
  * Run `npm install` in the project root folder
+ *
+ * @param {boolean} [silent=false]
+ *   If set, no console output will be generated
  */
-export async function runNpmInstall( silent=false )
+export async function runNpmInstallInDevtoolFolder( { silent=false }={} )
 {
+  await runNpmInstall( { silent, folderPath: resolveDevToolsPath() } );
+}
 
-  const projectRootPath = resolveProjectPath();
+// -------------------------------------------------------------------- Function
+
+/**
+ * Run `npm install` in the project root folder or a custom folder
+ *
+ * @param {boolean} [silent=false]
+ *   If set, no console output will be generated
+ *
+ * @param {string} [folderPath=<project-root-folder>]
+ */
+export async function runNpmInstall( { silent=false, folderPath }={} )
+{
+  let projectRootPath = resolveProjectPath();
+
+  if( !folderPath )
+  {
+    folderPath = projectRootPath;
+  }
 
   // ---------------------------------------------------------------------------
   // npm install
@@ -167,10 +193,20 @@ export async function runNpmInstall( silent=false )
 
     if( !silent )
     {
-      console.log("* Running [npm install]");
+      let displayPath;
+
+      if( folderPath === projectRootPath )
+      {
+        displayPath = projectRootPath;
+      }
+      else {
+        displayPath = stripProjectPath(folderPath);
+      }
+
+      console.log(`* Running [npm install] in folder [${displayPath}]`);
     }
 
-    const { stdout, stderr } = await execAsync( cmd, { cwd: projectRootPath } );
+    const { stdout, stderr } = await execAsync( cmd, { cwd: folderPath } );
 
     if( !silent )
     {
@@ -196,7 +232,8 @@ export async function runNpmInstall( silent=false )
       console.log(`* Running [npm dedup]`);
     }
 
-    const { stdout, stderr } = await execAsync( cmd, { cwd: projectRootPath } );
+    const { stdout, stderr } =
+      await execAsync( cmd, { cwd: folderPath } );
 
     if( !silent )
     {

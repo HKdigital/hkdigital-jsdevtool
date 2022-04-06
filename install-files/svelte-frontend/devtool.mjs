@@ -111,7 +111,7 @@ async function main()
       break;
 
     case "update-devtool":
-      /* async */ updateDevtool( "svelte-frontend" );
+      /* async */ updateDevtool( { installFilesFolderName: "svelte-frontend" } );
       break;
 
     default:

@@ -285,6 +285,6 @@ export async function ensureLibPath( silent=false )
   {
     await ensureFolder( libRoot );
 
-    console.log(`* Created lib folder [${libRoot}]`);
+    console.log(`* Created lib folder [${stripProjectPath(libRoot)}]`);
   }
 }

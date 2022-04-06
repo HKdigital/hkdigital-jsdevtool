@@ -1,5 +1,7 @@
 
-import { resolveProjectPath, 
+import {
+         stripProjectPath,
+         resolveProjectPath,
          resolveDevToolsPath } from "./paths.mjs";
 
 import { copyFile } from "./fs.mjs";
@@ -11,9 +13,18 @@ import { copyFile } from "./fs.mjs";
  * @param {string} installFilesFolderName
  *   Name of the sub folder in [install-files], 
  *   e.g. `nodejs-backend` or `svelte-frontend`
+ *
+ * @param {boolean} [silent=false]
+ *   If set, no console output will be generated
+ *
  */
-export async function updateDevtool( installFilesFolderName )
+export async function updateDevtool( { installFilesFolderName, silent=false } )
 {
+  if( typeof installFilesFolderName !== "string" )
+  {
+    throw new Error("Missing or invalid parameter [installFilesFolderName]");
+  }
+
   const devToolFileName = "devtool.mjs";
 
   const fromPath = 
@@ -22,8 +33,18 @@ export async function updateDevtool( installFilesFolderName )
       installFilesFolderName,
       devToolFileName );
 
-  const toPath =  resolveProjectPath( devToolFileName );
-
+  const toPath = resolveProjectPath( devToolFileName );
 
   await copyFile( fromPath, toPath );
+
+  if( !silent )
+  {
+    console.log(
+      `\nNote: to upgrade the [hkdigital-devtool] folder contents, see ` +
+      `[https://github.com/HKdigital/hkdigital-devtool].`);
+
+    console.log(
+      `\n* Copied [${stripProjectPath(fromPath)}] ` +
+      `to [${stripProjectPath(toPath)}]\n`);
+  }
 }

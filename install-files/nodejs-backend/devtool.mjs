@@ -111,7 +111,7 @@ async function main()
       break;
 
     case "update-devtool":
-      /* async */ updateDevtool( "nodejs-backend" );
+      /* async */ updateDevtool( { installFilesFolderName: "nodejs-backend" } );
       break;
 
     default:

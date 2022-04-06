@@ -4,12 +4,13 @@
 // Imports
 
 import { packageJsonExists,
+         runNpmInstallInDevtoolFolder,
          ensureLibPath,
-         copyBackendFiles,
+         copyFrontendFiles,
          runGitInit,
          mergePackageJsons,
          runNpmInstall,
-         showReadme } from "./helper/index.mjs";
+         showReadme } from "../helper/index.mjs";
 
 // -----------------------------------------------------------------------------
 // Run setup
@@ -20,18 +21,20 @@ import { packageJsonExists,
 
   if( await packageJsonExists() )
   {
-    console.log(`Setup (backend) script will not run:`);
+    console.log(`Setup SVELTE (frontend) script will not run:`);
     console.log(`- A file [package.json] already exists.`);
-    console.log(`  (setup will not install in an existing project)`);
+    console.log(`  (setup will not install over an existing project)`);
     console.log();
     return;
   }
+
+  await runNpmInstallInDevtoolFolder();
 
   await runGitInit();
 
   await ensureLibPath();
 
-  await copyBackendFiles();
+  await copyFrontendFiles();
 
   await mergePackageJsons();
 
