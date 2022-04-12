@@ -78,14 +78,29 @@ Link your local project folder to the remote repository.
 
 ```bash
 git remote add origin <remote-git-repository-url>
-git remote -v # to check the location of the repository server
+
+# e.g.
+# git remote add origin 
 ```
 
 Stage your code, commit your code and push it to the remote repository.
 
 ```bash
+# Add all files to the git index:
+# - defines the content that will be added to the next commit
 git add .
+
+# Commit
+# - creates a version of your code
 git commit
+
+# Rename the current branch to `main`
+# - main is a good name for a default / first branch
+git branch -M main
+
+# Push the branch to the remote server
+# - pushes to the server specified by `git remote add`
+# - use `git remote -v` to check the url
 git push origin main -u
 ```
 

@@ -39,14 +39,14 @@ export async function generateResolveConfig()
       { find: "$src",
         replacement: resolveSrcPath(".") },
 
-      { find: "$theme",
-        replacement: resolveLibPath("jslib-hk-fe/theme") },
+      // { find: "$theme",
+      //   replacement: resolveLibPath("jslib-hk-fe/theme") },
 
-      { find: "$fonts-and-icons-hk",
-        replacement: resolveLibPath("fonts-and-icons-hk") },
+      // { find: "$fonts-and-icons-hk",
+      //   replacement: resolveLibPath("fonts-and-icons-hk") },
 
-      { find: "$content-panels",
-        replacement: resolveSrcPath("views/content-panels") },
+      // { find: "$content-panels",
+      //   replacement: resolveSrcPath("views/content-panels") },
 
       // -- Custom
 
