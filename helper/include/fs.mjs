@@ -52,6 +52,9 @@ export const writeFile = fsPromises.writeFile;
  *   By setting this option, the sandbox also allows paths within the
  *   parent folder of the project
  *
+ * @param {boolean} [overwrite=false]
+ *   If true an existing file at the destination will be overwritten
+ *
  * @returns {boolean} true after the folder has been emptied
  */
 export async function copyFile( sourcePath, targetPath, options )
