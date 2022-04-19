@@ -14,6 +14,8 @@ import { resolveConfigPath,
 
 import { isFile } from "./fs.mjs";
 
+import { asyncImport } from "./import.mjs";
+
 /* ---------------------------------------------------------------- Internals */
 
 const VITE_DEV_FILE_NAME = "vite.dev.mjs";
@@ -123,48 +125,104 @@ export async function viteGetAliasesFromLib( libName, failOnMissing=true )
 {
   await importDependencies();
 
-  const path = resolveLibPath( libName, "build-config", "vite.aliases.mjs" );
+  // const path = resolveLibPath( libName, "build-config", "aliases.mjs" );
 
-  if( !await isFile( path ) )
-  {
-    console.log(`- Missing config file [${path}].`);
-    console.log();
+  // if( !await isFile( path ) )
+  // {
+  //   if( !failOnMissing )
+  //   {
+  //     console.log(
+  //       `- No config file found in lib [${stripProjectPath(path)}].`);
+  //     return [];
+  //   }
 
-    if( !failOnMissing )
-    {
-      console.log(
-        `- No config file found in lib [${stripProjectPath(path)}].`);
-      return [];
+  //   console.log(`- No config file [${stripProjectPath(path)}] (ignored).`);
+  //   console.log();
+  //   process.exit(1);
+  // }
+
+  // const module_ = await import( path );
+
+  // if( typeof module_.generateAliases !== "function" )
+  // {
+  //   console.log(
+  //     `- Config file [${path}] should export a function [generateAliases].`);
+  //   console.log();
+  //   process.exit(1);
+  // }
+
+  // /**
+  //  * Helper function to generate paths inside the current lib
+  //  *
+  //  * @param {...string} pathParts
+  //  *
+  //  * @returns {string} path
+  //  */
+  // const resolveCurrentLibPath = resolveLibPath.bind( null, libName );
+
+  // // returns e.g:
+  // // [
+  // //   { find: "$skills-fe",
+  // //     replacement: resolveCurrentLibPath() }
+  // // ];
+  // return await module_.generateAliases( { resolveCurrentLibPath } );
+
+  try {
+      const aliasConfigPath =
+        resolveLibPath( libName, "config", "aliases.mjs" );
+
+      if( !await isFile( aliasConfigPath ) )
+      {
+        console.log(
+          `- Optional alias config file not found at ` +
+          `[${stripProjectPath(aliasConfigPath)}].`);
+      }
+
+      const module_ = await asyncImport( aliasConfigPath );
+
+      const resolveCurrentLibPath = resolveLibPath.bind( null, libName );
+
+      const displayPath = stripProjectPath( aliasConfigPath );
+
+      if( typeof module_.getAliases !== "function" )
+      {
+        throw new Error(
+          `Alias configuration file [${displayPath}] does ` +
+          `not export a function [getAliases]`);
+      }
+
+      const viteEntries = [];
+
+      const customAliases =
+        await module_.getAliases( { resolveCurrentLibPath } );
+
+      for( const key in customAliases )
+      {
+        const path = customAliases[ key ];
+
+        if( typeof path !== "string" ||
+            !path.startsWith( resolveLibPath() ) )
+        {
+          throw new Error(
+            `Invalid value for alias [${key}] in alias configuration ` +
+            `file [${displayPath}] (expected full path).`);
+        }
+
+        viteEntries.push(
+          {
+            find: key,
+            replacement: path
+          } );
+
+      } // end for
     }
-
-    console.log(`- Missing config file [${stripProjectPath(path)}].`);
-    console.log();
-    process.exit(1);
-  }
-
-  const module_ = await import( path );
-
-  if( typeof module_.generateAliases !== "function" )
-  {
-    console.log(
-      `- Config file [${path}] should export a function [generateAliases].`);
-    console.log();
-    process.exit(1);
-  }
-
-  /**
-   * Helper function to generate paths inside the current lib
-   *
-   * @param {...string} pathParts
-   *
-   * @returns {string} path
-   */
-  function resolveCurrentLibPath()
-  {
-    return resolveLibPath( libName, ...arguments );
-  }
-
-  return await module_.generateAliases( { resolveCurrentLibPath } );
+    catch( e )
+    {
+      if( e.code !== "ERR_MODULE_NOT_FOUND" )
+      {
+        throw e;
+      }
+    }
 }
 
 /* ---------------------------------------------------------------- Internals */

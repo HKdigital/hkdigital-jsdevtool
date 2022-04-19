@@ -7,13 +7,14 @@ import json from '@rollup/plugin-json';
 
 import alias from '@rollup/plugin-alias';
 
-import { resolveSrcPath,
-         resolveLibPath,
+import { // resolveSrcPath,
+         // resolveLibPath,
+         getDefaultAliasEntries,
          createBannerFromPackageJson,
          onBootstrapReadyBannerCode,
          onBootstrapReadyFooterCode } from "../hkdigital-devtool/helper/index.mjs";
 
-import { getAliasEntries } from "./rollup.aliases.inc.mjs";
+// import { getConfigAliasEntries } from "./rollup.aliases.inc.mjs";
 
 /* ------------------------------------------------------ Export createConfig */
 
@@ -47,6 +48,17 @@ export async function createConfig()
   output.footer = onBootstrapReadyFooterCode();
 
   // ---------------------------------------------------------------------------
+  // Alias entries
+
+  const aliasEntries =
+    {
+      ...await getDefaultAliasEntries()
+      // ...await getConfigAliasEntries( { resolveSrcPath, resolveLibPath } )
+    };
+
+  console.log( "\nAliases", aliasEntries );
+
+  // ---------------------------------------------------------------------------
   // Plugins
 
   plugins.push(
@@ -73,8 +85,8 @@ export async function createConfig()
       ]
     } ),
 
-    // Aliases to be used by import statements
-    alias( { entries: getAliasEntries( { resolveSrcPath, resolveLibPath } ) } )
+    // Aliases that can be used by import statements
+    alias( { entries: aliasEntries } )
   );
 
   // ---------------------------------------------------------------------------

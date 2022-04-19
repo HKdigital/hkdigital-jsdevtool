@@ -1,7 +1,9 @@
 
 /**
  * Dynamic import
- * - Converts paths to URI first (needed on Windoos)
+ * - This method can be used instead of `await import(...)`
+ * - This method is needed because of issues with paths and URI's on Windows:
+ *   Paths are converted to URI's before they are passed to `import(...)`
  *
  * @param {string} pathOrURI
  *

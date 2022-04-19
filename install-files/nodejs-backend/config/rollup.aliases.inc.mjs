@@ -1,7 +1,13 @@
 
 
-export function getAliasEntries( { resolveSrcPath } )
+export async function getAliasEntries(
+  {
+    resolveSrcPath,
+    resolveLibPath,
+    resolveDevToolsPath
+  } )
 {
+
   return {
     entries: {
       "$src": resolveSrcPath()
