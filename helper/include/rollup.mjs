@@ -25,6 +25,32 @@ import { mergePackageJsons } from "./npm.mjs";
 
 import { asyncImport } from "./import.mjs";
 
+// ------------------------------------------------------------------- Internals
+
+const EXTERNAL_PACKAGES =
+  [
+    'source-map',
+    'arangojs',
+    '@hapi/hapi',
+    '@hapi/boom',
+    '@hapi/inert',
+    'http2',
+    'os',
+    'susie',
+    'fs',
+    'child_process',
+    'url',
+    'path',
+    'process',
+    'joi',
+    'crypto',
+    'stream',
+    'util',
+    'js-yaml',
+    'jsonwebtoken',
+    'redis'
+  ];
+
 // -------------------------------------------------------------------- Function
 
 /**
@@ -75,7 +101,7 @@ export async function rollupRunInDevelopmentMode()
   // This will make sure that bundles are properly closed after each run
   watcher.on('event', async ( { code, result, error } ) =>
     {
-      //console.log( { code } );
+      // console.log( { code } );
 
       switch( code )
       {
@@ -103,6 +129,7 @@ export async function rollupRunInDevelopmentMode()
           break;
 
         case "END":
+          console.log();
           console.log(`* Rollup: bundled in [${Date.now() - startedAt}] ms`);
           console.log();
 
@@ -345,6 +372,13 @@ export async function getAliasEntriesForAllLibs()
       const aliasConfigPath =
         resolveLibPath( libName, "config", "aliases.mjs" );
 
+      if( !await isFile( aliasConfigPath ) )
+      {
+        console.log(
+          `- Optional alias config file not found at ` +
+          `[${stripProjectPath(aliasConfigPath)}].`);
+      }
+
       const module_ = await asyncImport( aliasConfigPath );
 
       const resolveCurrentLibPath = resolveLibPath.bind( null, libName );
@@ -527,7 +561,20 @@ async function normalizeConfig( config, { production=false } )
     {
       execArgv: ['--enable-source-maps']
     } ) );
+  }
 
+  if( !("external" in config) )
+  {
+    config.external = EXTERNAL_PACKAGES;
+  }
+  else {
+    const tmp = new Set( config.external );
+    for( const value of EXTERNAL_PACKAGES )
+    {
+      tmp.add( value );
+    }
+
+    config.external = Array.from( tmp.values() );
   }
 
   return config;
