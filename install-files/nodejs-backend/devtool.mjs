@@ -131,7 +131,7 @@ function showUsageAndExit()
   const message =
   `
   usage:
-  ./devtool.mjs <command>
+  node devtool.mjs <command>
 
   commands:
 

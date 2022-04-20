@@ -12,7 +12,10 @@ let sourcemaps;
 import { resolveProjectPath,
          resolveConfigPath,
          resolveSrcPath,
-         resolveDistPath } from "./paths.mjs";
+         resolveLibPath,
+         resolveDistPath,
+         listLibNames,
+         stripProjectPath } from "./paths.mjs";
 
 import { isFile, readJSONFile } from "./fs.mjs";
 
@@ -21,6 +24,32 @@ import { setEnvVarsFromConfigFiles } from "./env.mjs";
 import { mergePackageJsons } from "./npm.mjs";
 
 import { asyncImport } from "./import.mjs";
+
+// ------------------------------------------------------------------- Internals
+
+const EXTERNAL_PACKAGES =
+  [
+    'source-map',
+    'arangojs',
+    '@hapi/hapi',
+    '@hapi/boom',
+    '@hapi/inert',
+    'http2',
+    'os',
+    'susie',
+    'fs',
+    'child_process',
+    'url',
+    'path',
+    'process',
+    'joi',
+    'crypto',
+    'stream',
+    'util',
+    'js-yaml',
+    'jsonwebtoken',
+    'redis'
+  ];
 
 // -------------------------------------------------------------------- Function
 
@@ -72,7 +101,7 @@ export async function rollupRunInDevelopmentMode()
   // This will make sure that bundles are properly closed after each run
   watcher.on('event', async ( { code, result, error } ) =>
     {
-      //console.log( { code } );
+      // console.log( { code } );
 
       switch( code )
       {
@@ -100,6 +129,7 @@ export async function rollupRunInDevelopmentMode()
           break;
 
         case "END":
+          console.log();
           console.log(`* Rollup: bundled in [${Date.now() - startedAt}] ms`);
           console.log();
 
@@ -277,6 +307,135 @@ export function onBootstrapReadyFooterCode()
 // -------------------------------------------------------------------- Function
 
 /**
+ * Get a list of default aliases
+ * - Includes "$src" for the `src` folder
+ * - Includes an alias for each lib `$<libname>`
+ * - Includes an alias for each lib `$<libname>` (minus the `jslib-` part)
+ *
+ * @returns {object} a list of alias entries
+ *   e.g.
+ *   {
+ *     $src: "...",
+ *     $jslib-hkd-base": "...",
+ *     $hkd-base": "...",
+ *     $jslib-hkd-be": "...",
+ *     $hkd-be": "...",
+ *     $platform: "..."
+ *   }
+ */
+export async function getDefaultAliasEntries()
+{
+  const entries =
+    {
+      $src: resolveSrcPath(),
+      ...await getAliasEntriesForAllLibs()
+    };
+
+  return entries;
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Get a list of aliases for all libs
+ *
+ * @returns {object} alias entries
+ */
+export async function getAliasEntriesForAllLibs()
+{
+  const libNames = await listLibNames();
+
+  const entries =
+    {
+      "$src": resolveSrcPath()
+    };
+
+  for( const libName of libNames )
+  {
+    const libPath = resolveLibPath( libName );
+
+    entries[ "$" + libName ] = libPath;
+
+    if( libName.startsWith("jslib-") || libName.startsWith("eslib-") )
+    {
+      const shortName = "$" + libName.slice( 6 );
+
+      if( shortName in entries )
+      {
+        throw new Error(`Alias [${shortName}] has already been defined`);
+      }
+
+      entries[ shortName ] = libPath;
+    }
+
+    try {
+      const aliasConfigPath =
+        resolveLibPath( libName, "config", "aliases.mjs" );
+
+      if( !await isFile( aliasConfigPath ) )
+      {
+        console.log(
+          `- Optional alias config file not found at ` +
+          `[${stripProjectPath(aliasConfigPath)}].`);
+      }
+
+      const module_ = await asyncImport( aliasConfigPath );
+
+      const resolveCurrentLibPath = resolveLibPath.bind( null, libName );
+
+      const displayPath = stripProjectPath( aliasConfigPath );
+
+      if( typeof module_.getAliases !== "function" )
+      {
+        throw new Error(
+          `Alias configuration file [${displayPath}] does ` +
+          `not export a function [getAliases]`);
+      }
+
+      const customAliases =
+        await module_.getAliases( { resolveCurrentLibPath } );
+
+      for( const key in customAliases )
+      {
+        if( key in entries )
+        {
+          throw new Error(
+            `Alias [${key}] from alias configuration ` +
+            `file [${displayPath}] has already been defined`);
+        }
+
+        const path = customAliases[ key ];
+
+        if( typeof path !== "string" ||
+            !path.startsWith( resolveLibPath() ) )
+        {
+          throw new Error(
+            `Invalid value for alias [${key}] in alias configuration ` +
+            `file [${displayPath}] (expected full path).`);
+        }
+
+        entries[ key ] = path;
+
+      } // end for
+    }
+    catch( e )
+    {
+      if( e.code !== "ERR_MODULE_NOT_FOUND" )
+      {
+        throw e;
+      }
+    }
+
+  } // end for
+
+  // console.log("entries", entries);
+
+  return entries;
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
  * Read rollup config file that should be used for development mode
  *
  * @param {string} fileName
@@ -402,11 +561,25 @@ async function normalizeConfig( config, { production=false } )
     {
       execArgv: ['--enable-source-maps']
     } ) );
+  }
 
+  if( !("external" in config) )
+  {
+    config.external = EXTERNAL_PACKAGES;
+  }
+  else {
+    const tmp = new Set( config.external );
+    for( const value of EXTERNAL_PACKAGES )
+    {
+      tmp.add( value );
+    }
+
+    config.external = Array.from( tmp.values() );
   }
 
   return config;
 }
+
 
 // -------------------------------------------------------------------- Function
 

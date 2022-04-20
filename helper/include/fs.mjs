@@ -1,15 +1,14 @@
 
 import pathTool from 'path';
 
-import { access,
+import { unlink,
+         access,
          mkdirSync,
          promises as fsPromises,
          createReadStream,
          createWriteStream } from "fs";
 
 const stats = fsPromises.stat;
-
-const fsCopyFile = fsPromises.copyFile;
 
 import { promisify } from 'util';
 
@@ -31,8 +30,6 @@ export const writeFile = fsPromises.writeFile;
 
 // ---------------------------------------------------------------------- Method
 
-// ---------------------------------------------------------------------- Method
-
 /**
  * Copy a folder and its contents to the specified location
  * - Parent folders for the target location will be created if missing.
@@ -51,6 +48,9 @@ export const writeFile = fsPromises.writeFile;
  * @param {boolean} [options.allowProjectParentFolderAccess=false]
  *   By setting this option, the sandbox also allows paths within the
  *   parent folder of the project
+ *
+ * @param {boolean} [overwrite=false]
+ *   If true an existing file at the destination will be overwritten
  *
  * @returns {boolean} true after the folder has been emptied
  */
@@ -106,15 +106,6 @@ export async function copyFile( sourcePath, targetPath, options )
     throw new Error(
       "A file system node exists at path ["+targetPath+"], " +
       "but is not a file");
-  }
-
-  if( targetFileExists )
-  {
-    if( await compareFiles( sourcePath, targetPath, options ) )
-    {
-      // console.log("SAME FILE ALREADY EXISTS");
-      return true;
-    }
   }
 
   let sourceStream = await tryGetReadStream( sourcePath, options );
@@ -275,11 +266,9 @@ export async function listFolderNames( containerPath, options )
  *
  * @param {string} path - Path of the folder to create if missing
  *
- * @param {object} [options] - Options
- *
  * @returns {Promise} promise that resolves when the function is done
  */
-export async function ensureFolder( path, options )
+export async function ensureFolder( path )
 {
   let _resolve;
   let _reject;
@@ -288,7 +277,7 @@ export async function ensureFolder( path, options )
     new Promise( ( resolve, reject ) =>
       {
         _resolve = resolve;
-        _reject = reject
+        _reject = reject;
       } );
 
   access( path, function( err )
@@ -348,9 +337,6 @@ export async function tryGetReadStream( path, options )
     // default 64 * 1024, probably better: highWaterMark: 256 * 1024
 
     return createReadStream( path, options );
-
-
-    // return await reader.getContentsAsStream( options );
   }
   catch( e )
   {
@@ -456,7 +442,7 @@ export async function writeStream( path, fileContents, options={} )
 
       writeStream.on('error', ( err ) =>
         {
-          reject( err )
+          reject( err );
         } );
 
       // fileContents.on('error', function ( err )
@@ -661,4 +647,89 @@ async function _ensureAllowWrite( path, overwrite=false )
       `Cannot write file [${path}] (a file node already exists that ` +
       "is not a regular file)");
   }
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Returns a promise that returns true if a file system node is a file or
+ * does not exists
+ *
+ * @param {string} path - Path to check
+ *
+ * @param {object} [options] - Options
+ * @param {string} [options.followSymlinks=true] - Follows symlinks
+ *
+ * @param {string} [options.sandboxPath=ROOT_PATH]
+ *   The folder to empty should not be ouside the "sandboxPath"
+ *
+ * @param {boolean} [options.allowProjectParentFolderAccess=false]
+ *   By setting this option, the sandbox also allows paths within the
+ *   parent folder of the project
+ *
+ * @return {Promise<boolean>}
+ *   true if a file system node is a file or does not exist
+ */
+export async function isFileOrDoesNotExist( path, options )
+{
+  expectString( path, "Missing or invalid parameter [path]");
+
+  path = sandboxPath( path, options );
+
+  let stats_ = await stats( path, options );
+
+  if( !stats_ )
+  {
+    return true;
+  }
+
+  return stats_.isFile();
+}
+
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Tries to remove a file
+ * - If the file system node is not a file the method does nothing
+ *
+ * @param {string} path - File path to remove
+ *
+ * @param {object} [options] - Options
+ *
+ * @param {string} [options.sandboxPath=ROOT_PATH]
+ *   The folder to empty should not be ouside the "sandboxPath"
+ *
+ * @param {boolean} [options.allowProjectParentFolderAccess=false]
+ *   By setting this option, the sandbox also allows paths within the
+ *   parent folder of the project
+ *
+ * @return {Promise<boolean>}
+ *   true if a file was removed
+ */
+export async function tryRemoveFile( path, options )
+{
+  path = sandboxPath( path, options );
+
+  return new Promise( async function( resolve /*, reject*/ )
+    {
+      if( await isFile( path, options ) )
+      {
+        unlink( path, function( /*err*/ )
+          {
+            // @note ignore errors
+            // if( !err )
+            // {
+            //   console.log("Removed file ["+path+"]");
+            // }
+
+            resolve( true );
+          } );
+      }
+      else {
+        resolve( false );
+      }
+
+    } ); // end fn Promise
+
 }

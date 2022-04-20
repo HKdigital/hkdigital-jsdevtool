@@ -25,12 +25,6 @@ export async function showHowtoDevTool()
   console.log();
   console.log(`=> Run the devtool`);
   console.log();
-  if( !projectPath.includes(":/") )
-  {
-    console.log(`./devtool.mjs`);
-  }
-  else {
-    console.log(`node devtool.mjs`);
-  }
+  console.log(`node devtool.mjs`);
   console.log();
 }

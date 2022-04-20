@@ -35,7 +35,7 @@ export async function updateDevtool( { installFilesFolderName, silent=false } )
 
   const toPath = resolveProjectPath( devToolFileName );
 
-  await copyFile( fromPath, toPath );
+  await copyFile( fromPath, toPath, { overwrite: true } );
 
   if( !silent )
   {

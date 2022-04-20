@@ -1,10 +1,6 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import glob from "glob";
-
-const { sync: expand_glob } = glob;
-
 import { isAbsolute } from "path";
 
 import { expectString, expectObject } from "./expect.mjs";
@@ -20,6 +16,23 @@ import {
   copyFile } from "./fs.mjs";
 
 const ROOT_PATH = resolveProjectPath();
+
+/* ---------------------------------------------------------- Dynamic imports */
+
+let expand_glob;
+
+/**
+ * Dynamically import dependencies
+ */
+async function importDependencies()
+{
+  if( !expand_glob )
+  {
+    const glob = await import( "glob" );
+
+    expand_glob = glob.default.sync;
+  }
+}
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -52,6 +65,8 @@ const ROOT_PATH = resolveProjectPath();
  */
 export async function expandGlobs( globOrGlobs, options )
 {
+  await importDependencies();
+
   // >> CASE 1: list of globs
 
   if( Array.isArray( globOrGlobs ) )

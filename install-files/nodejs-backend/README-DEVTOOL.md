@@ -22,10 +22,10 @@ preview             Run the production version from the [dist] folder
 
 ```bash
 # Install dependencies
-./devtool.mjs install-deps
+node devtool.mjs install-deps
 
 # Launch the backend in development mode
-./devtool.mjs run
+node devtool.mjs run
 ```
 
 Press `ctrl-c` to stop.

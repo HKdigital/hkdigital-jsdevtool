@@ -7,7 +7,7 @@ import { copyFile } from "./fs.mjs";
 
 import { execAsync } from "./shell.mjs";
 
-import { expandGlobs, copyUsingGlobs } from "./glob.mjs";
+import { copyUsingGlobs } from "./glob.mjs";
 
 const SVELTE_FRONTEND_INSTALL_FILES_PATH = "install-files/svelte-frontend";
 const NODEJS_BACKEND_INSTALL_FILES_PATH = "install-files/nodejs-backend";
@@ -36,7 +36,11 @@ export async function copyFrontendFiles( silent=false )
   // const files =
   await copyUsingGlobs(
     {
-      sourceGlob: `${sourceBasePath}/**/*`,
+      sourceGlob: [
+        `${sourceBasePath}/**/*`,
+        `${sourceBasePath}/**/.eslintrc*`,
+        `${sourceBasePath}/**/.gitignore`
+      ],
       sourceBasePath,
       targetFolder: `${projectRootPath}`,
       overwrite: false
@@ -81,7 +85,11 @@ export async function copyBackendFiles( silent=false )
   // const files =
   await copyUsingGlobs(
     {
-      sourceGlob: `${sourceBasePath}/**/*`,
+      sourceGlob: [
+        `${sourceBasePath}/**/*`,
+        `${sourceBasePath}/**/.eslintrc*`,
+        `${sourceBasePath}/**/.gitignore`
+      ],
       sourceBasePath,
       targetFolder: `${projectRootPath}`,
       overwrite: false

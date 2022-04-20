@@ -1,4 +1,4 @@
-# Development tool for NodeJS and SVELTE projects
+# Development tool for NodeJS and SVELTE
 
 ## About
 
@@ -40,7 +40,7 @@ cd my-project
 npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
 ```
 
-### Setup a SVELTE frontend project
+### Setup a SVELTE (frontend) project
 - Open a terminal and go to the `hkdigital-devtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
@@ -51,7 +51,7 @@ npm run setup-svelte
 cd ..
 node devtool.mjs
 ```
-### Setup a NodeJS backend project
+### Setup a NodeJS (backend) project
 - Open a terminal and go to the `hkdigital-devtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
@@ -78,14 +78,29 @@ Link your local project folder to the remote repository.
 
 ```bash
 git remote add origin <remote-git-repository-url>
-git remote -v # to check the location of the repository server
+
+# e.g.
+# git remote add origin 
 ```
 
 Stage your code, commit your code and push it to the remote repository.
 
 ```bash
+# Add all files to the git index:
+# - defines the content that will be added to the next commit
 git add .
+
+# Commit
+# - creates a version of your code
 git commit
+
+# Rename the current branch to `main`
+# - main is a good name for a default / first branch
+git branch -M main
+
+# Push the branch to the remote server
+# - pushes to the server specified by `git remote add`
+# - use `git remote -v` to check the url
 git push origin main -u
 ```
 
@@ -109,13 +124,11 @@ Run the following command in your terminal if your `hkdigital-devtool` folder is
 npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
 ```
 
-# Buy me a coffee
+# Support cancer research
 
-If you like our work and would like us to share some more code, please support us:
+If you like our work and would like us to share some more code, please support us! 
 
-[Buy me a coffee](https://www.buymeacoffee.com/hkdigital)
-
-## Support cancer research
+Currently we're collecting money for cancer research:
 
 Alpe d'HuZes is a unique sporting event where as much money as possible is raised for cancer research and for improving the quality of life of people with cancer. On a single day, 5000 participants will bike, hike or run the Alpe d'Huez. Attempting a maximum of six climbs, under the motto 'giving up is not an option'. 
 
