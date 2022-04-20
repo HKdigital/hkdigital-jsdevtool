@@ -37,7 +37,7 @@ export async function setEnvVarsFromConfigFiles( silent=false )
         debugPath: defaultEnvVarsPath }  );
   }
   else if( !silent ) {
-    console.log( `- missing config file [${defaultEnvVarsPath}]`);
+    console.log( `- Missing config file [${defaultEnvVarsPath}]`);
   }
 
   if( await isFile( localEnvVarsPath ) )
@@ -60,7 +60,9 @@ export async function setEnvVarsFromConfigFiles( silent=false )
         debugPath: localEnvVarsPath }  );
   }
   else if( !silent ) {
-    console.log(`- Missing config file [${localEnvVarsPath}`);
+    console.log();
+    console.log(`- Missing (optional) config file [${localEnvVarsPath}`);
+    console.log();
   }
 
   // Merge default and local environment variables into process.env
