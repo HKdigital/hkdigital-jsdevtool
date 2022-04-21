@@ -16,6 +16,7 @@ preview             Run the production version from the [dist] folder
                     - Build the project first
                     - Development environment variables from the config 
                       folder will be set
+...
 ```
 
 ### Examples

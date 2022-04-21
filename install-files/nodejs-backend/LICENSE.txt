@@ -1,3 +1,3 @@
 All rights reserved
 
-Copyright (c) 2022, Jens Kleinhout, HKdigital [hkdigital.nl]
+Copyright (c) 2022, John Doe, ACME Corporation [example.com]

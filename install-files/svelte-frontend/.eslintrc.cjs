@@ -8,7 +8,8 @@ module.exports = {
     //        /configuring/language-options#specifying-environments
     "browser": true,
     "es2021": true,
-    "commonjs": true
+    "commonjs": true,
+    "jest": true
   },
   "globals": {
   },

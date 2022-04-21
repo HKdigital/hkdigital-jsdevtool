@@ -4,7 +4,8 @@ module.exports = {
     //        /configuring/language-options#specifying-environments
     "browser": false,
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "globals": {
     "Atomics": "readonly",

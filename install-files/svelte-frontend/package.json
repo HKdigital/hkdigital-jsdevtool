@@ -1,22 +1,24 @@
 {
-  "name": "hkdigital-devtool-svelte-fe",
+  "name": "svelte-fe",
   "description": "",
   "version": "1.0.0",
-  "author": "Jens Kleinhout (https://hkdigital.nl)",
+  "author": "John Doe (https://example.com)",
   "license": "See LICENSE.txt",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --port 8888 --host 0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview --port 8888 --host 0.0.0.0"
+    "dev": "node devtool.mjs run",
+    "build": "node devtool.mjs build",
+    "preview": "node devtool.mjs preview",
+    "test": "jest --watch"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "eslint-plugin-svelte3": "^3.2.1",
     "svelte": "^3.44.1",
     "svelte-preprocess": "^4.9.8",
-    "vite": "^2.6.14"
+    "vite": "^2.6.14",
+    "jest": "^27.5.1"
   },
   "dependencies": {}
 }

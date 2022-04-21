@@ -1,11 +1,17 @@
 {
-  "name": "hkdigital-devtool-nodejs-be",
-  "description": "hkdigital-devtool-nodejs-be",
+  "name": "nodejs-be",
+  "description": "nodejs-be",
   "version": "1.0.0",
-  "author": "Jens Kleinhout (https://hkdigital.nl)",
+  "author": "John Doe (https://example.com)",
   "license": "SEE LICENSE IN LICENSE.txt",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "node devtool.mjs run",
+    "build": "node devtool.mjs build",
+    "preview": "node devtool.mjs preview",
+    "test": "jest --watch"
+  },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-commonjs": "^19.0.0",
@@ -15,7 +21,8 @@
     "rollup": "^2.52.3",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
-    "eslint": "^7.29.0"
+    "eslint": "^7.29.0",
+    "jest": "^27.5.1"
   },
   "dependencies": {}
 }
