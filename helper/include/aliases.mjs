@@ -22,11 +22,17 @@ export async function getDefaultAliasesForVite()
 {
   const entries = await getDefaultAliasEntriesForRollup();
 
-  console.log("TODO: convert alias entries to vite format". entries);
+  const viteAliases = [];
 
-  throw new Error("Not implemented yet");
+  for( const find in entries )
+  {
+    const replacement = entries[ find ];
 
-  // return entries;
+    viteAliases.push( { find, replacement } );
+
+  } // end for
+
+  return viteAliases;
 }
 
 // -------------------------------------------------------------------- Function
@@ -176,8 +182,17 @@ export async function tryImportAliasesFromConfigFile(
     entries
   } )
 {
-  const aliasConfigPath =
-    resolveLibPath( libName, "config", "aliases.mjs" );
+  let aliasConfigPath;
+
+  if( libName )
+  {
+    aliasConfigPath =
+      resolveLibPath( libName, "config", "aliases.mjs" );
+    }
+  else {
+    aliasConfigPath =
+      resolveProjectPath( "config", "config-include", "aliases.mjs" );
+  }
 
   if( !await isFile( aliasConfigPath ) )
   {

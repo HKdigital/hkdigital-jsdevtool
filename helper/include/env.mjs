@@ -14,8 +14,11 @@ export async function setEnvVarsFromConfigFiles( silent=false )
   let defaultEnvVars = {};
   let localEnvVars = {};
 
-  const defaultEnvVarsPath = resolveConfigPath("env.default.js");
-  const localEnvVarsPath = resolveConfigPath("env.local.js");
+  const defaultEnvVarsPath =
+    resolveConfigPath("config-include", "env.default.js");
+
+  const localEnvVarsPath =
+    resolveConfigPath("config-include", "env.local.js");
 
   if( await isFile( defaultEnvVarsPath ) )
   {

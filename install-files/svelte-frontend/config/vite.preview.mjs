@@ -1,12 +1,11 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { generatePreviewConfig } from "./include/vite.preview.server.inc.mjs";
+import { generatePreviewConfig } from "./config-include/server.preview.inc.mjs";
+import { generatePluginsConfig } from "./config-include/plugins.inc.mjs";
+import { generateBuildConfig } from "./config-include/build.inc.mjs";
 
-import { generateResolveConfig } from "./include/vite.all.resolve.inc.mjs";
-import { generatePluginsConfig } from "./include/vite.all.plugins.inc.mjs";
-
-import { generateBuildConfig } from "./include/vite.build.inc.mjs";
+import { generateDefaultResolveConfig }  from "../hkdigital-jsdevtool/helper/index.mjs";
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -17,7 +16,7 @@ export default async function() {
   return {
     build: await generateBuildConfig(), /* required for outDir */
     preview: await generatePreviewConfig(),
-    resolve: await generateResolveConfig(),
+    resolve: await generateDefaultResolveConfig(),
     plugins: await generatePluginsConfig()
   };
 }

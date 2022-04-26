@@ -1,10 +1,11 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { generateServerConfig } from "./include/vite.dev.server.inc.mjs";
+import { generateServerConfig } from "./config-include/server.dev.inc.mjs";
+import { generatePluginsConfig } from "./config-include/plugins.inc.mjs";
 
-import { generateResolveConfig } from "./include/vite.all.resolve.inc.mjs";
-import { generatePluginsConfig } from "./include/vite.all.plugins.inc.mjs";
+import { generateDefaultResolveConfig }  from "../hkdigital-jsdevtool/helper/index.mjs";
+
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -14,7 +15,7 @@ import { generatePluginsConfig } from "./include/vite.all.plugins.inc.mjs";
 export default async function() {
   return {
     server: await generateServerConfig(),
-    resolve: await generateResolveConfig(),
+    resolve: await generateDefaultResolveConfig(),
     plugins: await generatePluginsConfig()
   };
 }

@@ -12,6 +12,8 @@ import { resolveConfigPath,
          stripProjectPath,
          listLibNames } from "./paths.mjs";
 
+import { getDefaultAliasesForVite } from "./aliases.mjs";
+
 import { isFile } from "./fs.mjs";
 
 import { asyncImport } from "./import.mjs";
@@ -342,6 +344,29 @@ async function readViteConfig( configFileName )
   console.log();
 
   return config;
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Generate config section `resolve`
+ *
+ * @see https://vitejs.dev/config/
+ *
+ * @returns {object} config section
+ */
+export async function generateDefaultResolveConfig()
+{
+  const configResolve = {
+
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.css'],
+
+    alias: [ ...await getDefaultAliasesForVite() ]
+  };
+
+  // console.log( "configResolve", configResolve );
+
+  return configResolve;
 }
 
 // -------------------------------------------------------------------- Function

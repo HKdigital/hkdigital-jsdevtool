@@ -4,11 +4,11 @@
 
 This project contains scripts, config and other code that can be used to setup and manage Javascript projects. There are scripts and setups for both `NodeJS` (backend), as well as for `SVELTE` (frontend) projects.
 
-The development tool has been developed to work on `linux like` operating systems (including Mac OS). Support for Windows has been added and should be functional, but should be tested a bit more.
-
 ## Status
 
 This project is under development but should be mostly functional.
+
+The development tool has been developed to work on `linux like` operating systems (including Mac OS). Support for Windows has been added recently.
 
 If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-jsdevtool/issues).
 
@@ -28,6 +28,17 @@ The nodejs version manager `n` is also recommended so you can test your NodeJs s
 ```bash
 npm install -g n
 ```
+
+## Code editor and terminal program
+
+### Terminal program
+On Mac OS you can use the built-in `Terminal` to run scripts. [iTerm2](https://iterm2.com/) can be configured more to your personal preferences.
+
+### Code editor
+Choose the editor that you like. Most editors support basic editing, linting (checking code for errors) and code completion nowadays.
+- [Sublime text](https://www.sublimetext.com/) is the faster editor.
+- [Atom](https://atom.io/) is free and very extensible.
+- [Visual Studio Code](https://code.visualstudio.com/) probably offers the easiest integrations, but cumbersome
 
 ## Create a project from scratch
 
