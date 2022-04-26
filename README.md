@@ -36,9 +36,9 @@ On Mac OS you can use the built-in `Terminal` to run scripts. [iTerm2](https://i
 
 ### Code editor
 Choose the editor that you like. Most editors support basic editing, linting (checking code for errors) and code completion nowadays.
-- [Sublime text](https://www.sublimetext.com/) is a the fastest editor.
+- [Sublime Text](https://www.sublimetext.com/) is a the fastest editor.
 - [Atom](https://atom.io/) is free and very extensible.
-- [Visual Studio Code](https://code.visualstudio.com/) probably offers the easiest integrations, but cumbersome
+- [Visual Studio Code](https://code.visualstudio.com/) probably offers the easiest integrations, but slow and cumbersome.
 
 ## Create a project from scratch
 
