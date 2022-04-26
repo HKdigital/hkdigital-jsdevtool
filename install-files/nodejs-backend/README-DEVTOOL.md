@@ -1,4 +1,4 @@
-# How to use hkdigital-devtool
+# How to use hkdigital-jsdevtool
 
 ## Usage
 Use the script `devtool.mjs` to control you project. The script supports the following commands:

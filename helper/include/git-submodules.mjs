@@ -133,7 +133,7 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
     if( stderr.includes("-f to force removal") )
     {
       console.log();
-      console.log(`The submodule [lib/${libFolderName}] contains local changes.`);
+      console.log(`The submodule [lib/${libFolderName}] may contain local changes.`);
       console.log();
       console.log("Add parameter [force] to discard all submodule changes");
       console.log();

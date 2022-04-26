@@ -21,7 +21,7 @@ export const SEPARATOR = pathTool.sep;
 export const SRC_ROOT_NAME = "src";
 export const LIB_ROOT_NAME = "lib";
 export const DIST_ROOT_NAME = "dist";
-export const DEVTOOLS_ROOT_NAME = "hkdigital-devtool";
+export const DEVTOOLS_ROOT_NAME = "hkdigital-jsdevtool";
 export const CONFIG_ROOT_NAME = "config";
 
 export const CURRENT_SCRIPT_RELATIVE_PATH =

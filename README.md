@@ -10,7 +10,7 @@ The development tool has been developed to work on `linux like` operating system
 
 This project is under development but should be mostly functional.
 
-If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-devtool/issues).
+If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-jsdevtool/issues).
 
 ## Install dependencies
 
@@ -32,32 +32,32 @@ npm install -g n
 ## Create a project from scratch
 
 ### Create a project folder and install the devtool
-Open a terminal, create a project folder, goto that folder and install the devtools into the subfolder `hkdigital-devtool`.
+Open a terminal, create a project folder, goto that folder and install the devtools into the subfolder `hkdigital-jsdevtool`.
 
 ```bash
 mkdir my-project
 cd my-project
-npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
+npx degit git@github.com:HKdigital/hkdigital-jsdevtool.git hkdigital-jsdevtool
 ```
 
 ### Setup a SVELTE (frontend) project
-- Open a terminal and go to the `hkdigital-devtool` folder
+- Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
 
 ```bash
-cd hkdigital-devtool
+cd hkdigital-jsdevtool
 npm run setup-svelte
 cd ..
 node devtool.mjs
 ```
 ### Setup a NodeJS (backend) project
-- Open a terminal and go to the `hkdigital-devtool` folder
+- Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
 
 ```bash
-cd hkdigital-devtool
+cd hkdigital-jsdevtool
 npm run setup-nodejs
 cd ..
 node devtool.mjs
@@ -106,22 +106,22 @@ git push origin main -u
 
 ## Reinstallation or updating
 
-If your project is missing the `hkdigital-devtool` folder, e.g. after cloning the project from a repository, you will need to reinstall the folder.
+If your project is missing the `hkdigital-jsdevtool` folder, e.g. after cloning the project from a repository, you will need to reinstall the folder.
 
-Note that the `hkdigital-devtool` folder is in the `.gitignore` file, so won't be added to your git project. So when you clone your project using git, you'll notice that the folder is missing.
+Note that the `hkdigital-jsdevtool` folder is in the `.gitignore` file, so won't be added to your git project. So when you clone your project using git, you'll notice that the folder is missing.
 
-If you want to update `hkdigital-devtool`, you can safely remove the folder and reinstall it.
+If you want to update `hkdigital-jsdevtool`, you can safely remove the folder and reinstall it.
 
 - Remove the existing folder
-- Install a new `hkdigital-devtools` folder
+- Install a new `hkdigital-jsdevtools` folder
 - Run `node devtool.mjs `
 
-### Howto install missing `hkdigital-devtool`
+### Howto install missing `hkdigital-jsdevtool`
 
-Run the following command in your terminal if your `hkdigital-devtool` folder is missing.
+Run the following command in your terminal if your `hkdigital-jsdevtool` folder is missing.
 
 ```bash
-npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
+npx degit git@github.com:HKdigital/hkdigital-jsdevtool.git hkdigital-jsdevtool
 ```
 
 # Support cancer research

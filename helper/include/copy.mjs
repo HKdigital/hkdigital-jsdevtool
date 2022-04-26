@@ -15,7 +15,7 @@ const NODEJS_BACKEND_INSTALL_FILES_PATH = "install-files/nodejs-backend";
 // -------------------------------------------------------------------- Function
 
 /**
- * Copy files from `hkdigital-devtool/install-files/frontend`` to project root
+ * Copy files from `hkdigital-jsdevtool/install-files/frontend`` to project root
  * - Uses rsync, existing files will not be overwritten
  */
 export async function copyFrontendFiles( silent=false )
@@ -64,7 +64,7 @@ export async function copyFrontendFiles( silent=false )
 // -------------------------------------------------------------------- Function
 
 /**
- * Copy files from `hkdigital-devtool/install-files/backend`` to project root
+ * Copy files from `hkdigital-jsdevtool/install-files/backend`` to project root
  * - Uses rsync, existing files will not be overwritten
  */
 export async function copyBackendFiles( silent=false )

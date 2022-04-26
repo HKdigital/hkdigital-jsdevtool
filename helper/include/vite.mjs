@@ -121,51 +121,9 @@ export async function viteGetAliasesFromAllLibs()
  *
  * @returns {array} list of vite aliases
  */
-export async function viteGetAliasesFromLib( libName, failOnMissing=true )
+export async function viteGetAliasesFromLib( libName )
 {
   await importDependencies();
-
-  // const path = resolveLibPath( libName, "build-config", "aliases.mjs" );
-
-  // if( !await isFile( path ) )
-  // {
-  //   if( !failOnMissing )
-  //   {
-  //     console.log(
-  //       `- No config file found in lib [${stripProjectPath(path)}].`);
-  //     return [];
-  //   }
-
-  //   console.log(`- No config file [${stripProjectPath(path)}] (ignored).`);
-  //   console.log();
-  //   process.exit(1);
-  // }
-
-  // const module_ = await import( path );
-
-  // if( typeof module_.generateAliases !== "function" )
-  // {
-  //   console.log(
-  //     `- Config file [${path}] should export a function [generateAliases].`);
-  //   console.log();
-  //   process.exit(1);
-  // }
-
-  // /**
-  //  * Helper function to generate paths inside the current lib
-  //  *
-  //  * @param {...string} pathParts
-  //  *
-  //  * @returns {string} path
-  //  */
-  // const resolveCurrentLibPath = resolveLibPath.bind( null, libName );
-
-  // // returns e.g:
-  // // [
-  // //   { find: "$skills-fe",
-  // //     replacement: resolveCurrentLibPath() }
-  // // ];
-  // return await module_.generateAliases( { resolveCurrentLibPath } );
 
   try {
       const aliasConfigPath =
@@ -176,6 +134,8 @@ export async function viteGetAliasesFromLib( libName, failOnMissing=true )
         console.log(
           `- Optional alias config file not found at ` +
           `[${stripProjectPath(aliasConfigPath)}].`);
+
+        return [];
       }
 
       const module_ = await asyncImport( aliasConfigPath );

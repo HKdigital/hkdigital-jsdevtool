@@ -7,6 +7,7 @@ export * from "./include/git-submodules.mjs";
 export * from "./include/shell.mjs";
 export * from "./include/env.mjs";
 export * from "./include/copy.mjs";
+export * from "./include/aliases.mjs";
 export * from "./include/rollup.mjs";
 export * from "./include/vite.mjs";
 export * from "./include/readme.mjs";

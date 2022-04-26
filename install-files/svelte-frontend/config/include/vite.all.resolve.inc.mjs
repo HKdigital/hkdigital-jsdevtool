@@ -3,8 +3,8 @@
 
 import { resolveSrcPath,
          resolveLibPath,
-         /*viteGetAliasesFromLib*/ }
-          from "../../hkdigital-devtool/helper/index.mjs";
+         getDefaultAliasesForVite }
+          from "../../hkdigital-jsdevtool/helper/index.mjs";
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -23,40 +23,42 @@ export async function generateResolveConfig()
 
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.css'],
 
-    alias: [
-      // {
-      //   find: '@',
-      //   replacement: resolveSrcPath(".")
-      // },
+    alias: { ...await getDefaultAliasesForVite() }
 
-      // -- Platform (usually jslib-hk-fe or jslib-hk-be)
+    // alias: [
+    //   // {
+    //   //   find: '@',
+    //   //   replacement: resolveSrcPath(".")
+    //   // },
 
-      { find: "$platform",
-        replacement: resolveLibPath("jslib-hk-fe") },
+    //   // -- Platform (usually jslib-hk-fe or jslib-hk-be)
 
-      // -- Project
+    //   { find: "@platform",
+    //     replacement: resolveLibPath("jslib-hk-fe") },
 
-      { find: "$src",
-        replacement: resolveSrcPath(".") },
+    //   // -- Project
 
-      // { find: "$theme",
-      //   replacement: resolveLibPath("jslib-hk-fe/theme") },
+    //   { find: "@src",
+    //     replacement: resolveSrcPath(".") },
 
-      // { find: "$fonts-and-icons-hk",
-      //   replacement: resolveLibPath("fonts-and-icons-hk") },
+    //   // { find: "@theme",
+    //   //   replacement: resolveLibPath("jslib-hk-fe/theme") },
 
-      // { find: "$content-panels",
-      //   replacement: resolveSrcPath("views/content-panels") },
+    //   // { find: "@fonts-and-icons-hk",
+    //   //   replacement: resolveLibPath("fonts-and-icons-hk") },
 
-      // -- Custom
+    //   // { find: "@content-panels",
+    //   //   replacement: resolveSrcPath("views/content-panels") },
 
-      // -- Libs
+    //   // -- Custom
 
-      // { find: "$lib",
-      //   replacement: resolveLibPath() },
+    //   // -- Libs
 
-      // ...(await viteGetAliasesFromLib( "jslib-hk-base" ))
-    ]
+    //   // { find: "@lib",
+    //   //   replacement: resolveLibPath() },
+
+    //   // ...(await viteGetAliasesFromLib( "jslib-hk-base" ))
+    // ]
 
   };
 }

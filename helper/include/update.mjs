@@ -40,8 +40,8 @@ export async function updateDevtool( { installFilesFolderName, silent=false } )
   if( !silent )
   {
     console.log(
-      `\nNote: to upgrade the [hkdigital-devtool] folder contents, see ` +
-      `[https://github.com/HKdigital/hkdigital-devtool].`);
+      `\nNote: to upgrade the [hkdigital-jsdevtool] folder contents, see ` +
+      `[https://github.com/HKdigital/hkdigital-jsdevtool].`);
 
     console.log(
       `\n* Copied [${stripProjectPath(fromPath)}] ` +

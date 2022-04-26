@@ -23,7 +23,7 @@ let gitSubmodulesPush;
  */
 async function importDependencies()
 {
-  const helperPath = "./hkdigital-devtool/helper/index.mjs";
+  const helperPath = "./hkdigital-jsdevtool/helper/index.mjs";
 
   if( !existsSync( helperPath ) )
   {
@@ -80,7 +80,7 @@ async function main()
       /* async */ installDeps();
       break;
 
-    case "submodule-add":
+    case "lib-add":
       {
         const repositoryUrl = argv[1];
         const libFolderName = argv[2];
@@ -89,7 +89,7 @@ async function main()
       }
       break;
 
-    case "submodule-remove":
+    case "lib-remove":
       {
         const libFolderName = argv[1];
         const force = argv[2] === "force";
@@ -149,12 +149,12 @@ function showUsageAndExit()
                       - Development environment variables from the config
                         folder will be set
 
-  submodule-add <repository-url> [<lib-folder-name>]
+  lib-add             <repository-url> [<lib-folder-name>]
 
                       Add a git submodule to the [lib] folder. A repository url
                       is required. A custom lib folder name is optional.
 
-  submodule-remove <lib-folder-name> [force]
+  lib-remove          <lib-folder-name> [force]
 
                       Remove a git submodule from the [lib] folder. A lib folder
                       name is required. [force] is required if the sub module
@@ -167,7 +167,7 @@ function showUsageAndExit()
 
   update-devtool      Copy the devtool script from the install files folder
                       to the project folder. Run this if you installed a new
-                      [hkdigital-devtool] folder.
+                      [hkdigital-jsdevtool] folder.
   `;
 
   console.log( message );
@@ -177,22 +177,22 @@ function showUsageAndExit()
 // -------------------------------------------------------------------- Function
 
 /**
- * Show [hkdigital-devtool] installation instructions and exit
+ * Show [hkdigital-jsdevtool] installation instructions and exit
  */
 function showInstallHowtoAndExit()
 {
   const message =
     `
-    Missing [hkdigital-devtool] folder. Please add the devtool to your project first.
+    Missing [hkdigital-jsdevtool] folder. Please add the devtool to your project first.
 
     Run the following command in your terminal:
 
     --
-    npx degit git@github.com:HKdigital/hkdigital-devtool.git hkdigital-devtool
+    npx degit git@github.com:HKdigital/hkdigital-jsdevtool.git hkdigital-jsdevtool
     --
 
     More information:
-    https://github.com/HKdigital/hkdigital-devtool
+    https://github.com/HKdigital/hkdigital-jsdevtool
     `;
 
   console.log( message );

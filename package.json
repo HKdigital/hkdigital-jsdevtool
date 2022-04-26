@@ -1,5 +1,5 @@
 {
-  "name": "hkdigital-devtool",
+  "name": "hkdigital-jsdevtool",
   "description": "HKdigital devtool that can be used to setup and manage nodejs (backend) or svelte (frontend) projects ",
   "version": "1.0.0",
   "author": "Jens Kleinhout - HKdigital - The Netherlands",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HKdigital/hkdigital-devtool.git"
+    "url": "git+https://github.com/HKdigital/hkdigital-jsdevtool.git"
   },
   "keywords": [
     "devtool",
@@ -18,9 +18,9 @@
     "svelte"
   ],
   "bugs": {
-    "url": "https://github.com/HKdigital/hkdigital-devtool/issues"
+    "url": "https://github.com/HKdigital/hkdigital-jsdevtool/issues"
   },
-  "homepage": "https://github.com/HKdigital/hkdigital-devtool#readme",
+  "homepage": "https://github.com/HKdigital/hkdigital-jsdevtool#readme",
   "dependencies": {
     "glob": "^7.2.0"
   }
