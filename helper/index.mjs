@@ -12,3 +12,6 @@ export * from "./include/rollup.mjs";
 export * from "./include/vite.mjs";
 export * from "./include/readme.mjs";
 export * from "./include/update.mjs";
+
+// export * from "./include/deploy.mjs";
+export * from "./include/arangodb.mjs";

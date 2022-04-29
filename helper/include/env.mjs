@@ -7,7 +7,10 @@ import { asyncImport } from "./import.mjs";
 // -------------------------------------------------------------------- Function
 
 /**
- * Set environment variables defined in `env.default.js` and `env.local`
+ * Set environment variables defined in `env.default.js` and `env.local.js`
+ *
+ * - Reads variables from both files will be set in `process.env`
+ * - Variables defined in `env.local.js` override variables in `env.default.js`
  */
 export async function setEnvVarsFromConfigFiles( silent=false )
 {
@@ -15,10 +18,10 @@ export async function setEnvVarsFromConfigFiles( silent=false )
   let localEnvVars = {};
 
   const defaultEnvVarsPath =
-    resolveConfigPath("config-include", "env.default.js");
+    resolveConfigPath("env.default.js");
 
   const localEnvVarsPath =
-    resolveConfigPath("config-include", "env.local.js");
+    resolveConfigPath("env.local.js");
 
   if( await isFile( defaultEnvVarsPath ) )
   {

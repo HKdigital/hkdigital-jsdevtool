@@ -18,6 +18,9 @@ let gitDisplaySubmodulesStatus;
 let gitSubmodulesPull;
 let gitSubmodulesPush;
 
+let arangoDump;
+
+
 /**
  * Dynamically import dependencies
  */
@@ -45,6 +48,8 @@ async function importDependencies()
   gitDisplaySubmodulesStatus = helperModule.gitDisplaySubmodulesStatus;
   gitSubmodulesPull = helperModule.gitSubmodulesPull;
   gitSubmodulesPush = helperModule.gitSubmodulesPush;
+
+  arangoDump = helperModule.arangoDump;
 }
 
 /* --------------------------------------------------------------------- Main */
@@ -114,6 +119,15 @@ async function main()
       /* async */ updateDevtool( { installFilesFolderName: "nodejs-backend" } );
       break;
 
+    case "arango-dump":
+      {
+        let deploymentTarget = argv[1];
+        // let folderName = argv[2];
+
+        /* async */ arangoDump( deploymentTarget );
+      }
+      break;
+
     default:
       showUsageAndExit();
   }
@@ -168,6 +182,18 @@ function showUsageAndExit()
   update-devtool      Copy the devtool script from the install files folder
                       to the project folder. Run this if you installed a new
                       [hkdigital-jsdevtool] folder.
+
+  EXPERIMENTAL >>
+
+  arango-dump         [<endpoint-label>=local]
+
+                      Dump the contents of a database to the folder
+                      [databases/arango-<endpoint-label>/dump/<date-time-stamp>]
+
+  arango-restore      [<endpoint-label>=local] [<date-time-stamp>=latest]
+
+                      Restore the database contents from the folder
+                      [databases/arango-local/dump/<date-time-stamp>]
   `;
 
   console.log( message );
