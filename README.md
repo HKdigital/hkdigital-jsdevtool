@@ -4,7 +4,7 @@
 
 DevOps is the integration of development and software operations. This project can be used to integrate DevOps functionality into your javascript projects.
 
-The project contains scripts to setup `NodeJS` (backend) or a `SVELTE` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
+The project contains scripts to setup a `NodeJS` (backend) or a `SVELTE` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
 
 ## Status
 
