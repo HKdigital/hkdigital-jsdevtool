@@ -1,16 +1,22 @@
-# Development tool for NodeJS and SVELTE
+# DevOps tool for NodeJS and SVELTE projects
 
 ## About
 
-This project contains scripts, config and other code that can be used to setup and manage Javascript projects. There are scripts and setups for both `NodeJS` (backend), as well as for `SVELTE` (frontend) projects.
+DevOps is the integration of development and software operations. This project can be used to integrate DevOps functionality into your javascript projects.
+
+The project contains scripts to setup `NodeJS` (backend) or a `SVELTE` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
 
 ## Status
 
-This project is under development but should be mostly functional.
+This project is under development, which means there will be bugfixes, improvements and new features will be added.
 
-The development tool has been developed to work on `linux like` operating systems (including Mac OS). Support for Windows has been added recently.
-
+Support for Windows has been added recently. 
 If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-jsdevtool/issues).
+
+### Currently under development
+
+- Dumping and restoring [ArangoDB](https://www.arangodb.com/) databases to and from disk
+- Integration of [JEST](https://jestjs.io/) testing framework
 
 ## Install dependencies
 
