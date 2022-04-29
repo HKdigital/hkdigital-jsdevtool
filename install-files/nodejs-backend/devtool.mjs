@@ -174,10 +174,10 @@ function showUsageAndExit()
                       name is required. [force] is required if the sub module
                       contains changes.
 
-  submodules-status   Displays the git status for all submodules
+  submodules-status   Displays the git status for all git submodules
 
   submodules-pull     Pull changes for all submodules from remote repository
-  submodules-push     Pull changes in all submodules to their remote repositories
+  submodules-push     Push changes in all submodules to their remote repositories
 
   update-devtool      Copy the devtool script from the install files folder
                       to the project folder. Run this if you installed a new
