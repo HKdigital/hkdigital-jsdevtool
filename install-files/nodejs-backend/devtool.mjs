@@ -2,13 +2,17 @@
 
 import { existsSync } from "fs";
 
+/* ----------------------------------------------------------------- Exports  */
+
+export const PROJECT_TYPE = "nodejs-backend";
+
 /* ---------------------------------------------------------- Dynamic imports */
 
 let rollupRunInDevelopmentMode;
 let rollupBuildDist;
 let rollupPreviewProjectFromDist;
 
-let installDeps;
+let updateDeps;
 let updateDevtool;
 
 let gitAddSubmodule;
@@ -19,7 +23,8 @@ let gitSubmodulesPull;
 let gitSubmodulesPush;
 
 let arangoDump;
-
+let arangoRestore;
+let arangoRestoreDefault;
 
 /**
  * Dynamically import dependencies
@@ -39,7 +44,7 @@ async function importDependencies()
   rollupBuildDist = helperModule.rollupBuildDist;
   rollupPreviewProjectFromDist = helperModule.rollupPreviewProjectFromDist;
 
-  installDeps = helperModule.installDeps;
+  updateDeps = helperModule.updateDeps;
   updateDevtool = helperModule.updateDevtool;
 
   gitAddSubmodule = helperModule.gitAddSubmodule;
@@ -50,6 +55,9 @@ async function importDependencies()
   gitSubmodulesPush = helperModule.gitSubmodulesPush;
 
   arangoDump = helperModule.arangoDump;
+  arangoRestore = helperModule.arangoRestore;
+  arangoRestoreDefault = helperModule.arangoRestoreDefault;
+
 }
 
 /* --------------------------------------------------------------------- Main */
@@ -81,8 +89,8 @@ async function main()
       /* async */ rollupPreviewProjectFromDist();
       break;
 
-    case "install-deps":
-      /* async */ installDeps();
+    case "update-deps":
+      /* async */ updateDeps();
       break;
 
     case "lib-add":
@@ -116,15 +124,38 @@ async function main()
       break;
 
     case "update-devtool":
-      /* async */ updateDevtool( { installFilesFolderName: "nodejs-backend" } );
+      /* async */ updateDevtool( { installFilesFolderName: PROJECT_TYPE } );
       break;
 
     case "arango-dump":
       {
-        let deploymentTarget = argv[1];
-        // let folderName = argv[2];
+        let deploymentLabel = argv[1];
 
-        /* async */ arangoDump( deploymentTarget );
+        /* async */ arangoDump( deploymentLabel );
+      }
+      break;
+
+    case "arango-restore":
+      {
+        let deploymentLabel = argv[1];
+        let dateTimeStamp = argv[2];
+
+        const params = { deploymentLabel };
+
+        if( dateTimeStamp )
+        {
+          params.dateTimeStamp = dateTimeStamp;
+        }
+
+        /* async */ arangoRestore( params );
+      }
+      break;
+
+    case "arango-restore-default":
+      {
+        let deploymentLabel = argv[1];
+
+        /* async */ arangoRestoreDefault( {deploymentLabel } );
       }
       break;
 
@@ -144,56 +175,106 @@ function showUsageAndExit()
 {
   const message =
   `
-  usage:
-  node devtool.mjs <command>
 
-  commands:
-
-  install-deps        Merge all [package.json] files from all library folders
-                      into the a single [package.json] in the project root and
-                      runs [npm install] in the project root folder.
+  USAGE
+  node devtool.mjs <command> [...params]
 
 
-  run                 Run in development mode
+  --------------------
+  DEVELOPMENT COMMANDS
+  --------------------
 
-  build               Build a production version in the [dist] folder
+  run                 Run the project in development mode
 
-  preview             Run the production version from the [dist] folder
-                      - Build the project first
-                      - Development environment variables from the config
-                        folder will be set
+                      - Compiles a development version of the project
+                      - Sets development environment variables from
+                        [config/env.default.js] and [config/env.default.js]
+                      - Runs the compiled development version of the project
+
+
+  build               Build a production version of the project
+
+                      - Executes the [update-deps] command.
+                        This will update the package.json file from the project
+                        folder before it is copied to the dist folder.
+                      - Builds a production version of the project in the
+                        [dist] folder
+
+
+  preview             Preview the production version from the [dist] folder
+
+                      - Builds the project in the dist folder
+                      - Sets *development* environment variables from
+                        [config/env.default.js] and [config/env.default.js]
+                      - Runs [dist/index.mjs]
+
+
+  update-deps         Update dependencies
+
+                      - Merges all [package.json] files from all library folders
+                        into the a single [package.json] in the project root
+                      - Runs [npm install] in the project root folder.
+
+
+  update-devtool      Copy the (newer) devtool script from the install files
+                      folder to the project folder. Run this command after you
+                      added a new or updated [hkdigital-jsdevtool] folder to
+                      your project.
+
+
+  ----------------
+  LIBRARY COMMANDS
+  ----------------
 
   lib-add             <repository-url> [<lib-folder-name>]
 
-                      Add a git submodule to the [lib] folder. A repository url
-                      is required. A custom lib folder name is optional.
+                      Add a git submodule to the [lib] folder. A repository
+                      url is required. A custom lib folder name is optional.
 
   lib-remove          <lib-folder-name> [force]
 
                       Remove a git submodule from the [lib] folder. A lib folder
                       name is required. [force] is required if the sub module
-                      contains changes.
+                      contains changes or if git thinks there are changes.
 
-  submodules-status   Displays the git status for all git submodules
+
+  ----------------------
+  GIT SUBMODULE COMMANDS
+  ----------------------
+
+  submodules-status   Displays the git status for all submodules
 
   submodules-pull     Pull changes for all submodules from remote repository
-  submodules-push     Push changes in all submodules to their remote repositories
+  submodules-push     Push changes from all submodules to their remote
+                      repositories
 
-  update-devtool      Copy the devtool script from the install files folder
-                      to the project folder. Run this if you installed a new
-                      [hkdigital-jsdevtool] folder.
 
-  EXPERIMENTAL >>
+  -----------------
+  DATABASE COMMANDS
+  -----------------
 
-  arango-dump         [<endpoint-label>=local]
+  arango-dump         [<deployment-label>=local]
 
                       Dump the contents of a database to the folder
-                      [databases/arango-<endpoint-label>/dump/<date-time-stamp>]
+                      [databases/arango-<deployment-label>/dump/<timestamp>]
 
-  arango-restore      [<endpoint-label>=local] [<date-time-stamp>=latest]
+                      Deployment labels can be configured in
+                      [config/deploy.default.js] or [config/deploy.local.js]
+
+  arango-restore      [<deployment-label>=local] [<timestamp>=latest]
 
                       Restore the database contents from the folder
-                      [databases/arango-local/dump/<date-time-stamp>]
+                      [databases/arango-<deployment-label>/dump/<timestamp>]
+
+  arango-restore-default
+
+                      [<deployment-label>=local]
+
+                      Restore the database contents from the folder
+                      [databases/arango-default]
+
+                                   ~~ * ~~
+
   `;
 
   console.log( message );
@@ -209,7 +290,8 @@ function showInstallHowtoAndExit()
 {
   const message =
     `
-    Missing [hkdigital-jsdevtool] folder. Please add the devtool to your project first.
+    Missing [hkdigital-jsdevtool] folder. Please add the devtool to your
+    project first.
 
     Run the following command in your terminal:
 

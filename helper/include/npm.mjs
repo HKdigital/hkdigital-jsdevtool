@@ -17,7 +17,7 @@ import { execAsync } from "./shell.mjs";
 /**
  * Merge package.json's and run npm install
  */
-export async function installDeps()
+export async function updateDeps()
 {
   await mergePackageJsons();
   await runNpmInstall();

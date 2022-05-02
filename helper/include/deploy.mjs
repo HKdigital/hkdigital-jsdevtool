@@ -1,6 +1,8 @@
 
 /* ------------------------------------------------------------------ Imports */
 
+import { expectNotEmptyString } from "./expect.mjs";
+
 import { resolveProjectPath,
          resolveSrcPath,
          resolveLibPath,
@@ -10,6 +12,37 @@ import { resolveProjectPath,
 import { isFile } from "./fs.mjs";
 
 import { asyncImport } from "./import.mjs";
+
+/* ------------------------------------------------------------------ Exports */
+
+/**
+ * Read the deployment config for the specified deployment label
+ * from config files from the project's config folder
+ *
+ * - Reads variables from project config files `deploy.default.js` and
+ *   `deploy.local.js`
+ * - Variables defined in `deploy.local.js` override variables in
+ *   `deploy.default.js`
+ *
+ * @returns {object} deployment config
+ */
+export async function loadDeploymentConfig( { deploymentLabel, silent=false } )
+{
+  expectNotEmptyString( deploymentLabel,
+    "Missing or invalid parameter [deploymentLabel]" );
+
+  const allDeploymentConfigs = await loadAllDeploymentConfigs( silent );
+
+  if( !(deploymentLabel in allDeploymentConfigs) )
+  {
+    console.log(
+      `Missing deployment label [${deploymentLabel}] in ` +
+      `deployment config files.`);
+    process.exit();
+  }
+
+  return allDeploymentConfigs[ deploymentLabel ];
+}
 
 // -------------------------------------------------------------------- Function
 
@@ -21,9 +54,9 @@ import { asyncImport } from "./import.mjs";
  * - Variables defined in `deploy.local.js` override variables in
  *   `deploy.default.js`
  *
- * @returns {object} deployment config
+ * @returns {object} all deployment configs
  */
-export async function loadDeploymentConfig( silent=false )
+export async function loadAllDeploymentConfigs( silent=false )
 {
 let defaultDeploymentVars = {};
   let localDeploymentVars = {};

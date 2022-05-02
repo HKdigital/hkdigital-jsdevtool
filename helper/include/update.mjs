@@ -1,10 +1,10 @@
 
-import {
-         stripProjectPath,
+import { stripProjectPath,
          resolveProjectPath,
          resolveDevToolsPath } from "./paths.mjs";
 
 import { copyFile } from "./fs.mjs";
+
 
 /**
  * Copy the [devtool.mjs] file from the [install-files] folder into the 

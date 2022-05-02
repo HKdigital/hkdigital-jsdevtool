@@ -35,6 +35,16 @@ The nodejs version manager `n` is also recommended so you can test your NodeJs s
 npm install -g n
 ```
 
+### ArangoDB (optional, for use in NodeJS projects)
+The devtool installed in NodeJS projects offers commands to dump and restore ArangoDB databases. If you wish to use this functionality, you must install ArangoDB on your computer.
+
+Official instructions can be found here: [ArangoDB Installation](https://www.arangodb.com/docs/stable/installation.html).
+On MacOS, the setup using [Homebrew](https://brew.sh/) package manager is quite easy.
+
+```bash
+brew install arangodb
+```
+
 ## Code editor and terminal program
 
 ### Terminal program

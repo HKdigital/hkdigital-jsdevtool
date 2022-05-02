@@ -2,13 +2,17 @@
 
 import { existsSync } from "fs";
 
+/* --------------------------------------------------------------- Internals  */
+
+const PROJECT_TYPE = "svelte-frontend";
+
 /* ---------------------------------------------------------- Dynamic imports */
 
 let viteRunInDevelopmentMode;
 let viteBuildDist;
 let vitePreviewProjectFromDist;
 
-let installDeps;
+let updateDeps;
 let updateDevtool;
 
 let gitAddSubmodule;
@@ -36,7 +40,7 @@ async function importDependencies()
   viteBuildDist = helperModule.viteBuildDist;
   vitePreviewProjectFromDist = helperModule.vitePreviewProjectFromDist;
 
-  installDeps = helperModule.installDeps;
+  updateDeps = helperModule.updateDeps;
   updateDevtool = helperModule.updateDevtool;
 
   gitAddSubmodule = helperModule.gitAddSubmodule;
@@ -76,8 +80,8 @@ async function main()
        /* async */  vitePreviewProjectFromDist();
       break;
 
-    case "install-deps":
-      /* async */ installDeps();
+    case "update-deps":
+      /* async */ updateDeps();
       break;
 
     case "lib-add":
@@ -111,7 +115,7 @@ async function main()
       break;
 
     case "update-devtool":
-      /* async */ updateDevtool( { installFilesFolderName: "svelte-frontend" } );
+      /* async */ updateDevtool( { installFilesFolderName: PROJECT_TYPE } );
       break;
 
     default:
@@ -130,44 +134,83 @@ function showUsageAndExit()
 {
   const message =
   `
-  usage:
-  node devtool.mjs <command>
 
-  commands:
+  USAGE
+  node devtool.mjs <command> [...params]
 
-  install-deps        Merge all [package.json] files from all library folders
-                      into the a single [package.json] in the project root and
-                      runs [npm install] in the project root folder.
 
-  run                 Run in development mode
+  --------------------
+  DEVELOPMENT COMMANDS
+  --------------------
 
-  build               Build a production version in the [dist] folder
+  run                 Run the project in development mode
 
-  preview             Run the production version from the [dist] folder
-                      - Build the project first
-                      - Development environment variables from the config
-                        folder will be set
+                      - Compiles a development version of the project
+                      - Sets development environment variables from
+                        [config/env.default.js] and [config/env.default.js]
+                      - Runs the compiled development version of the project
+
+
+  build               Build a production version of the project
+
+                      - Executes the [update-deps] command.
+                        This will update the package.json file from the project
+                        folder before it is copied to the dist folder.
+                      - Builds a production version of the project in the
+                        [dist] folder
+
+
+  preview             Preview the production version from the [dist] folder
+
+                      - Builds the project in the dist folder
+                      - Sets *development* environment variables from
+                        [config/env.default.js] and [config/env.default.js]
+                      - Runs [dist/index.mjs]
+
+
+  update-deps         Update dependencies
+
+                      - Merges all [package.json] files from all library folders
+                        into the a single [package.json] in the project root
+                      - Runs [npm install] in the project root folder.
+
+
+  update-devtool      Copy the (newer) devtool script from the install files
+                      folder to the project folder. Run this command after you
+                      added a new or updated [hkdigital-jsdevtool] folder to
+                      your project.
+
+
+  ----------------
+  LIBRARY COMMANDS
+  ----------------
 
   lib-add             <repository-url> [<lib-folder-name>]
 
-                      Add a git submodule to the [lib] folder. A repository url
-                      is required. A custom lib folder name is optional.
+                      Add a git submodule to the [lib] folder. A repository
+                      url is required. A custom lib folder name is optional.
 
   lib-remove          <lib-folder-name> [force]
 
                       Remove a git submodule from the [lib] folder. A lib folder
                       name is required. [force] is required if the sub module
-                      contains changes.
+                      contains changes or if git thinks there are changes.
 
-  submodules-status   Displays the git status for all git submodules
+
+  ----------------------
+  GIT SUBMODULE COMMANDS
+  ----------------------
+
+  submodules-status   Displays the git status for all submodules
 
   submodules-pull     Pull changes for all submodules from remote repository
-  submodules-push     Push changes in all submodules to their remote repositories
+  submodules-push     Push changes from all submodules to their remote
+                      repositories
 
-  update-devtool      Copy the devtool script from the install files folder
-                      to the project folder. Run this if you installed a new
-                      [hkdigital-jsdevtool] folder.
-  `;
+
+                                   ~~ * ~~
+
+`;
 
   console.log( message );
   process.exit(0);
@@ -182,7 +225,8 @@ function showInstallHowtoAndExit()
 {
   const message =
     `
-    Missing [hkdigital-jsdevtool] folder. Please add the devtool to your project first.
+    Missing [hkdigital-jsdevtool] folder. Please add the devtool to your
+    project first.
 
     Run the following command in your terminal:
 

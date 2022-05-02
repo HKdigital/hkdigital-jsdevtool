@@ -1,14 +1,15 @@
 
 import pathTool from 'path';
 
-import { unlink,
-         access,
+import { access,
          mkdirSync,
          promises as fsPromises,
          createReadStream,
          createWriteStream } from "fs";
 
 const stats = fsPromises.stat;
+const unlink = fsPromises.unlink;
+const readlink = fsPromises.readlink;
 
 import { promisify } from 'util';
 
@@ -27,6 +28,7 @@ import { stripProjectPath,
 
 export const readFile = fsPromises.readFile;
 export const writeFile = fsPromises.writeFile;
+export const symlink = fsPromises.symlink;
 
 // ---------------------------------------------------------------------- Method
 
@@ -200,6 +202,41 @@ export async function isFile( path, options )
   catch( e )
   {
     return false;
+  }
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Returns a promise that returns true if a file system node exists at
+ * the specified path and is a symlink
+ *
+ * @param {string} path - Path to check
+ *
+ * @return {Promise<boolean>}
+ *   true if a symlink exists at the specified location
+ */
+export async function isSymlink( path )
+{
+  expectString( path, "Missing or invalid parameter [path]");
+
+  try {
+    await readlink( path );
+
+    // Link could be read -> is symbolic link
+    return true;
+  }
+  catch( e )
+  {
+    if( e && e.code === 'ENOENT')
+    {
+      // Link could not be read -> is not a symbolic link
+      return false;
+    }
+    else {
+      console.log(e);
+      process.exit();
+    }
   }
 }
 
@@ -686,7 +723,6 @@ export async function isFileOrDoesNotExist( path, options )
   return stats_.isFile();
 }
 
-
 // ---------------------------------------------------------------------- Method
 
 /**
@@ -696,13 +732,6 @@ export async function isFileOrDoesNotExist( path, options )
  * @param {string} path - File path to remove
  *
  * @param {object} [options] - Options
- *
- * @param {string} [options.sandboxPath=ROOT_PATH]
- *   The folder to empty should not be ouside the "sandboxPath"
- *
- * @param {boolean} [options.allowProjectParentFolderAccess=false]
- *   By setting this option, the sandbox also allows paths within the
- *   parent folder of the project
  *
  * @return {Promise<boolean>}
  *   true if a file was removed
@@ -715,16 +744,60 @@ export async function tryRemoveFile( path, options )
     {
       if( await isFile( path, options ) )
       {
-        unlink( path, function( /*err*/ )
-          {
-            // @note ignore errors
-            // if( !err )
-            // {
-            //   console.log("Removed file ["+path+"]");
-            // }
+        try {
+          await unlink( path );
+          resolve( true );
+        }
+        catch( e )
+        {
+          // @note ignore errors
+          // if( !err )
+          // {
+          //   console.log("Removed file ["+path+"]");
+          // }
+        }
+      }
+      else {
+        resolve( false );
+      }
 
-            resolve( true );
-          } );
+    } ); // end fn Promise
+
+}
+
+// ---------------------------------------------------------------------- Method
+
+/**
+ * Tries to remove a symlink
+ * - If the file system node is not a symlink the method does nothing
+ *
+ * @param {string} path - Symlink path to remove
+ *
+ * @param {object} [options] - Options
+ *
+ * @return {Promise<boolean>}
+ *   true if a file was removed
+ */
+export async function tryRemoveSymlink( path, options )
+{
+  path = sandboxPath( path, options );
+
+  return new Promise( async function( resolve /*, reject*/ )
+    {
+      if( await isSymlink( path, options ) )
+      {
+        try {
+          await unlink( path );
+          resolve( true );
+        }
+        catch( e )
+        {
+          // @note ignore errors
+          // if( !err )
+          // {
+          //   console.log("Removed file ["+path+"]");
+          // }
+        }
       }
       else {
         resolve( false );
