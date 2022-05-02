@@ -121,7 +121,13 @@ export async function arangoEnsureInstalled()
   catch( e )
   {
     console.log( e );
-    console.log( "- Arango tools are not installed locally" );
+    console.log();
+    console.log( "- ArangoDB is not installed locally " +
+                 "(required to run arangodump and arangorestore)" );
+    console.log();
+    console.log("For installation instructions:");
+    console.log("@see https://www.arangodb.com/docs/stable/installation.html");
+    console.log();
     process.exit();
   }
 }
