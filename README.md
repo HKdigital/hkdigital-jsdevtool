@@ -78,6 +78,16 @@ npm run setup-svelte
 cd ..
 node devtool.mjs
 ```
+
+#### Open a browser
+
+Use a browser and navigate to the displayed url, e.g. http://localhost:8888/.
+
+#### Open the project folder with your code editor
+
+Open the project folder with your code editor. You'll find a file 
+[src/index.html], which is the starting point of your web application. The browser will live reload code changes you make.
+
 ### Setup a NodeJS (backend) project
 - Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
@@ -89,6 +99,11 @@ npm run setup-nodejs
 cd ..
 node devtool.mjs
 ```
+
+#### Open the project folder with your code editor
+
+Open the project folder with your code editor. You'll find a file 
+[src/index.js], which is the starting point of your web application. The application will be restarted every time you make some changes to the code. If this is not what you like, simply stop the devtool and run it when you're done making changes.
 
 ## Next steps
 
