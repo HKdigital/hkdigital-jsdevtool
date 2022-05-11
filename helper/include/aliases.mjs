@@ -214,15 +214,15 @@ export async function tryImportAliasesFromConfigFile(
 
     const displayPath = stripProjectPath( aliasConfigPath );
 
-    if( typeof module_.getAliases !== "function" )
+    if( typeof module_.getCustomAliases !== "function" )
     {
       throw new Error(
         `Alias configuration file [${displayPath}] does ` +
-        `not export a function [getAliases]`);
+        `not export a function [getCustomAliases]`);
     }
 
     const customAliases =
-      await module_.getAliases(
+      await module_.getCustomAliases(
         {
           resolveProjectPath,
           resolveSrcPath,
