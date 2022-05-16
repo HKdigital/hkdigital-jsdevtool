@@ -22,6 +22,8 @@ let gitDisplaySubmodulesStatus;
 let gitSubmodulesPull;
 let gitSubmodulesPush;
 
+let generateOptimizedImages;
+
 /**
  * Dynamically import dependencies
  */
@@ -49,6 +51,8 @@ async function importDependencies()
   gitDisplaySubmodulesStatus = helperModule.gitDisplaySubmodulesStatus;
   gitSubmodulesPull = helperModule.gitSubmodulesPull;
   gitSubmodulesPush = helperModule.gitSubmodulesPush;
+
+  generateOptimizedImages = helperModule.generateOptimizedImages;
 }
 
 /* --------------------------------------------------------------------- Main */
@@ -68,6 +72,8 @@ async function main()
 
   switch( argv[0] )
   {
+    /* Development */
+
     case "run":
       /* async */ viteRunInDevelopmentMode();
       break;
@@ -83,6 +89,12 @@ async function main()
     case "update-deps":
       /* async */ updateDeps();
       break;
+
+    case "update-devtool":
+      /* async */ updateDevtool( { installFilesFolderName: PROJECT_TYPE } );
+      break;
+
+    /* Lib */
 
     case "lib-add":
       {
@@ -102,6 +114,8 @@ async function main()
       }
       break;
 
+    /* Submodules */
+
     case "submodules-status":
       /* async */ gitDisplaySubmodulesStatus();
       break;
@@ -114,9 +128,23 @@ async function main()
       /* async */ gitSubmodulesPush();
       break;
 
-    case "update-devtool":
-      /* async */ updateDevtool( { installFilesFolderName: PROJECT_TYPE } );
+    /* Images */
+
+    case "images-optimize":
+       {
+        const globOrGlobs = argv[1];
+
+         if( globOrGlobs )
+         {
+          /* async */ generateOptimizedImages( globOrGlobs );
+        }
+        else {
+          generateOptimizedImages();
+        }
+      }
       break;
+
+    /* Default */
 
     default:
       showUsageAndExit();
@@ -207,6 +235,18 @@ function showUsageAndExit()
   submodules-push     Push changes from all submodules to their remote
                       repositories
 
+
+  ------------------------
+  OPTIMIZE IMAGES COMMANDS
+  ------------------------
+
+  images-optimize     [<path=src/static/img/**/*.{jpg,png}>]
+                      Generate optimized image files
+
+                      e.g. specify a custom source folder
+
+                      node devtool.mjs \
+                           images-optimize "src/static/my-folder/**/*.{jpg,png}"
 
                                    ~~ * ~~
 

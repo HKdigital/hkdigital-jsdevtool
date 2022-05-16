@@ -77,6 +77,8 @@ async function main()
 
   switch( argv[0] )
   {
+    /* Development */
+
     case "run":
       /* async */ rollupRunInDevelopmentMode();
       break;
@@ -92,6 +94,8 @@ async function main()
     case "update-deps":
       /* async */ updateDeps();
       break;
+
+    /* Lib */
 
     case "lib-add":
       {
@@ -111,6 +115,8 @@ async function main()
       }
       break;
 
+    /* Submodules */
+
     case "submodules-status":
       /* async */ gitDisplaySubmodulesStatus();
       break;
@@ -126,6 +132,8 @@ async function main()
     case "update-devtool":
       /* async */ updateDevtool( { installFilesFolderName: PROJECT_TYPE } );
       break;
+
+    /* ArangoDB */
 
     case "arango-dump":
       {
@@ -158,6 +166,8 @@ async function main()
         /* async */ arangoRestoreDefault( {deploymentLabel } );
       }
       break;
+
+    /* Default */
 
     default:
       showUsageAndExit();

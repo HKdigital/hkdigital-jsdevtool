@@ -119,7 +119,7 @@ export function resolveProjectPath()
     }
   }
 
-  // Split path parts that contain path separator "/"
+  // Split path parts that contain a backslash "/"
 
   const parts = [];
 
@@ -329,7 +329,7 @@ export function sandboxPath( path, options )
 
   let ROOT_PATH = resolveProjectPath();
 
-  let sandboxPath = ROOT_PATH
+  let sandboxPath = ROOT_PATH;
   let prefixPath = ROOT_PATH;
 
   let allowRoot = false;
@@ -430,4 +430,65 @@ export function sandboxPath( path, options )
   return path;
 }
 
+// -----------------------------------------------------------------------------
 
+/**
+ * Get the path without the extension part
+ *
+ * @param {string} path
+ *
+ * @returns {string} path without the extension
+ */
+export function stripExtension( path )
+{
+  expectString( path, "Missing or invalid parameter [path]" );
+
+  const x = path.lastIndexOf(".");
+
+  if( x <= 0 )
+  {
+    return path;
+  }
+
+  return path.slice( 0, x );
+}
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Get the basename from a path
+ *
+ * @param {string} path
+ *   Path to get the base name from
+ *
+ * @param {string} [options.stripExtension=false]
+ *   Is set to true, the extension is also removed from the basename
+ *
+ * @param {string} [options.separator=SEPARATOR]
+ *   The separator that is used in the path
+ *
+ * @e.g.
+ *   basename('/foo/bar/baz/asdf/quux.html');
+ *     => returns: 'quux.html'
+ *
+ *   basename('/foo/bar/baz/asdf/quux.html', );
+ *     => returns: 'quux.html'
+ */
+export function basename( path, options )
+{
+  expectString( path, "Missing or invalid parameter [path]" );
+
+  const x = path.lastIndexOf( options ? options.separator : SEPARATOR );
+
+  if( x > 0 )
+  {
+    path = path.slice( x + 1 );
+  }
+
+  if( options && options.stripExtension )
+  {
+    return stripExtension( path );
+  }
+
+  return path;
+}
