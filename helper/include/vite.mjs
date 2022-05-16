@@ -204,7 +204,7 @@ async function readViteConfig( configFileName )
   let configFilePath = resolveConfigPath( configFileName );
   let configFileURI = resolveConfigPath( configFileName, { returnURI: true } );
 
-  console.log( { configFilePath } );
+  // console.log( { configFilePath } );
 
   if( !await isFile( configFilePath ) )
   {
