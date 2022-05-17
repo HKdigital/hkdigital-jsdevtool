@@ -12,15 +12,22 @@ import { expectNotEmptyString } from "./expect.mjs";
 // -----------------------------------------------------------------------------
 
 /**
- * Generate optimized images for all images found in the specified folder
- * - The function works recursively
+ * Generate optimized images for the images found in the specified folder
+ * - The function works recursively, so images in sub folders will be
+ *   processed too
  *
- * @param {string|string[]} [globOrGlobs=]
- *   Glob or list of globs that determine which images to convert
+ * @param {string} [sourceFolder="src/static/img"]
+ *   Path to folder that contains the source images
  */
-export async function generateOptimizedImages(
-  globOrGlobs="src/static/img/**/*.{jpg,png}" )
+export async function generateOptimizedImages( sourceFolder )
 {
+  sourceFolder = sourceFolder || "src/static/img";
+
+  expectNotEmptyString( sourceFolder,
+    "Missing or invalid parameter [sourceFolder]" );
+
+  const globOrGlobs = sourceFolder + "/**/*.{jpg,JPG,png,PNG,gif,GIF}";
+
   const paths = await expandGlobs( globOrGlobs );
 
   // console.log( "generateOptimizedImages", paths );
@@ -43,11 +50,12 @@ export async function generateOptimizedImage( sourcePath )
   expectNotEmptyString( sourcePath,
     "Missing or invalid parameter [sourcePath]" );
 
-  const outputPath = `${basename(sourcePath, { stripExtension: true })}.webp`;
+  const outputPath =
+    `${basename(sourcePath, { stripExtension: true })}.webp`;
 
   // const outputPath = `${dirname( sourcePath )}${SEPARATOR}${fileName}`;
 
-  const cmd = `cwebp ${sourcePath} -q 90 -o "${outputPath}"]`;
+  const cmd = `cwebp ${sourcePath} -q 90 -o "${outputPath}"`;
 
   try {
     // console.log( cmd );

@@ -132,15 +132,9 @@ async function main()
 
     case "images-optimize":
        {
-        const globOrGlobs = argv[1];
+        const sourcePath = argv[1];
 
-         if( globOrGlobs )
-         {
-          /* async */ generateOptimizedImages( globOrGlobs );
-        }
-        else {
-          generateOptimizedImages();
-        }
+        /* async */ generateOptimizedImages( sourcePath );
       }
       break;
 
@@ -240,13 +234,13 @@ function showUsageAndExit()
   OPTIMIZE IMAGES COMMANDS
   ------------------------
 
-  images-optimize     [<path=src/static/img/**/*.{jpg,png}>]
+  images-optimize     [<source=src/static/img/**/*.{jpg,png}>]
                       Generate optimized image files
 
                       e.g. specify a custom source folder
 
                       node devtool.mjs \
-                           images-optimize "src/static/my-folder/**/*.{jpg,png}"
+                           images-optimize "src/static/my-folder"
 
                                    ~~ * ~~
 
