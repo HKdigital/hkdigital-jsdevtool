@@ -55,7 +55,7 @@ export async function generateOptimizedImage( sourcePath )
 
   // const outputPath = `${dirname( sourcePath )}${SEPARATOR}${fileName}`;
 
-  const cmd = `cwebp ${sourcePath} -q 90 -o "${outputPath}"`;
+  const cmd = `cwebp "${sourcePath}" -q 90 -o "${outputPath}"`;
 
   try {
     // console.log( cmd );
