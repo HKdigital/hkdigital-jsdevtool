@@ -1,6 +1,4 @@
 
-import cwebp from 'cwebp-bin';
-
 import { execAsync } from "./shell.mjs";
 import { expandGlobs } from "./glob.mjs";
 
