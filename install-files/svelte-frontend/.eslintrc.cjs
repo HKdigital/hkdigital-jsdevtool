@@ -18,7 +18,8 @@ module.exports = {
     "sourceType": "module"
   },
   "plugins": [
-    'svelte3'
+    'svelte3',
+    'html'
   ],
   "overrides": [
     {

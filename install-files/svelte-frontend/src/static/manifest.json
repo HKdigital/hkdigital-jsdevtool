@@ -24,8 +24,8 @@
       "type": "image/png"
     },
     {
-      "src": "/hk/demo-icons/icon.svg",
-      "sizes": "72x72",
+      "src": "/hk/demo-icons/icon-1024.svg",
+      "sizes": "1024x1024",
       "type": "image/svg+xml"
     }
   ]
