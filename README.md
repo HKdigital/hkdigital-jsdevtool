@@ -1,16 +1,22 @@
-# Development tool for NodeJS and SVELTE
+# DevOps tool for NodeJS and SVELTE projects
 
 ## About
 
-This project contains scripts, config and other code that can be used to setup and manage Javascript projects. There are scripts and setups for both `NodeJS` (backend), as well as for `SVELTE` (frontend) projects.
+DevOps is the integration of development and software operations. This project can be used to integrate DevOps functionality into your javascript projects.
+
+The project contains scripts to setup a `NodeJS` (backend) or a `SVELTE` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
 
 ## Status
 
-This project is under development but should be mostly functional.
+This project is under development, which means there will be bugfixes, improvements and new features will be added.
 
-The development tool has been developed to work on `linux like` operating systems (including Mac OS). Support for Windows has been added recently.
-
+Support for Windows has been added recently. 
 If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-jsdevtool/issues).
+
+### Currently under development
+
+- Dumping and restoring [ArangoDB](https://www.arangodb.com/) databases to and from disk
+- Integration of [JEST](https://jestjs.io/) testing framework
 
 ## Install dependencies
 
@@ -29,6 +35,16 @@ The nodejs version manager `n` is also recommended so you can test your NodeJs s
 npm install -g n
 ```
 
+### ArangoDB (optional, for use in NodeJS projects)
+The devtool installed in NodeJS projects offers commands to dump and restore ArangoDB databases. If you wish to use this functionality, you must install ArangoDB on your computer.
+
+Official instructions can be found here: [ArangoDB Installation](https://www.arangodb.com/docs/stable/installation.html).
+On MacOS, the setup using [Homebrew](https://brew.sh/) package manager is quite easy.
+
+```bash
+brew install arangodb
+```
+
 ## Code editor and terminal program
 
 ### Terminal program
@@ -36,9 +52,9 @@ On Mac OS you can use the built-in `Terminal` to run scripts. [iTerm2](https://i
 
 ### Code editor
 Choose the editor that you like. Most editors support basic editing, linting (checking code for errors) and code completion nowadays.
-- [Sublime text](https://www.sublimetext.com/) is the faster editor.
+- [Sublime Text](https://www.sublimetext.com/) is a stable and very fast editor.
 - [Atom](https://atom.io/) is free and very extensible.
-- [Visual Studio Code](https://code.visualstudio.com/) probably offers the easiest integrations, but cumbersome
+- [Visual Studio Code](https://code.visualstudio.com/) probably offers the easiest integrations, but slow and cumbersome.
 
 ## Create a project from scratch
 
@@ -62,6 +78,16 @@ npm run setup-svelte
 cd ..
 node devtool.mjs
 ```
+
+#### Open a browser
+
+Use a browser and navigate to the displayed url, e.g. http://localhost:8888/.
+
+#### Open the project folder with your code editor
+
+Open the project folder with your code editor. You'll find a file 
+[src/index.html], which is the starting point of your SVELTE application. The browser will live reload code changes you make.
+
 ### Setup a NodeJS (backend) project
 - Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
@@ -73,6 +99,11 @@ npm run setup-nodejs
 cd ..
 node devtool.mjs
 ```
+
+#### Open the project folder with your code editor
+
+Open the project folder with your code editor. You'll find a file 
+[src/index.js], which is the starting point of your NodeJS application. The application will be restarted every time you make some changes to the code. If this is not what you like, simply stop the devtool and run it when you're done making changes.
 
 ## Next steps
 

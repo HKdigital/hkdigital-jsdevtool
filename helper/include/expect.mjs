@@ -17,6 +17,21 @@ export function expectString( value, errorText )
 // -----------------------------------------------------------------------------
 
 /**
+ * Expect a value to be a string and not empty
+ *
+ * @param {mixed} value - Value to check
+ */
+export function expectNotEmptyString( value, errorText )
+{
+  if( typeof value !== "string" || 0 === value.length )
+  {
+    throw new Error( `${errorText} (expected not empty string)`);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+/**
  * Expect a value to be an object
  *
  * @param {mixed} value - Value to check

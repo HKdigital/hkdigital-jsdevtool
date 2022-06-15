@@ -1,32 +1,33 @@
 # How to use hkdigital-jsdevtool
 
 ## Usage
-Use the script `devtool.mjs` to control you project. The script supports the following commands:
+Use the script `devtool.mjs` installed in your project folder to control your 
+project.
 
-```
-install-deps        Merge all [package.json] files from all library folders
-                    into the a single [package.json] in the project root and
-                    runs [npm install] in the project root folder.
+### Update project dependencies
 
-run                 Run in development mode
-
-build               Build a production version in the [dist] folder
-
-preview             Run the production version from the [dist] folder
-                    - Build the project first
-                    - Development environment variables from the config 
-                      folder will be set
-...
-```
-
-### Examples
+It's a good idea to update the project's dependencies first. The following 
+command will update your package.json and run `npm install`.
 
 ```bash
-# Install dependencies
-node devtool.mjs install-deps
+node devtool.mjs update-deps
+```
 
-# Launch the backend in development mode
+### Run project in development mode
+
+To run your project in development mode, use the following command.
+
+```bash
 node devtool.mjs run
 ```
 
-Press `ctrl-c` to stop.
+Press `ctrl-c` to stop
+
+### There is more...
+
+The devtool script can do much more, run the script without command to display
+the available commands.
+
+```bash
+node devtool.mjs
+```

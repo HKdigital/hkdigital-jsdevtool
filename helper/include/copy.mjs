@@ -1,9 +1,6 @@
 
 import { resolveProjectPath,
-         resolveDevToolsPath,
-         SEPARATOR } from "./paths.mjs";
-
-import { copyFile } from "./fs.mjs";
+         resolveDevToolsPath } from "./paths.mjs";
 
 import { execAsync } from "./shell.mjs";
 
@@ -26,9 +23,6 @@ export async function copyFrontendFiles( silent=false )
   }
 
   const projectRootPath = resolveProjectPath();
-
-  const installFilesFolder =
-    resolveDevToolsPath( SVELTE_FRONTEND_INSTALL_FILES_PATH );
 
   const sourceBasePath =
     resolveDevToolsPath( SVELTE_FRONTEND_INSTALL_FILES_PATH );

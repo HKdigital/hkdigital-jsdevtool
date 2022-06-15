@@ -71,6 +71,9 @@ export async function getDefaultAliasEntriesForRollup()
     {
       throw new Error(`Alias [${key}] has already been defined`);
     }
+
+    entries[ key ] = projectEntries[ key ];
+
   } // end for
 
   // -- Add default alias "@src" if not set
@@ -92,7 +95,7 @@ export async function getDefaultAliasEntriesForRollup()
  */
 export async function getProjectAliasEntries()
 {
-  const entries = [];
+  const entries = {};
 
   // Add aliases from config file to `entries`
   await tryImportAliasesFromConfigFile(
@@ -115,10 +118,7 @@ export async function getAliasEntriesForAllLibs()
 {
   const libNames = await listLibNames();
 
-  const entries =
-    {
-      "@src": resolveSrcPath()
-    };
+  const entries = {};
 
   for( const libName of libNames )
   {
@@ -214,15 +214,15 @@ export async function tryImportAliasesFromConfigFile(
 
     const displayPath = stripProjectPath( aliasConfigPath );
 
-    if( typeof module_.getAliases !== "function" )
+    if( typeof module_.getCustomAliases !== "function" )
     {
       throw new Error(
         `Alias configuration file [${displayPath}] does ` +
-        `not export a function [getAliases]`);
+        `not export a function [getCustomAliases]`);
     }
 
     const customAliases =
-      await module_.getAliases(
+      await module_.getCustomAliases(
         {
           resolveProjectPath,
           resolveSrcPath,

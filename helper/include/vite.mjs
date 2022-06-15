@@ -146,17 +146,17 @@ export async function viteGetAliasesFromLib( libName )
 
       const displayPath = stripProjectPath( aliasConfigPath );
 
-      if( typeof module_.getAliases !== "function" )
+      if( typeof module_.getCustomAliases !== "function" )
       {
         throw new Error(
           `Alias configuration file [${displayPath}] does ` +
-          `not export a function [getAliases]`);
+          `not export a function [getCustomAliases]`);
       }
 
       const viteEntries = [];
 
       const customAliases =
-        await module_.getAliases( { resolveCurrentLibPath } );
+        await module_.getCustomAliases( { resolveCurrentLibPath } );
 
       for( const key in customAliases )
       {
@@ -204,7 +204,7 @@ async function readViteConfig( configFileName )
   let configFilePath = resolveConfigPath( configFileName );
   let configFileURI = resolveConfigPath( configFileName, { returnURI: true } );
 
-  console.log( { configFilePath } );
+  // console.log( { configFilePath } );
 
   if( !await isFile( configFilePath ) )
   {
