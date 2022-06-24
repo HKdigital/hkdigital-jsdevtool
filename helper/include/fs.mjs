@@ -782,7 +782,9 @@ export async function tryRemoveSymlink( path, options )
 {
   path = sandboxPath( path, options );
 
-  return new Promise( async function( resolve /*, reject*/ )
+  return new Promise(
+      /* eslint-disable no-async-promise-executor */
+      async function( resolve /*, reject*/ )
     {
       if( await isSymlink( path, options ) )
       {

@@ -109,7 +109,8 @@ function ensureEnvVarsAreStrings( { vars, debugPath } )
 
       if( typeof value !== "string" )
       {
-        throw new Error(`The value of variable [${key}] should be a string`);
+        throw new Error(
+          `The value of environment variable [${key}] should be a string`);
       }
     } // end for
   }

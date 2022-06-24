@@ -10,5 +10,5 @@ export default {
   // - use `deploy.local.js` to override or extend this config
   //
 
-  NODE_ENV: "development"   // "development"|"production"|"test"
+  NODE_ENV: "development",   // "development"|"production"|"test"
 };
