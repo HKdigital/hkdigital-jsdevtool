@@ -1,4 +1,16 @@
-# DevOps tool for NodeJS and SVELTE projects
+
+<div align="center" style="text-align: center; ">
+  <br>
+  <br>
+  <img alt="HKdigital" src="doc/doc-include/HKdigital-logo.svg" style="height: 100px;" />
+  <br>
+  <br>
+</div>
+
+<div align="center" style="text-align: center;">
+<h1>DevOps tool for NodeJS and SVELTE projects</h1>
+  <br>
+</div>
 
 ## About
 
@@ -165,13 +177,3 @@ Run the following command in your terminal if your `hkdigital-jsdevtool` folder 
 ```bash
 npx degit git@github.com:HKdigital/hkdigital-jsdevtool.git hkdigital-jsdevtool
 ```
-
-# Support cancer research
-
-If you like our work and would like us to share some more code, please support us! 
-
-Currently we're collecting money for cancer research:
-
-Alpe d'HuZes is a unique sporting event where as much money as possible is raised for cancer research and for improving the quality of life of people with cancer. On a single day, 5000 participants will bike, hike or run the Alpe d'Huez. Attempting a maximum of six climbs, under the motto 'giving up is not an option'. 
-
-https://www.opgevenisgeenoptie.nl/fundraisers/JensKleinhout
