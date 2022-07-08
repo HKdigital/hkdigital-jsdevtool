@@ -79,7 +79,7 @@ cd my-project
 npx degit git@github.com:HKdigital/hkdigital-jsdevtool.git hkdigital-jsdevtool
 ```
 
-### Setup a SVELTE (frontend) project
+### (Option 1) Setup a SVELTE (frontend) project
 - Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
@@ -100,7 +100,7 @@ Use a browser and navigate to the displayed url, e.g. http://localhost:8888/.
 Open the project folder with your code editor. You'll find a file 
 [src/index.html], which is the starting point of your SVELTE application. The browser will live reload code changes you make.
 
-### Setup a NodeJS (backend) project
+### (Option 2) Setup a NodeJS (backend) project
 - Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
