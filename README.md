@@ -27,8 +27,11 @@ If you encounter problems or have a good idea to make this tool better, please c
 
 ### Currently under development
 
-- Dumping and restoring [ArangoDB](https://www.arangodb.com/) databases to and from disk
 - Integration of [JEST](https://jestjs.io/) testing framework
+
+### Recently added
+
+Dumping and restoring [ArangoDB](https://www.arangodb.com/) databases to and from disk. Note that the devtool requires arangotools (arangodb) to be installed on your system to work.
 
 ## Install dependencies
 
@@ -40,11 +43,33 @@ Follow the instructions on [git-scm.com](https://git-scm.com/).
 ### Node.js
 Follow the instructions on [NodeJS.org](https://nodejs.org/`)
 
+#### NPM
+The NodeJs package manager will be installed along with NodeJS. 
+
+To upgrade NPM to the latest version:
+
+```bash
+sudo npm install -g npm@latest
+```
+
 ### n (optional)
 The nodejs version manager `n` is also recommended so you can test your NodeJs scripts against different NodeJs versions, see [github tj/n](https://github.com/tj/n).
 
 ```bash
 npm install -g n
+```
+
+To remove all previous NodeJs installations except from the latest:
+
+```bash
+n prune
+```
+
+To install the latest and the latest lts version of NodeJs
+
+```bash
+n lts
+n latest
 ```
 
 ### ArangoDB (optional, for use in NodeJS projects)
