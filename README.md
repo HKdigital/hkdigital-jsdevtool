@@ -35,63 +35,10 @@ Dumping and restoring [ArangoDB](https://www.arangodb.com/) databases to and fro
 
 ## Install dependencies
 
-The scripts use `git` and `nodejs (npm, npx)`, make sure you have that configured on your system before using this project.
+The `devtool` script has some dependencies that should be installed first on your system.
 
-### git
-Follow the instructions on [git-scm.com](https://git-scm.com/).
+@see [Install dependencies and code editor](https://github.com/HKdigital/hkdigital-jsdevtool/tree/main/doc/readme/install-dependencies-and-code-editor.md)
 
-### Node.js
-Follow the instructions on [NodeJS.org](https://nodejs.org/`)
-
-#### NPM
-The NodeJs package manager will be installed along with NodeJS. 
-
-To upgrade NPM to the latest version:
-
-```bash
-sudo npm install -g npm@latest
-```
-
-### n (optional)
-The nodejs version manager `n` is also recommended so you can test your NodeJs scripts against different NodeJs versions, see [github tj/n](https://github.com/tj/n).
-
-```bash
-npm install -g n
-```
-
-To remove all previous NodeJs installations except from the latest:
-
-```bash
-n prune
-```
-
-To install the latest and the latest lts version of NodeJs
-
-```bash
-n lts
-n latest
-```
-
-### ArangoDB (optional, for use in NodeJS projects)
-The devtool installed in NodeJS projects offers commands to dump and restore ArangoDB databases. If you wish to use this functionality, you must install ArangoDB on your computer.
-
-Official instructions can be found here: [ArangoDB Installation](https://www.arangodb.com/docs/stable/installation.html).
-On MacOS, the setup using [Homebrew](https://brew.sh/) package manager is quite easy.
-
-```bash
-brew install arangodb
-```
-
-## Code editor and terminal program
-
-### Terminal program
-On Mac OS you can use the built-in `Terminal` to run scripts. [iTerm2](https://iterm2.com/) can be configured more to your personal preferences.
-
-### Code editor
-Choose the editor that you like. Most editors support basic editing, linting (checking code for errors) and code completion nowadays.
-- [Sublime Text](https://www.sublimetext.com/) is a stable and very fast editor.
-- [Atom](https://atom.io/) is free and very extensible.
-- [Visual Studio Code](https://code.visualstudio.com/) probably offers the easiest integrations, but slow and cumbersome.
 
 ## Create a project from scratch
 
@@ -104,7 +51,7 @@ cd my-project
 npx degit git@github.com:HKdigital/hkdigital-jsdevtool.git hkdigital-jsdevtool
 ```
 
-### (Option 1) Setup a SVELTE (frontend) project
+### (Option 1) Setup a SVELTE frontend project
 - Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
@@ -125,7 +72,7 @@ Use a browser and navigate to the displayed url, e.g. http://localhost:8888/.
 Open the project folder with your code editor. You'll find a file 
 [src/index.html], which is the starting point of your SVELTE application. The browser will live reload code changes you make.
 
-### (Option 2) Setup a NodeJS (backend) project
+### (Option 2) Setup a NodeJS backend project
 - Open a terminal and go to the `hkdigital-jsdevtool` folder
 - Run the setup script
 - Go to the project root folder and run the installed `devtool` script to manage your project
@@ -141,47 +88,6 @@ node devtool.mjs
 
 Open the project folder with your code editor. You'll find a file 
 [src/index.js], which is the starting point of your NodeJS application. The application will be restarted every time you make some changes to the code. If this is not what you like, simply stop the devtool and run it when you're done making changes.
-
-## Next steps
-
-### Read the `README-DEVTOOL.md`
-A file called `README-DEVTOOL.md` is installed in your project's root folder after running one of the setup scripts.
-
-### Store your code on a remote git repository
-First create an empty git project on e.g. [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/).
-
-- When creating the project: do not create a `.gitignore` file or a `README.md`!
-- You need to choose a name for the default branch. `main` is a commonly used option.
-
-Link your local project folder to the remote repository.
-
-```bash
-git remote add origin <remote-git-repository-url>
-
-# e.g.
-# git remote add origin 
-```
-
-Stage your code, commit your code and push it to the remote repository.
-
-```bash
-# Add all files to the git index:
-# - defines the content that will be added to the next commit
-git add .
-
-# Commit
-# - creates a version of your code
-git commit
-
-# Rename the current branch to `main`
-# - main is a good name for a default / first branch
-git branch -M main
-
-# Push the branch to the remote server
-# - pushes to the server specified by `git remote add`
-# - use `git remote -v` to check the url
-git push origin main -u
-```
 
 ## Reinstallation or updating
 
@@ -202,3 +108,13 @@ Run the following command in your terminal if your `hkdigital-jsdevtool` folder 
 ```bash
 npx degit git@github.com:HKdigital/hkdigital-jsdevtool.git hkdigital-jsdevtool
 ```
+
+## Next steps
+
+If you want to learn about the subcommands of the devtool, just run the script without any parameters and it will show some help.
+
+Furtermore: a file called `README-DEVTOOL.md` is installed in your project's root folder after running one of the setup scripts.
+
+Git is an important tool for developers. It is integrated in the devtool. To learn more about working with git:
+
+@see [Git tips and tricks](https://github.com/HKdigital/hkdigital-jsdevtool/tree/main/doc/readme/git-tips-and-tricks.md)

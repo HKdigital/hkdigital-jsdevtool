@@ -12,7 +12,7 @@ module.exports = {
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": "2022", // "latest"
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "plugins": [],
