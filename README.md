@@ -143,8 +143,8 @@ More specific frontend libraries will follow.
 
 #### HKdigital's backend libraries
 
-** The backend library is undergoing heavy changes and has therefore not been published yet, 
-   please contact us if you're interested **
+**The backend library is undergoing heavy changes and has therefore not been published yet, 
+   please contact us if you're interested**
 
 Backend library for NodeJS projects **(private)**
 [Backend Library](https://github.com/HKdigital/jslib--hkd-be)
