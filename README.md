@@ -125,15 +125,14 @@ Git is an important tool for developers. It is integrated in the devtool. To lea
 
 ### Install libraries
 
-To speed up the development of your application, it's recommended to use libraries. You can create your own libraries that you can use in multiple projects or use the libraries published by HKdigital.
+To speed up the development of your application, we recommend to use libraries.
+You can create your own libraries, so you can reuse code in multiple projects, or you can use the libraries published by HKdigital.
 
 #### HKdigital's base library
 
 Publishing of the libraries is work in progress, but brave men or woman can already use them.
 
-Libraries may depend on eachother (use code from another library). The is one base library that most other libraries need: 
-
-[Base Library](https://github.com/HKdigital/jslib--hkd-base)
+Libraries may depend on eachother (use code from another library). The is one base library that most other libraries need [Base Library](https://github.com/HKdigital/jslib--hkd-base).
 
 This library can be used in both SVELTE and NodeJS projects and contains code constructs that can be used to create a nice application basis.
 
