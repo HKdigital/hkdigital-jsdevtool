@@ -115,6 +115,42 @@ If you want to learn about the subcommands of the devtool, just run the script w
 
 Furtermore: a file called `README-DEVTOOL.md` is installed in your project's root folder after running one of the setup scripts.
 
+
+### Learn GIT
+
 Git is an important tool for developers. It is integrated in the devtool. To learn more about working with git:
 
 @see [Git tips and tricks](https://github.com/HKdigital/hkdigital-jsdevtool/tree/main/doc/readme/git-tips-and-tricks.md)
+
+
+### Install libraries
+
+To speed up the development of your application, it's recommended to use libraries. You can create your own libraries that you can use in multiple projects or use the libraries published by HKdigital.
+
+#### HKdigital's base library
+
+Publishing of the libraries is work in progress, but brave men or woman can already use them.
+
+Libraries may depend on eachother (use code from another library). The is one base library that most other libraries need: 
+
+[Base Library](https://github.com/HKdigital/jslib--hkd-base)
+
+This library can be used in both SVELTE and NodeJS projects and contains code constructs that can be used to create a nice application basis.
+
+#### HKdigital's frontend libraries
+
+Frontend library for SVELTE projects
+[Frontend Library](https://github.com/HKdigital/jslib--hkd-fe)
+
+More specific frontend libraries will follow.
+
+#### HKdigital's backend libraries
+
+** The backend library is undergoing heavy changes and has therefore not been published yet, 
+   please contact us if you're interested **
+
+Backend library for NodeJS projects **(private)**
+[Backend Library](https://github.com/HKdigital/jslib--hkd-be)
+
+More specific backend libraries will follow.
+
