@@ -372,8 +372,7 @@ export async function arangoRestoreDefault( { deploymentLabel="local" } )
   const customSourceFolder =
     resolveProjectPath(
       "database",
-      "default",
-      "arango");
+      "arango-default");
 
   await arangoRestore(
   {
