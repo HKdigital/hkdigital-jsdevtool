@@ -210,6 +210,8 @@ async function readViteConfig( configFileName )
   {
     console.log(`- Missing config file [${configFilePath}].`);
     console.log();
+
+    /* eslint-disable-next-line no-undef */
     process.exit(1);
   }
 
