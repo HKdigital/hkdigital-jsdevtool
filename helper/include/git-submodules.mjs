@@ -97,7 +97,7 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
 
   if( force )
   {
-    forceStr = "--force";
+    forceStr = "-r --force";
   }
 
   console.log( `Removing git submodule [lib/${libFolderName}]` );

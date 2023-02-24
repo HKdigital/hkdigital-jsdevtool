@@ -278,10 +278,10 @@ function showUsageAndExit()
 
   arango-restore-default
 
-                      [<deployment-label>=local]
+                      [<deployment-label>=local] [<timestamp>=latest]
 
                       Restore the database contents from the folder
-                      [databases/arango-default]
+                      [databases/arango-default/<timestamp>]
 
                                    ~~ * ~~
 
