@@ -19,6 +19,7 @@ export async function gitAddSubmodule( repositoryUrl, libFolderName )
   {
     console.log();
     console.log("Missing [repository url]");
+    console.log("(e.g. git@github.com:HKdigital/jslib--hkd-base.git)");
     console.log();
     process.exit();
   }
