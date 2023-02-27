@@ -38,5 +38,5 @@ export async function generatePluginsConfig()
         defaultHandler(warning);
       }
     } )
-  ]
+  ];
 }

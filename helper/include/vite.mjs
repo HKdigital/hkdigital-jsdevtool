@@ -361,7 +361,12 @@ export async function generateDefaultResolveConfig()
 {
   const configResolve = {
 
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.css'],
+    extensions: [
+      '.mjs', '.js',
+      // '.ts', '.jsx', '.tsx',
+      '.json',
+      '.css', '.scss'
+    ],
 
     alias: [ ...await getDefaultAliasesForVite() ]
   };
