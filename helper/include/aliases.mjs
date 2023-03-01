@@ -126,7 +126,9 @@ export async function getAliasEntriesForAllLibs()
 
     entries[ "@" + libName ] = libPath;
 
-    if( libName.startsWith("jslib-") || libName.startsWith("eslib-") )
+    if( libName.startsWith("jslib-") ||
+        libName.startsWith("eslib-") ||
+        libName.startsWith("styles-") )
     {
       let skip = libName.indexOf("-") + 1;
 
