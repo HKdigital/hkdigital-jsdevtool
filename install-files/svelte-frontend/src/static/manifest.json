@@ -14,17 +14,17 @@
 
   "icons": [
     {
-      "src": "/hk/demo-icons/icon-192.png",
+      "src": "/icons/powered-by-hk/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/hk/demo-icons/icon-512.png",
+      "src": "/icons/powered-by-hk/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/hk/demo-icons/icon-1024.svg",
+      "src": "/icons/powered-by-hk/icon-1024.svg",
       "sizes": "1024x1024",
       "type": "image/svg+xml"
     }
