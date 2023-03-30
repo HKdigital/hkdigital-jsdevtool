@@ -244,7 +244,7 @@ export async function tryImportAliasesFromConfigFile(
       const path = customAliases[ key ];
 
       if( typeof path !== "string" ||
-          !path.startsWith( resolveLibPath() ) )
+          !path.startsWith( resolveProjectPath() ) )
       {
         throw new Error(
           `Invalid value for alias [${key}] in alias configuration ` +
