@@ -3,7 +3,7 @@
 
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
-// import sveltePreprocess from 'svelte-preprocess';
+import sveltePreprocess from 'svelte-preprocess';
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -18,7 +18,7 @@ export async function generatePluginsConfig()
 {
   return /* config.plugins */ [
    svelte( {
-      // preprocess: sveltePreprocess( {} ),
+      preprocess: sveltePreprocess( {} ),
 
       // @see https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/config.md
       onwarn(warning, defaultHandler) {

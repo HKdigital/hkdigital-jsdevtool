@@ -94,11 +94,13 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
     process.exit();
   }
 
-  let forceStr = "";
+  let deinitForceStr = "";
+  let rmForceStr = "";
 
   if( force )
   {
-    forceStr = "-r --force";
+    deinitForceStr = "--force";
+    rmForceStr = "-r --force";
   }
 
   console.log( `Removing git submodule [lib/${libFolderName}]` );
@@ -106,8 +108,8 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
   const projectRootPath = resolveProjectPath();
 
   const cmd =
-    `git submodule deinit ${forceStr} lib/${libFolderName} && \
-     git rm ${forceStr} lib/${libFolderName} && \
+    `git submodule deinit ${deinitForceStr} lib/${libFolderName} && \
+     git rm ${rmForceStr} lib/${libFolderName} && \
      rm -rf .git/modules/lib/${libFolderName}`;
 
   console.log( { cmd } );
