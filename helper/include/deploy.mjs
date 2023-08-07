@@ -38,6 +38,8 @@ export async function loadDeploymentConfig( { deploymentLabel, silent=false } )
     console.log(
       `Missing deployment label [${deploymentLabel}] in ` +
       `deployment config files.`);
+
+    // eslint-disable-next-line no-undef
     process.exit();
   }
 

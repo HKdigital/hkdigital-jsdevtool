@@ -235,6 +235,8 @@ export async function isSymlink( path )
     }
     else {
       console.log(e);
+
+      // eslint-disable-next-line no-undef
       process.exit();
     }
   }

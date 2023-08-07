@@ -21,6 +21,8 @@ export async function gitAddSubmodule( repositoryUrl, libFolderName )
     console.log("Missing [repository url]");
     console.log("(e.g. git@github.com:HKdigital/jslib--hkd-base.git)");
     console.log();
+
+    // eslint-disable-next-line no-undef
     process.exit();
   }
 
@@ -41,6 +43,8 @@ export async function gitAddSubmodule( repositoryUrl, libFolderName )
     console.log();
     console.log(`Folder [lib/${libFolderName}] already exists`);
     console.log();
+
+    // eslint-disable-next-line no-undef
     process.exit();
   }
 
@@ -81,6 +85,8 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
     console.log();
     console.log("Missing [lib folder name]");
     console.log();
+
+    // eslint-disable-next-line no-undef
     process.exit();
   }
 
@@ -91,6 +97,8 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
     console.log();
     console.log(`Folder [lib/${libFolderName}] does not exists`);
     console.log();
+
+    // eslint-disable-next-line no-undef
     process.exit();
   }
 
@@ -140,6 +148,8 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
       console.log();
       console.log("Add parameter [force] to discard all submodule changes");
       console.log();
+
+      // eslint-disable-next-line no-undef
       process.exit();
     }
     else {

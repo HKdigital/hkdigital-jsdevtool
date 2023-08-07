@@ -70,6 +70,8 @@ async function loadArangoDeploymentConfig( deploymentLabel )
     console.log(
       `Missing section [arangodb] in deployment target ` +
       `config [${deploymentLabel}].`);
+
+    // eslint-disable-next-line no-undef
     process.exit();
   }
 
@@ -128,6 +130,8 @@ export async function arangoEnsureInstalled()
     console.log("For installation instructions:");
     console.log("@see https://www.arangodb.com/docs/stable/installation.html");
     console.log();
+
+    // eslint-disable-next-line no-undef
     process.exit();
   }
 }
@@ -303,6 +307,8 @@ arangorestore \
   --server.authentication true \
   --server.database "${database}" \
   --input-directory "${sourceFolder}" \
+  --create-collection true \
+  --overwrite true \
   --log.use-json-format true`;
 
   try {
@@ -311,6 +317,8 @@ arangorestore \
       console.log(
         `Source folder [${stripProjectPath(sourceFolder)}] does not exist`);
       console.log();
+
+      // eslint-disable-next-line no-undef
       process.exit();
     }
 
