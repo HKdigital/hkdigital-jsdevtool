@@ -27,6 +27,7 @@ export async function generatePluginsConfig()
         {
           case "vite-plugin-svelte-css-no-scopable-elements":
           case "unused-export-let":
+          case "a11y-click-events-have-key-events":
             // ignore warning
             return;
 
