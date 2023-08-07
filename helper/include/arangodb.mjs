@@ -298,6 +298,11 @@ export async function arangoRestore(
     `[${stripProjectPath(sourceFolder)}] on [${endpoint}] `);
   console.log();
 
+  //
+  // @see
+  // https://www.arangodb.com/docs/stable/programs-arangorestore-examples.html
+  //
+
   const cmd =
 `
 arangorestore \
