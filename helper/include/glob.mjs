@@ -28,9 +28,9 @@ async function importDependencies()
 {
   if( !expand_glob )
   {
-    const glob = await import( "glob" );
+    const { globSync } = await import( "glob" );
 
-    expand_glob = glob.default.sync;
+    expand_glob = globSync;
   }
 }
 

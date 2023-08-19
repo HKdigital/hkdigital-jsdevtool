@@ -23,6 +23,6 @@
   "homepage": "https://github.com/HKdigital/hkdigital-jsdevtool#readme",
   "dependencies": {
     "cwebp-bin": "^8.0.0",
-    "glob": "^8.1.0"
+    "glob": "^10.3.3"
   }
 }
