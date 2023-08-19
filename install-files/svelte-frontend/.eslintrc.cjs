@@ -1,33 +1,46 @@
 /**
  * @note Make sure that the eslint plugin for svelte has been installed
- * npm install --save-dev eslint-plugin-svelte3
+ *
+ *   npm install --save-dev eslint-plugin-svelte
+ *
+ *   @see https://www.npmjs.com/package/eslint-plugin-svelte
+ *
  */
 module.exports = {
+
   "env": {
+    //
     // @see https://eslint.org/docs/user-guide
     //        /configuring/language-options#specifying-environments
+    //
     "browser": true,
     "es2021": true,
     "commonjs": true,
     "jest": true
   },
+
   "globals": {
   },
+
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+
   "plugins": [
     'svelte3',
     'html'
   ],
+
   "overrides": [
     {
       files: ['*.svelte'],
       processor: 'svelte3/svelte3'
     }
   ],
+
   "extends": "eslint:recommended",
+
   "rules": {
     // @see https://eslint.org/docs/rules/no-unused-vars
     "no-unused-vars": [
@@ -56,10 +69,11 @@ module.exports = {
       "always"
     ]
   },
+
   "settings": {
-    "svelte3/ignore-styles": () => true,
-    'svelte3/ignore-warnings': (warning) => {
-      return warning.code === 'a11y-click-events-have-key-events';
-    }
+    // "svelte3/ignore-styles": () => true,
+    // 'svelte3/ignore-warnings': (warning) => {
+    //   return warning.code === 'a11y-click-events-have-key-events';
+    // }
   }
 };
