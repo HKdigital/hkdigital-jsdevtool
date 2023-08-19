@@ -8,7 +8,7 @@
  */
 module.exports = {
 
-  "env": {
+  env: {
     //
     // @see https://eslint.org/docs/user-guide
     //        /configuring/language-options#specifying-environments
@@ -19,39 +19,47 @@ module.exports = {
     "jest": true
   },
 
-  "globals": {
-  },
+  globals: {},
 
-  "parserOptions": {
+  parserOptions: {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
 
-  "plugins": [
-    'svelte3',
+  plugins: [
     'html'
   ],
 
-  "overrides": [
+  overrides: [
     {
-      files: ['*.svelte'],
-      processor: 'svelte3/svelte3'
+      files: ['*.svelte']
     }
   ],
 
-  "extends": "eslint:recommended",
+  extends: ["plugin:svelte/recommended"],
 
-  "rules": {
+  rules: {
+    //
     // @see https://eslint.org/docs/rules/no-unused-vars
+    //
     "no-unused-vars": [
       "warn", {
       "vars": "all",
-      //"args": "after-used",
-      // "args": "none",
       "args": "all",
       "ignoreRestSiblings": false
       }
     ],
+
+    //
+    // @see https://sveltejs.github.io/eslint-plugin-svelte/rules/valid-compile/
+    //
+    "svelte/valid-compile": [
+      "error",
+      {
+        "ignoreWarnings": true
+      }
+    ],
+
     "indent": [
       "off",
       2
@@ -70,10 +78,5 @@ module.exports = {
     ]
   },
 
-  "settings": {
-    // "svelte3/ignore-styles": () => true,
-    // 'svelte3/ignore-warnings': (warning) => {
-    //   return warning.code === 'a11y-click-events-have-key-events';
-    // }
-  }
+  settings: {}
 };
