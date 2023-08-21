@@ -44,7 +44,7 @@ export async function generatePluginsConfig()
 
         //
         // The default handler will shown warnings in the terminal
-        // output
+        // output during development and build
         //
         defaultHandler(warning);
       }
