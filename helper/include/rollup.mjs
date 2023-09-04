@@ -578,5 +578,5 @@ async function importDependencies()
   watch = rollupModule.watch;
 
   run = (await import( "@rollup/plugin-run" )).default;
-  sourcemaps = (await import("rollup-plugin-sourcemaps")).default;
+  sourcemaps = (await import("@edugis/rollup-plugin-sourcemaps")).default;
 }
