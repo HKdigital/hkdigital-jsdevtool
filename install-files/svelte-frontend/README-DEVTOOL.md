@@ -31,3 +31,13 @@ the available commands.
 ```bash
 node devtool.mjs
 ```
+
+### Visual Studio Code...
+
+Visual Studio code can use a TypeScript checker to highlight issues or eslint. 
+
+Configuring this without placing configuration at duplicate locations is work in progress...
+
+If you want Visual Studio Code to check using esling, you should install the eslint plugin.
+
+@see https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
