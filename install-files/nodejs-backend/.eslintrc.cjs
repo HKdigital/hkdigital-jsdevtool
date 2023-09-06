@@ -29,6 +29,7 @@ module.exports = {
       "ignoreRestSiblings": false
       }
     ],
+
     "indent": [
       "off",
       2

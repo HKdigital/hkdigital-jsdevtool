@@ -5,6 +5,12 @@
  *
  *   @see https://www.npmjs.com/package/eslint-plugin-svelte
  *
+ * --
+ *
+ * @note for Visual Studio Code install the eslint plugin
+ *
+ *   @see https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+ *
  */
 module.exports = {
 
@@ -49,6 +55,11 @@ module.exports = {
       "ignoreRestSiblings": false
       }
     ],
+
+    //
+    // Mark undefined functions or variables as error
+    //
+    "no-undef": "error",
 
     //
     // @see https://sveltejs.github.io/eslint-plugin-svelte/rules/valid-compile/
