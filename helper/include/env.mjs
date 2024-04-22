@@ -1,8 +1,8 @@
 
-import { resolveConfigPath } from "./paths.mjs";
-import { isFile } from "./fs.mjs";
+import { resolveConfigPath } from './paths.mjs';
+import { isFile } from './fs.mjs';
 
-import { asyncImport } from "./import.mjs";
+import { asyncImport } from './import.mjs';
 
 // -------------------------------------------------------------------- Function
 
@@ -18,10 +18,10 @@ export async function setEnvVarsFromConfigFiles( silent=false )
   let localEnvVars = {};
 
   const defaultEnvVarsPath =
-    resolveConfigPath("env.default.js");
+    resolveConfigPath('env.default.js');
 
   const localEnvVarsPath =
-    resolveConfigPath("env.local.js");
+    resolveConfigPath('env.local.js');
 
   if( await isFile( defaultEnvVarsPath ) )
   {
@@ -30,7 +30,7 @@ export async function setEnvVarsFromConfigFiles( silent=false )
     if( !(module_.default instanceof Object) )
     {
       console.log(`- Invalid config file [${defaultEnvVarsPath}]`);
-      console.log(`  (should export settings via [default])`);
+      console.log('  (should export settings via [default])');
       console.log();
       process.exit(1);
     }
@@ -53,7 +53,7 @@ export async function setEnvVarsFromConfigFiles( silent=false )
     if( !(module_.default instanceof Object) )
     {
       console.log(`- Invalid config file [${localEnvVarsPath}]`);
-      console.log(`  (should export settings via [default])`);
+      console.log('  (should export settings via [default])');
       console.log();
       process.exit(1);
     }
@@ -82,7 +82,7 @@ export async function setEnvVarsFromConfigFiles( silent=false )
   if( !silent && Object.keys(mergedEnvVars).length > 0 )
   {
     // console.log( "* Set environment variables:", mergedEnvVars );
-    console.log( "* Set environment variables from [config] folder" );
+    console.log( '* Set environment variables from [config] folder' );
   }
 }
 
@@ -100,14 +100,14 @@ function ensureEnvVarsAreStrings( { vars, debugPath } )
   try {
     if( !(vars instanceof Object) )
     {
-      throw new Error("Expected object [vars]");
+      throw new Error('Expected object [vars]');
     }
 
     for( const key in vars )
     {
       const value = vars[ key ];
 
-      if( typeof value !== "string" )
+      if( typeof value !== 'string' )
       {
         throw new Error(
           `The value of environment variable [${key}] should be a string`);

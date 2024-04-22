@@ -10,21 +10,21 @@ import { resolveConfigPath,
          resolveLibPath,
          resolveDistPath,
          stripProjectPath,
-         listLibNames } from "./paths.mjs";
+         listLibNames } from './paths.mjs';
 
-import { getDefaultAliasesForVite } from "./aliases.mjs";
+import { getDefaultAliasesForVite } from './aliases.mjs';
 
-import { isFile } from "./fs.mjs";
+import { isFile } from './fs.mjs';
 
-import { asyncImport } from "./import.mjs";
+import { asyncImport } from './import.mjs';
 
 /* ---------------------------------------------------------------- Internals */
 
-const VITE_DEV_FILE_NAME = "vite.dev.mjs";
-const VITE_BUILD_FILE_NAME = "vite.build.mjs";
-const VITE_PREVIEW_FILE_NAME = "vite.preview.mjs";
+const VITE_DEV_FILE_NAME = 'vite.dev.mjs';
+const VITE_BUILD_FILE_NAME = 'vite.build.mjs';
+const VITE_PREVIEW_FILE_NAME = 'vite.preview.mjs';
 
-const VITE_PUBLIC_FOLDER_PATH = "static";
+const VITE_PUBLIC_FOLDER_PATH = 'static';
 
 /* ---------------------------------------------------------------- Functions */
 
@@ -129,12 +129,12 @@ export async function viteGetAliasesFromLib( libName )
 
   try {
       const aliasConfigPath =
-        resolveLibPath( libName, "config", "aliases.mjs" );
+        resolveLibPath( libName, 'config', 'aliases.mjs' );
 
       if( !await isFile( aliasConfigPath ) )
       {
         console.log(
-          `- Optional alias config file not found at ` +
+          '- Optional alias config file not found at ' +
           `[${stripProjectPath(aliasConfigPath)}].`);
 
         return [];
@@ -146,11 +146,11 @@ export async function viteGetAliasesFromLib( libName )
 
       const displayPath = stripProjectPath( aliasConfigPath );
 
-      if( typeof module_.getCustomAliases !== "function" )
+      if( typeof module_.getCustomAliases !== 'function' )
       {
         throw new Error(
           `Alias configuration file [${displayPath}] does ` +
-          `not export a function [getCustomAliases]`);
+          'not export a function [getCustomAliases]');
       }
 
       const viteEntries = [];
@@ -162,7 +162,7 @@ export async function viteGetAliasesFromLib( libName )
       {
         const path = customAliases[ key ];
 
-        if( typeof path !== "string" ||
+        if( typeof path !== 'string' ||
             !path.startsWith( resolveLibPath() ) )
         {
           throw new Error(
@@ -180,7 +180,7 @@ export async function viteGetAliasesFromLib( libName )
     }
     catch( e )
     {
-      if( e.code !== "ERR_MODULE_NOT_FOUND" )
+      if( e.code !== 'ERR_MODULE_NOT_FOUND' )
       {
         throw e;
       }
@@ -201,8 +201,8 @@ export async function viteGetAliasesFromLib( libName )
  */
 async function readViteConfig( configFileName )
 {
-  let configFilePath = resolveConfigPath( configFileName );
-  let configFileURI = resolveConfigPath( configFileName, { returnURI: true } );
+  const configFilePath = resolveConfigPath( configFileName );
+  const configFileURI = resolveConfigPath( configFileName, { returnURI: true } );
 
   // console.log( { configFilePath } );
 
@@ -211,7 +211,7 @@ async function readViteConfig( configFileName )
     console.log(`- Missing config file [${configFilePath}].`);
     console.log();
 
-    /* eslint-disable-next-line no-undef */
+     
     process.exit(1);
   }
 
@@ -223,7 +223,7 @@ async function readViteConfig( configFileName )
 
   let config;
 
-  if( typeof defaultExport === "function" )
+  if( typeof defaultExport === 'function' )
   {
     config = await defaultExport();
   }
@@ -250,7 +250,7 @@ async function readViteConfig( configFileName )
       config.build.outDir = resolveDistPath();
     }
 
-    if( !("emptyOutDir" in config.build) &&
+    if( !('emptyOutDir' in config.build) &&
          config.build.outDir.startsWith( resolveDistPath() ) )
     {
       /* needed because outDir is outside project root */
@@ -283,7 +283,7 @@ async function readViteConfig( configFileName )
 
     if( resolve.extensions instanceof Array )
     {
-      debugConfig.extensions = resolve.extensions.join(", ");
+      debugConfig.extensions = resolve.extensions.join(', ');
     }
 
     if( resolve.alias instanceof Array )
@@ -294,9 +294,9 @@ async function readViteConfig( configFileName )
 
       for( const current of resolveAlias )
       {
-        if( typeof current === "function" )
+        if( typeof current === 'function' )
         {
-          debugAliases.push(`(custom resolver)`);
+          debugAliases.push('(custom resolver)');
         }
         else if( current instanceof Object  )
         {
@@ -306,7 +306,7 @@ async function readViteConfig( configFileName )
               `${current.find} => ${stripProjectPath(current.replacement)}` );
           }
         }
-        else if( typeof current === "string" ) {
+        else if( typeof current === 'string' ) {
           debugAliases.push( `${stripProjectPath(current)}` );
         }
         else {
@@ -341,7 +341,7 @@ async function readViteConfig( configFileName )
   // console.log("Full config", config);
 
   console.log();
-  console.log( "Main configuration:" );
+  console.log( 'Main configuration:' );
   console.log( debugConfig );
   console.log();
 
@@ -388,5 +388,5 @@ async function importDependencies()
     return;
   }
 
-  viteModule = await import("vite");
+  viteModule = await import('vite');
 }

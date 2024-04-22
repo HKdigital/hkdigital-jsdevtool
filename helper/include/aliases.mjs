@@ -5,11 +5,11 @@ import { resolveProjectPath,
          resolveSrcPath,
          resolveLibPath,
          stripProjectPath,
-         listLibNames } from "./paths.mjs";
+         listLibNames } from './paths.mjs';
 
-import { isFile } from "./fs.mjs";
+import { isFile } from './fs.mjs';
 
-import { asyncImport } from "./import.mjs";
+import { asyncImport } from './import.mjs';
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -78,9 +78,9 @@ export async function getDefaultAliasEntriesForRollup()
 
   // -- Add default alias "@src" if not set
 
-  if( !("@src" in entries) )
+  if( !('@src' in entries) )
   {
-    entries["@src"] = resolveSrcPath();
+    entries['@src'] = resolveSrcPath();
   }
 
   return entries;
@@ -124,22 +124,22 @@ export async function getAliasEntriesForAllLibs()
   {
     const libPath = resolveLibPath( libName );
 
-    entries[ "@" + libName ] = libPath;
+    entries[ '@' + libName ] = libPath;
 
-    if( libName.startsWith("jslib-") ||
-        libName.startsWith("eslib-") ||
-        libName.startsWith("styles-") )
+    if( libName.startsWith('jslib-') ||
+        libName.startsWith('eslib-') ||
+        libName.startsWith('styles-') )
     {
-      let skip = libName.indexOf("-") + 1;
+      let skip = libName.indexOf('-') + 1;
 
-      if( "-" === libName.charAt( skip ) )
+      if( '-' === libName.charAt( skip ) )
       {
         // lib name continas double dash token: e.g. jslib--hkd-base
         // -> skip extra dash
         skip = skip + 1;
       }
 
-      const shortName = "@" + libName.slice( skip );
+      const shortName = '@' + libName.slice( skip );
 
       if( shortName in entries )
       {
@@ -189,17 +189,17 @@ export async function tryImportAliasesFromConfigFile(
   if( libName )
   {
     aliasConfigPath =
-      resolveLibPath( libName, "config", "aliases.mjs" );
+      resolveLibPath( libName, 'config', 'aliases.mjs' );
     }
   else {
     aliasConfigPath =
-      resolveProjectPath( "config", "config-include", "aliases.mjs" );
+      resolveProjectPath( 'config', 'config-include', 'aliases.mjs' );
   }
 
   if( !await isFile( aliasConfigPath ) )
   {
     console.log(
-      `- Optional alias config file not found at ` +
+      '- Optional alias config file not found at ' +
       `[${stripProjectPath(aliasConfigPath)}].`);
     return;
   }
@@ -216,11 +216,11 @@ export async function tryImportAliasesFromConfigFile(
 
     const displayPath = stripProjectPath( aliasConfigPath );
 
-    if( typeof module_.getCustomAliases !== "function" )
+    if( typeof module_.getCustomAliases !== 'function' )
     {
       throw new Error(
         `Alias configuration file [${displayPath}] does ` +
-        `not export a function [getCustomAliases]`);
+        'not export a function [getCustomAliases]');
     }
 
     const customAliases =
@@ -243,7 +243,7 @@ export async function tryImportAliasesFromConfigFile(
 
       const path = customAliases[ key ];
 
-      if( typeof path !== "string" ||
+      if( typeof path !== 'string' ||
           !path.startsWith( resolveProjectPath() ) )
       {
         throw new Error(
@@ -257,7 +257,7 @@ export async function tryImportAliasesFromConfigFile(
   }
   catch( e )
   {
-    if( e.code !== "ERR_MODULE_NOT_FOUND" )
+    if( e.code !== 'ERR_MODULE_NOT_FOUND' )
     {
       throw e;
     }

@@ -1,28 +1,28 @@
 
-import pathTool from 'path';
+import pathTool from 'node:path';
 
 import { access,
          mkdirSync,
          promises as fsPromises,
          createReadStream,
-         createWriteStream } from "fs";
+         createWriteStream } from 'node:fs';
 
 const stats = fsPromises.stat;
 const unlink = fsPromises.unlink;
 const readlink = fsPromises.readlink;
 
-import { promisify } from 'util';
+import { promisify } from 'node:util';
 
-import stream from "stream";
+import stream from 'node:stream';
 
 export const pipelineAsync = promisify( stream.pipeline );
 
 import { expectString,
-         expectObject } from "./expect.mjs";
+         expectObject } from './expect.mjs';
 
 import { stripProjectPath,
          sandboxPath,
-         dirname } from "./paths.mjs";
+         dirname } from './paths.mjs';
 
 // ------------------------------------------------------------------ Re-exports
 
@@ -58,8 +58,8 @@ export const symlink = fsPromises.symlink;
  */
 export async function copyFile( sourcePath, targetPath, options )
 {
-  expectString( sourcePath, "Missing or invalid parameter [sourcePath]");
-  expectString( targetPath, "Missing or invalid parameter [targetPath]");
+  expectString( sourcePath, 'Missing or invalid parameter [sourcePath]');
+  expectString( targetPath, 'Missing or invalid parameter [targetPath]');
 
   options = Object.assign(
     {
@@ -69,12 +69,12 @@ export async function copyFile( sourcePath, targetPath, options )
     },
     options );
 
-  let overwrite = options.overwrite;
+  const overwrite = options.overwrite;
 
   sourcePath = sandboxPath( sourcePath, options );
   targetPath = sandboxPath( targetPath, options );
 
-  let targetFolder = dirname(targetPath);
+  const targetFolder = dirname(targetPath);
 
   // console.log("COPY FILE",
   // {
@@ -87,10 +87,10 @@ export async function copyFile( sourcePath, targetPath, options )
 
   if( !await isFile( sourcePath, options ) )
   {
-    throw new Error("Source file was not found at path ["+sourcePath+"]");
+    throw new Error('Source file was not found at path ['+sourcePath+']');
   }
 
-  let targetFileExists = await isFile( targetPath, options );
+  const targetFileExists = await isFile( targetPath, options );
 
   if( !overwrite && targetFileExists )
   {
@@ -106,11 +106,11 @@ export async function copyFile( sourcePath, targetPath, options )
   if( !targetFileExists && await exists( targetPath, options ) )
   {
     throw new Error(
-      "A file system node exists at path ["+targetPath+"], " +
-      "but is not a file");
+      'A file system node exists at path ['+targetPath+'], ' +
+      'but is not a file');
   }
 
-  let sourceStream = await tryGetReadStream( sourcePath, options );
+  const sourceStream = await tryGetReadStream( sourcePath, options );
 
   // await writeStream( targetPath, sourceStream, { overwrite } );
   await writeStream( targetPath, sourceStream, options );
@@ -159,7 +159,7 @@ export async function readJSONFile( path )
 export async function isFolder( path, options )
 {
   try {
-    let stats_ = await stats( path, options );
+    const stats_ = await stats( path, options );
 
     if( !stats_ )
     {
@@ -190,7 +190,7 @@ export async function isFolder( path, options )
 export async function isFile( path, options )
 {
   try {
-    let stats_ = await stats( path, options );
+    const stats_ = await stats( path, options );
 
     if( !stats_ )
     {
@@ -218,7 +218,7 @@ export async function isFile( path, options )
  */
 export async function isSymlink( path )
 {
-  expectString( path, "Missing or invalid parameter [path]");
+  expectString( path, 'Missing or invalid parameter [path]');
 
   try {
     await readlink( path );
@@ -236,7 +236,7 @@ export async function isSymlink( path )
     else {
       console.log(e);
 
-      // eslint-disable-next-line no-undef
+       
       process.exit();
     }
   }
@@ -259,7 +259,7 @@ export async function isSymlink( path )
  */
 export async function listFolderNames( containerPath, options )
 {
-  let filter = options ? options.filter : null;
+  const filter = options ? options.filter : null;
 
   try {
     const basenames = await fsPromises.readdir( containerPath );
@@ -319,7 +319,7 @@ export async function ensureFolder( path )
         _reject = reject;
       } );
 
-  access( path, function( err )
+  access( path, ( err ) =>
   {
     if( err && err.code === 'ENOENT')
     {
@@ -411,17 +411,17 @@ export async function tryGetReadStream( path, options )
 export async function writeStream( path, fileContents, options={} )
 {
   expectString( path,
-    "Missing or invalid parameter [path]");
+    'Missing or invalid parameter [path]');
 
   if( !isReadableStream( fileContents ) )
   {
     throw new Error(
-      "Missing or invalid parameter [fileContents] " +
-      "(expected readable stream)");
+      'Missing or invalid parameter [fileContents] ' +
+      '(expected readable stream)');
   }
 
   expectObject( options,
-    "Missing or invalid parameter [options]");
+    'Missing or invalid parameter [options]');
 
   const writeParams = await _prepareWrite( path, options );
 
@@ -430,17 +430,17 @@ export async function writeStream( path, fileContents, options={} )
   //
   // @note stream contents -> use 'binary' encoding by default
   //
-  let encoding = writeParams.encoding || 'binary';
+  const encoding = writeParams.encoding || 'binary';
 
-  return _finalizeWrite( writeParams, new Promise( async function( resolve, reject )
+  return _finalizeWrite( writeParams, new Promise( async ( resolve, reject ) =>
     {
-      let flags = writeParams.append ? 'a' : 'w';
+      const flags = writeParams.append ? 'a' : 'w';
 
       //
       // @note write streams are non-blocking
       // @note flags 'w' creates a new file or truncates an existing file
       //
-      let writeStream =
+      const writeStream =
         createWriteStream( writePath, { encoding, flags } );
 
       writeStream.on('error', async ( err ) => {
@@ -526,9 +526,9 @@ export async function exists( path, options )
 {
   path = sandboxPath( path, options );
 
-  return new Promise( function( resolve /*, reject*/ )
+  return new Promise( ( resolve /*, reject*/ ) =>
     {
-      access( path, async function(err)
+      access( path, async (err) =>
         {
           if( err && err.code === 'ENOENT')
           {
@@ -610,7 +610,7 @@ async function _prepareWrite( path, options )
 
   if( writeParams.autoCreateParentFolders )
   {
-    let outputFolder = dirname( outputPath );
+    const outputFolder = dirname( outputPath );
 
     // console.log(`Create folder [${outputFolder}]`);
 
@@ -647,7 +647,7 @@ async function _finalizeWrite( writeParams, writeDonePromise )
   }
   catch( e )
   {
-    console.log("ERROR", e);
+    console.log('ERROR', e);
 
     await tryRemoveFile(
       writeParams.outputPath, { allowProjectParentFolderAccess } );
@@ -669,7 +669,7 @@ async function _finalizeWrite( writeParams, writeDonePromise )
  */
 async function _ensureAllowWrite( path, overwrite=false )
 {
-  let allowProjectParentFolderAccess = true;
+  const allowProjectParentFolderAccess = true;
 
   if( !overwrite )
   {
@@ -684,7 +684,7 @@ async function _ensureAllowWrite( path, overwrite=false )
   {
     throw new Error(
       `Cannot write file [${path}] (a file node already exists that ` +
-      "is not a regular file)");
+      'is not a regular file)');
   }
 }
 
@@ -711,11 +711,11 @@ async function _ensureAllowWrite( path, overwrite=false )
  */
 export async function isFileOrDoesNotExist( path, options )
 {
-  expectString( path, "Missing or invalid parameter [path]");
+  expectString( path, 'Missing or invalid parameter [path]');
 
   path = sandboxPath( path, options );
 
-  let stats_ = await stats( path, options );
+  const stats_ = await stats( path, options );
 
   if( !stats_ )
   {
@@ -742,7 +742,7 @@ export async function tryRemoveFile( path, options )
 {
   path = sandboxPath( path, options );
 
-  return new Promise( async function( resolve /*, reject*/ )
+  return new Promise( async ( resolve /*, reject*/ ) =>
     {
       if( await isFile( path, options ) )
       {
@@ -786,7 +786,7 @@ export async function tryRemoveSymlink( path, options )
 
   return new Promise(
       /* eslint-disable no-async-promise-executor */
-      async function( resolve /*, reject*/ )
+      async ( resolve /*, reject*/ ) =>
     {
       if( await isSymlink( path, options ) )
       {

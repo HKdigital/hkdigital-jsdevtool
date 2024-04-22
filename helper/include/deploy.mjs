@@ -1,17 +1,14 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { expectNotEmptyString } from "./expect.mjs";
+import { expectNotEmptyString } from './expect.mjs';
 
-import { resolveProjectPath,
-         resolveSrcPath,
-         resolveLibPath,
-         stripProjectPath,
-         resolveConfigPath } from "./paths.mjs";
+import { stripProjectPath,
+         resolveConfigPath } from './paths.mjs';
 
-import { isFile } from "./fs.mjs";
+import { isFile } from './fs.mjs';
 
-import { asyncImport } from "./import.mjs";
+import { asyncImport } from './import.mjs';
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -29,7 +26,7 @@ import { asyncImport } from "./import.mjs";
 export async function loadDeploymentConfig( { deploymentLabel, silent=false } )
 {
   expectNotEmptyString( deploymentLabel,
-    "Missing or invalid parameter [deploymentLabel]" );
+    'Missing or invalid parameter [deploymentLabel]' );
 
   const allDeploymentConfigs = await loadAllDeploymentConfigs( silent );
 
@@ -37,9 +34,9 @@ export async function loadDeploymentConfig( { deploymentLabel, silent=false } )
   {
     console.log(
       `Missing deployment label [${deploymentLabel}] in ` +
-      `deployment config files.`);
+      'deployment config files.');
 
-    // eslint-disable-next-line no-undef
+
     process.exit();
   }
 
@@ -64,10 +61,10 @@ let defaultDeploymentVars = {};
   let localDeploymentVars = {};
 
   const defaultDeploymentVarsPath =
-    resolveConfigPath("deploy.default.js");
+    resolveConfigPath('deploy.default.js');
 
   const localDeploymentVarsPath =
-    resolveConfigPath("deploy.local.js");
+    resolveConfigPath('deploy.local.js');
 
   if( await isFile( defaultDeploymentVarsPath ) )
   {
@@ -76,7 +73,7 @@ let defaultDeploymentVars = {};
     if( !(module_.default instanceof Object) )
     {
       console.log(`- Invalid config file [${defaultDeploymentVarsPath}]`);
-      console.log(`  (should export settings via [default])`);
+      console.log('  (should export settings via [default])');
       console.log();
       process.exit(1);
     }
@@ -85,7 +82,7 @@ let defaultDeploymentVars = {};
 
     if( !silent )
     {
-      console.log( `* Loaded deployment variables from ` +
+      console.log( '* Loaded deployment variables from ' +
                    `[${stripProjectPath(defaultDeploymentVarsPath)}]` );
     }
   }
@@ -100,7 +97,7 @@ let defaultDeploymentVars = {};
     if( !(module_.default instanceof Object) )
     {
       console.log(`- Invalid config file [${localDeploymentVarsPath}]`);
-      console.log(`  (should export settings via [default])`);
+      console.log('  (should export settings via [default])');
       console.log();
       process.exit(1);
     }
@@ -109,7 +106,7 @@ let defaultDeploymentVars = {};
 
     if( !silent )
     {
-      console.log( `* Loaded deployment variables from ` +
+      console.log( '* Loaded deployment variables from ' +
                    `[${stripProjectPath(localDeploymentVarsPath)}]` );
     }
   }

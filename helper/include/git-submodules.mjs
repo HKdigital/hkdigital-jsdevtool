@@ -1,9 +1,9 @@
 
 import { resolveProjectPath,
-         resolveLibPath } from "./paths.mjs";
+         resolveLibPath } from './paths.mjs';
 
-import { isFolder } from "./fs.mjs";
-import { execAsync } from "./shell.mjs";
+import { isFolder } from './fs.mjs';
+import { execAsync } from './shell.mjs';
 
 // ---------------------------------------------------------------------- Method
 
@@ -18,11 +18,11 @@ export async function gitAddSubmodule( repositoryUrl, libFolderName )
   if( !repositoryUrl )
   {
     console.log();
-    console.log("Missing [repository url]");
-    console.log("(e.g. git@github.com:HKdigital/jslib--hkd-base.git)");
+    console.log('Missing [repository url]');
+    console.log('(e.g. git@github.com:HKdigital/jslib--hkd-base.git)');
     console.log();
 
-    // eslint-disable-next-line no-undef
+     
     process.exit();
   }
 
@@ -30,7 +30,7 @@ export async function gitAddSubmodule( repositoryUrl, libFolderName )
   {
     libFolderName = repositoryUrl.split(/[\\/]/).pop(); // basename
 
-    if( libFolderName.endsWith(".git") )
+    if( libFolderName.endsWith('.git') )
     {
       libFolderName = libFolderName.slice( 0, -4 );
     }
@@ -44,7 +44,7 @@ export async function gitAddSubmodule( repositoryUrl, libFolderName )
     console.log(`Folder [lib/${libFolderName}] already exists`);
     console.log();
 
-    // eslint-disable-next-line no-undef
+     
     process.exit();
   }
 
@@ -83,10 +83,10 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
   if( !libFolderName )
   {
     console.log();
-    console.log("Missing [lib folder name]");
+    console.log('Missing [lib folder name]');
     console.log();
 
-    // eslint-disable-next-line no-undef
+     
     process.exit();
   }
 
@@ -98,17 +98,17 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
     console.log(`Folder [lib/${libFolderName}] does not exists`);
     console.log();
 
-    // eslint-disable-next-line no-undef
+     
     process.exit();
   }
 
-  let deinitForceStr = "";
-  let rmForceStr = "";
+  let deinitForceStr = '';
+  let rmForceStr = '';
 
   if( force )
   {
-    deinitForceStr = "--force";
-    rmForceStr = "-r --force";
+    deinitForceStr = '--force';
+    rmForceStr = '-r --force';
   }
 
   console.log( `Removing git submodule [lib/${libFolderName}]` );
@@ -141,15 +141,15 @@ export async function gitRemoveSubmodule( libFolderName, force=false )
   {
     const stderr = e.stderr;
 
-    if( stderr.includes("-f to force removal") )
+    if( stderr.includes('-f to force removal') )
     {
       console.log();
       console.log(`The submodule [lib/${libFolderName}] may contain local changes.`);
       console.log();
-      console.log("Add parameter [force] to discard all submodule changes");
+      console.log('Add parameter [force] to discard all submodule changes');
       console.log();
 
-      // eslint-disable-next-line no-undef
+       
       process.exit();
     }
     else {
@@ -167,7 +167,7 @@ export async function gitDisplaySubmodulesStatus()
 {
   const projectRootPath = resolveProjectPath();
 
-  const cmd = `git submodule foreach --recursive 'git status && echo "--"'`;
+  const cmd = 'git submodule foreach --recursive \'git status && echo "--"\'';
 
   const { stdout, stderr } = await execAsync( cmd, { cwd: projectRootPath } );
 
@@ -194,7 +194,7 @@ export async function gitSubmodulesPull()
 {
   const projectRootPath = resolveProjectPath();
 
-  const cmd = `git submodule foreach --recursive 'git pull --no-rebase && echo "--"'`;
+  const cmd = 'git submodule foreach --recursive \'git pull --no-rebase && echo "--"\'';
 
   const { stdout, stderr } = await execAsync( cmd, { cwd: projectRootPath } );
 
@@ -220,7 +220,7 @@ export async function gitSubmodulesPush()
 {
   const projectRootPath = resolveProjectPath();
 
-  const cmd = `git submodule foreach --recursive 'git push && echo "--"'`;
+  const cmd = 'git submodule foreach --recursive \'git push && echo "--"\'';
 
   const { stdout, stderr } = await execAsync( cmd, { cwd: projectRootPath } );
 

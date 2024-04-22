@@ -13,10 +13,10 @@ function twoDigits( value )
 {
   if( Math.abs(value) < 10 )
   {
-    return (value > 0 ? "" : "-") + "0" + Math.abs(value);
+    return (value > 0 ? '' : '-') + '0' + Math.abs(value);
   }
   else {
-    return "" + value;
+    return '' + value;
   }
 }
 
@@ -39,7 +39,7 @@ export function generateFolderDateTimeStamp()
   const minutes = twoDigits( d.getMinutes() );
   const seconds = twoDigits( d.getSeconds() );
 
-  let offset = twoDigits(d.getTimezoneOffset() / 60 );
+  const offset = twoDigits(d.getTimezoneOffset() / 60 );
 
   return `${year}-${month}-${day}~${hours}_${minutes}_${seconds}~${offset}`;
 }

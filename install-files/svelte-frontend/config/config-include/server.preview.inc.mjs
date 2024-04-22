@@ -1,7 +1,7 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { generateServerConfig } from "./vite.dev.server.inc.mjs";
+import { generateServerConfig } from './vite.dev.server.inc.mjs';
 
 /* ------------------------------------------------------------------ Exports */
 
@@ -18,7 +18,7 @@ export async function generatePreviewConfig()
 
   return /* config.preview */ {
     port: server.port || 8888,
-    host: server.host || "0.0.0.0",
+    host: server.host || '0.0.0.0',
 
     // cors: {
     //   origin: "*"

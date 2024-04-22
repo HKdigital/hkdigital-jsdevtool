@@ -1,9 +1,9 @@
 
 import { stripProjectPath,
          resolveProjectPath,
-         resolveDevToolsPath } from "./paths.mjs";
+         resolveDevToolsPath } from './paths.mjs';
 
-import { copyFile } from "./fs.mjs";
+import { copyFile } from './fs.mjs';
 
 
 /**
@@ -20,16 +20,16 @@ import { copyFile } from "./fs.mjs";
  */
 export async function updateDevtool( { installFilesFolderName, silent=false } )
 {
-  if( typeof installFilesFolderName !== "string" )
+  if( typeof installFilesFolderName !== 'string' )
   {
-    throw new Error("Missing or invalid parameter [installFilesFolderName]");
+    throw new Error('Missing or invalid parameter [installFilesFolderName]');
   }
 
-  const devToolFileName = "devtool.mjs";
+  const devToolFileName = 'devtool.mjs';
 
   const fromPath = 
     resolveDevToolsPath(
-      "install-files",
+      'install-files',
       installFilesFolderName,
       devToolFileName );
 
@@ -40,8 +40,8 @@ export async function updateDevtool( { installFilesFolderName, silent=false } )
   if( !silent )
   {
     console.log(
-      `\nNote: to upgrade the [hkdigital-jsdevtool] folder contents, see ` +
-      `[https://github.com/HKdigital/hkdigital-jsdevtool].`);
+      '\nNote: to upgrade the [hkdigital-jsdevtool] folder contents, see ' +
+      '[https://github.com/HKdigital/hkdigital-jsdevtool].');
 
     console.log(
       `\n* Copied [${stripProjectPath(fromPath)}] ` +

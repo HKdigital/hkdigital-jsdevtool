@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import { existsSync } from "fs";
+import { existsSync } from 'node:fs';
 
 /* --------------------------------------------------------------- Internals  */
 
-const PROJECT_TYPE = "svelte-frontend";
+const PROJECT_TYPE = 'svelte-frontend';
 
 /* ---------------------------------------------------------- Dynamic imports */
 
@@ -29,7 +29,7 @@ let generateOptimizedImages;
  */
 async function importDependencies()
 {
-  const helperPath = "./hkdigital-jsdevtool/helper/index.mjs";
+  const helperPath = './hkdigital-jsdevtool/helper/index.mjs';
 
   if( !existsSync( helperPath ) )
   {
@@ -74,29 +74,29 @@ async function main()
   {
     /* Development */
 
-    case "run":
+    case 'run':
       /* async */ viteRunInDevelopmentMode();
       break;
 
-    case "build":
+    case 'build':
       /* async */ viteBuildDist();
       break;
 
-    case "preview":
+    case 'preview':
        /* async */  vitePreviewProjectFromDist();
       break;
 
-    case "update-deps":
+    case 'update-deps':
       /* async */ updateDeps();
       break;
 
-    case "update-devtool":
+    case 'update-devtool':
       /* async */ updateDevtool( { installFilesFolderName: PROJECT_TYPE } );
       break;
 
     /* Lib */
 
-    case "lib-add":
+    case 'lib-add':
       {
         const repositoryUrl = argv[1];
         const libFolderName = argv[2];
@@ -105,10 +105,10 @@ async function main()
       }
       break;
 
-    case "lib-remove":
+    case 'lib-remove':
       {
         const libFolderName = argv[1];
-        const force = argv[2] === "force";
+        const force = argv[2] === 'force';
 
         /* async */ gitRemoveSubmodule( libFolderName, force );
       }
@@ -116,21 +116,21 @@ async function main()
 
     /* Submodules */
 
-    case "submodules-status":
+    case 'submodules-status':
       /* async */ gitDisplaySubmodulesStatus();
       break;
 
-    case "submodules-pull":
+    case 'submodules-pull':
       /* async */ gitSubmodulesPull();
       break;
 
-    case "submodules-push":
+    case 'submodules-push':
       /* async */ gitSubmodulesPush();
       break;
 
     /* Images */
 
-    case "images-optimize":
+    case 'images-optimize':
        {
         const sourcePath = argv[1];
 

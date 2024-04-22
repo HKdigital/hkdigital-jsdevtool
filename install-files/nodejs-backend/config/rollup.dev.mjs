@@ -9,7 +9,7 @@ import alias from '@rollup/plugin-alias';
 import { getDefaultAliasEntriesForRollup,
          createBannerFromPackageJson,
          onBootstrapReadyBannerCode,
-         onBootstrapReadyFooterCode } from "../hkdigital-jsdevtool/helper/index.mjs";
+         onBootstrapReadyFooterCode } from '../hkdigital-jsdevtool/helper/index.mjs';
 
 /* ------------------------------------------------------ Export createConfig */
 
@@ -47,7 +47,7 @@ export async function createConfig()
 
   const aliasEntries = { ...await getDefaultAliasEntriesForRollup() };
 
-  console.log( "\nAliases", aliasEntries );
+  console.log( '\nAliases', aliasEntries );
 
   // ---------------------------------------------------------------------------
   // Plugins

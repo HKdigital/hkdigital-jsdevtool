@@ -2,7 +2,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 // import { nodeResolve } from '@rollup/plugin-node-resolve';
 
-import copy from "rollup-plugin-copy";
+import copy from 'rollup-plugin-copy';
 import json from '@rollup/plugin-json';
 
 import alias from '@rollup/plugin-alias';
@@ -10,7 +10,7 @@ import alias from '@rollup/plugin-alias';
 import { getDefaultAliasEntriesForRollup,
          createBannerFromPackageJson,
          onBootstrapReadyBannerCode,
-         onBootstrapReadyFooterCode } from "../hkdigital-jsdevtool/helper/index.mjs";
+         onBootstrapReadyFooterCode } from '../hkdigital-jsdevtool/helper/index.mjs';
 
 // import { getConfigAliasEntries } from "./rollup.aliases.inc.mjs";
 
@@ -50,7 +50,7 @@ export async function createConfig()
 
   const aliasEntries = { ...await getDefaultAliasEntriesForRollup() };
 
-  console.log( "\nAliases", aliasEntries );
+  console.log( '\nAliases', aliasEntries );
 
   // ---------------------------------------------------------------------------
   // Plugins

@@ -10,7 +10,7 @@ import { packageJsonExists,
          runGitInit,
          mergePackageJsons,
          runNpmInstall,
-         showHowtoDevTool } from "../helper/index.mjs";
+         showHowtoDevTool } from '../helper/index.mjs';
 
 // -----------------------------------------------------------------------------
 // Run setup
@@ -21,9 +21,9 @@ import { packageJsonExists,
 
   if( await packageJsonExists() )
   {
-    console.log(`Setup NodeJS (backend) script will not run:`);
-    console.log(`- A file [package.json] already exists.`);
-    console.log(`  (setup will not install over an existing project)`);
+    console.log('Setup NodeJS (backend) script will not run:');
+    console.log('- A file [package.json] already exists.');
+    console.log('  (setup will not install over an existing project)');
     console.log();
     return;
   }

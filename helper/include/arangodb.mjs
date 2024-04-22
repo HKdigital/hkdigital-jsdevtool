@@ -2,20 +2,20 @@
 /* ------------------------------------------------------------------ Imports */
 
 import { expectObject,
-         expectNotEmptyString } from "./expect.mjs";
+         expectNotEmptyString } from './expect.mjs';
 
 import { resolveProjectPath,
-         stripProjectPath } from "./paths.mjs";
+         stripProjectPath } from './paths.mjs';
 
 import { symlink,
          tryRemoveSymlink,
-         isFolder } from "./fs.mjs";
+         isFolder } from './fs.mjs';
 
-import { execAsync } from "./shell.mjs";
+import { execAsync } from './shell.mjs';
 
-import { loadDeploymentConfig } from "./deploy.mjs";
+import { loadDeploymentConfig } from './deploy.mjs';
 
-import { generateFolderDateTimeStamp } from "./date.mjs";
+import { generateFolderDateTimeStamp } from './date.mjs';
 
 /* ---------------------------------------------------------------- Internals */
 
@@ -30,7 +30,7 @@ function jsonlToArray( str )
 {
   const arr = [];
 
-  const lines = str.split("\n");
+  const lines = str.split('\n');
 
   for( const line of lines )
   {
@@ -61,40 +61,40 @@ function jsonlToArray( str )
 async function loadArangoDeploymentConfig( deploymentLabel )
 {
   expectNotEmptyString( deploymentLabel,
-    "Missing or invalid parameter [deploymentLabel]" );
+    'Missing or invalid parameter [deploymentLabel]' );
 
   const deploymentConfig = await loadDeploymentConfig( { deploymentLabel } );
 
-  if( !("arangodb" in deploymentConfig) )
+  if( !('arangodb' in deploymentConfig) )
   {
     console.log(
-      `Missing section [arangodb] in deployment target ` +
+      'Missing section [arangodb] in deployment target ' +
       `config [${deploymentLabel}].`);
 
-    // eslint-disable-next-line no-undef
+     
     process.exit();
   }
 
   const config = deploymentConfig.arangodb;
 
   expectObject( config,
-    `Missing or invalid deployment config ` +
+    'Missing or invalid deployment config ' +
     `[${deploymentLabel}.arangodb` );
 
   expectNotEmptyString( config.endpoint,
-    `Missing or invalid deployment config ` +
+    'Missing or invalid deployment config ' +
     `[${deploymentLabel}.arangodb.endpoint]`);
 
   expectNotEmptyString( config.username,
-    `Missing or invalid deployment config ` +
+    'Missing or invalid deployment config ' +
     `[${deploymentLabel}.arangodb.username]`);
 
   expectNotEmptyString( config.password,
-    `Missing or invalid deployment config ` +
+    'Missing or invalid deployment config ' +
     `[${deploymentLabel}.arangodb.password]`);
 
   expectNotEmptyString( config.database,
-    `Missing or invalid deployment config ` +
+    'Missing or invalid deployment config ' +
     `[${deploymentLabel}.arangodb.database]`);
 
 
@@ -103,15 +103,15 @@ async function loadArangoDeploymentConfig( deploymentLabel )
 
 /* ------------------------------------------------------------------ Exports */
 
-export const DATABASE_ROOT_FOLDER = "database";
-export const DATABASE_KIND_PREFIX = "arango-";
+export const DATABASE_ROOT_FOLDER = 'database';
+export const DATABASE_KIND_PREFIX = 'arango-';
 
 /**
  * Stop program execution if arangotools are not installed
  */
 export async function arangoEnsureInstalled()
 {
-  const cmd = `arangodump --version-json`;
+  const cmd = 'arangodump --version-json';
 
   try {
     // console.log( cmd );
@@ -124,14 +124,14 @@ export async function arangoEnsureInstalled()
   {
     console.log( e );
     console.log();
-    console.log( "- ArangoDB is not installed locally " +
-                 "(required to run arangodump and arangorestore)" );
+    console.log( '- ArangoDB is not installed locally ' +
+                 '(required to run arangodump and arangorestore)' );
     console.log();
-    console.log("For installation instructions:");
-    console.log("@see https://www.arangodb.com/docs/stable/installation.html");
+    console.log('For installation instructions:');
+    console.log('@see https://www.arangodb.com/docs/stable/installation.html');
     console.log();
 
-    // eslint-disable-next-line no-undef
+     
     process.exit();
   }
 }
@@ -144,12 +144,12 @@ export async function arangoEnsureInstalled()
  * @param {string} [deploymentLabel="local"]
  *   Name of the deployment target section.
  */
-export async function arangoDump( deploymentLabel="local" )
+export async function arangoDump( deploymentLabel='local' )
 {
   await arangoEnsureInstalled();
 
   expectNotEmptyString( deploymentLabel,
-    "Missing or invalid parameter [deploymentLabel]" );
+    'Missing or invalid parameter [deploymentLabel]' );
 
   console.log();
 
@@ -163,7 +163,7 @@ export async function arangoDump( deploymentLabel="local" )
   const destFolder =
     resolveProjectPath(
       DATABASE_ROOT_FOLDER,
-      "dumps",
+      'dumps',
       DATABASE_KIND_PREFIX + deploymentLabel,
       dateTimeStamp );
 
@@ -197,7 +197,7 @@ arangodump \
 
     for( const obj of arr )
     {
-      if( "message" in obj )
+      if( 'message' in obj )
       {
         console.log( `* ${obj.message}` );
       }
@@ -210,9 +210,9 @@ arangodump \
     const latestSymlinkPath =
       resolveProjectPath(
         DATABASE_ROOT_FOLDER,
-        "dumps",
+        'dumps',
         DATABASE_KIND_PREFIX + deploymentLabel,
-        "latest" );
+        'latest' );
 
     await tryRemoveSymlink( latestSymlinkPath );
 
@@ -229,7 +229,7 @@ arangodump \
 
       for( const obj of arr )
       {
-        if( "message" in obj && obj.level === "ERROR" )
+        if( 'message' in obj && obj.level === 'ERROR' )
         {
           console.log();
           console.error( `ERROR: ${obj.message}` );
@@ -242,7 +242,7 @@ arangodump \
     }
 
     console.log();
-    console.log("- Failed to dump database\n");
+    console.log('- Failed to dump database\n');
   }
 }
 
@@ -253,24 +253,24 @@ arangodump \
  */
 export async function arangoRestore(
   {
-    deploymentLabel="local",
-    dateTimeStamp="latest",
+    deploymentLabel='local',
+    dateTimeStamp='latest',
     customSourceFolder=null
   } )
 {
   await arangoEnsureInstalled();
 
   expectNotEmptyString( deploymentLabel,
-    "Missing or invalid parameter [deploymentLabel]" );
+    'Missing or invalid parameter [deploymentLabel]' );
 
   if( customSourceFolder )
   {
     expectNotEmptyString( customSourceFolder,
-      "Missing or invalid parameter [customSourceFolder]" );
+      'Missing or invalid parameter [customSourceFolder]' );
   }
   else {
     expectNotEmptyString( dateTimeStamp,
-      "Missing or invalid parameter [dateTimeStamp]" );
+      'Missing or invalid parameter [dateTimeStamp]' );
   }
 
   console.log();
@@ -287,7 +287,7 @@ export async function arangoRestore(
     sourceFolder =
       resolveProjectPath(
         DATABASE_ROOT_FOLDER,
-        "dumps",
+        'dumps',
         DATABASE_KIND_PREFIX + deploymentLabel,
         dateTimeStamp );
   }
@@ -323,7 +323,7 @@ arangorestore \
         `Source folder [${stripProjectPath(sourceFolder)}] does not exist`);
       console.log();
 
-      // eslint-disable-next-line no-undef
+       
       process.exit();
     }
 
@@ -337,7 +337,7 @@ arangorestore \
 
     for( const obj of arr )
     {
-      if( "message" in obj )
+      if( 'message' in obj )
       {
         console.log( `* ${obj.message}` );
       }
@@ -353,7 +353,7 @@ arangorestore \
 
       for( const obj of arr )
       {
-        if( "message" in obj && obj.level === "ERROR" )
+        if( 'message' in obj && obj.level === 'ERROR' )
         {
           console.log();
           console.error( `ERROR: ${obj.message}` );
@@ -366,7 +366,7 @@ arangorestore \
     }
 
     console.log();
-    console.log("- Failed to restore database\n");
+    console.log('- Failed to restore database\n');
   }
 }
 
@@ -380,12 +380,12 @@ arangorestore \
  *   database/arango-default
  *
  */
-export async function arangoRestoreDefault( { deploymentLabel="local" } )
+export async function arangoRestoreDefault( { deploymentLabel='local' } )
 {
   const customSourceFolder =
     resolveProjectPath(
-      "database",
-      "arango-default");
+      'database',
+      'arango-default');
 
   await arangoRestore(
   {
@@ -401,5 +401,5 @@ export async function arangoRestoreDefault( { deploymentLabel="local" } )
  */
 export async function arangoPublish()
 {
-  throw new Error("Not implemeted yet");
+  throw new Error('Not implemeted yet');
 }

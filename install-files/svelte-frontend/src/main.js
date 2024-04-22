@@ -1,6 +1,6 @@
 
-import App from "@src/App.svelte";
+import App from '@src/App.svelte';
 
 new App( { target: document.body } );
 
-console.log("Hello from [main.js]");
+console.log('Hello from [main.js]');

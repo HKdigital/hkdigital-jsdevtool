@@ -12,20 +12,15 @@ let sourcemaps;
 import { resolveProjectPath,
          resolveConfigPath,
          resolveSrcPath,
-         resolveLibPath,
-         resolveDistPath,
-         listLibNames } from "./paths.mjs";
+         resolveDistPath } from './paths.mjs';
 
-import { isFile, readJSONFile } from "./fs.mjs";
+import { isFile, readJSONFile } from './fs.mjs';
 
-import { setEnvVarsFromConfigFiles } from "./env.mjs";
+import { setEnvVarsFromConfigFiles } from './env.mjs';
 
-import { mergePackageJsons } from "./npm.mjs";
+import { mergePackageJsons } from './npm.mjs';
 
-import { asyncImport } from "./import.mjs";
-
-import { getProjectAliasEntries,
-         getAliasEntriesForAllLibs } from "./aliases.mjs";
+import { asyncImport } from './import.mjs';
 
 // ------------------------------------------------------------------- Internals
 
@@ -75,7 +70,7 @@ export async function rollupRunInDevelopmentMode()
   const config =
     await readConfig(
       {
-        fileName: "rollup.dev.mjs",
+        fileName: 'rollup.dev.mjs',
         production: false
       } );
 
@@ -112,8 +107,8 @@ export async function rollupRunInDevelopmentMode()
   {
     switch( event.plugin || null )
     {
-      case "sourcemaps":
-        if( event.message === "Failed reading file" )
+      case 'sourcemaps':
+        if( event.message === 'Failed reading file' )
         {
           // Ignore, an exception will be thrown on some pther place anyway
           return;
@@ -121,14 +116,14 @@ export async function rollupRunInDevelopmentMode()
         break;
 
       case null:
-        if( "UNRESOLVED_IMPORT" === event.code )
+        if( 'UNRESOLVED_IMPORT' === event.code )
         {
           // Show a short warning about unresolved imports
           console.log();
           console.log(`Warning: ${event.message}`);
           return;
         }
-        else if( "CIRCULAR_DEPENDENCY" === event.code )
+        else if( 'CIRCULAR_DEPENDENCY' === event.code )
         {
           // Ignore warnings about circular dependencies
           return;
@@ -136,12 +131,12 @@ export async function rollupRunInDevelopmentMode()
     }
 
     console.log();
-    console.log("Warning:");
+    console.log('Warning:');
     console.log(
       {
-        plugin: event.plugin || "",
-        code: event.code || "",
-        message: event.message || ""
+        plugin: event.plugin || '',
+        code: event.code || '',
+        message: event.message || ''
       } );
   };
 
@@ -158,12 +153,12 @@ export async function rollupRunInDevelopmentMode()
 
       switch( code )
       {
-        case "START":
+        case 'START':
           console.log();
 
           if( startedAt )
           {
-            console.log("* Rollup: source changed -> rebundle");
+            console.log('* Rollup: source changed -> rebundle');
           }
 
           startedAt = Date.now();
@@ -178,10 +173,10 @@ export async function rollupRunInDevelopmentMode()
         //   console.log("Rollup: bundle ready");
         //   break;
 
-        case "ERROR":
+        case 'ERROR':
           console.log();
-          console.log("Rollup error:");
-          console.log("-------------");
+          console.log('Rollup error:');
+          console.log('-------------');
 
           delete error.watchFiles;
 
@@ -189,7 +184,7 @@ export async function rollupRunInDevelopmentMode()
           console.log();
           break;
 
-        case "END":
+        case 'END':
           console.log();
           console.log(`* Rollup: bundled in [${Date.now() - startedAt}] ms`);
           console.log();
@@ -222,14 +217,14 @@ export async function rollupBuildDist()
   const config =
     await readConfig(
       {
-        fileName: "rollup.build.mjs",
+        fileName: 'rollup.build.mjs',
         production: true
       } );
 
-  console.log("DEBUG: rollup config", config);
+  console.log('DEBUG: rollup config', config);
 
   let bundle;
-  let buildFailed = false;
+  const buildFailed = false;
 
   try {
     bundle = await rollup( config );
@@ -240,8 +235,8 @@ export async function rollupBuildDist()
   {
     // buildFailed = true;
     console.log();
-    console.log( "Rollup build error:" );
-    console.log( "-------------------" );
+    console.log( 'Rollup build error:' );
+    console.log( '-------------------' );
 
     delete error.watchFiles;
 
@@ -255,7 +250,7 @@ export async function rollupBuildDist()
 
   if( buildFailed )
   {
-    console.error("* Rollup: build failed!");
+    console.error('* Rollup: build failed!');
     console.log();
     process.exit( 1 );
   }
@@ -263,14 +258,14 @@ export async function rollupBuildDist()
   const { updated } =
     await mergePackageJsons(
       {
-        outputPath: resolveDistPath("package.json"),
+        outputPath: resolveDistPath('package.json'),
         includeDevDependencies: false,
         silent: true
       } );
 
   if( updated )
   {
-    console.error("* Rollup: created package.json");
+    console.error('* Rollup: created package.json');
   }
 
   console.error(`* Rollup: build done [${Date.now() - startedAt}] ms`);
@@ -289,7 +284,7 @@ export async function rollupPreviewProjectFromDist()
 
   await setEnvVarsFromConfigFiles();
 
-  const distIndexJsPath = resolveDistPath("index.mjs");
+  const distIndexJsPath = resolveDistPath('index.mjs');
 
   if( !await isFile( distIndexJsPath ) )
   {
@@ -315,34 +310,34 @@ export async function rollupPreviewProjectFromDist()
  */
 export async function createBannerFromPackageJson( )
 {
-  const pkg = await readJSONFile( resolveProjectPath("package.json") );
+  const pkg = await readJSONFile( resolveProjectPath('package.json') );
 
   if( !(pkg instanceof Object) )
   {
-    throw new Error("Missing [pkg]");
+    throw new Error('Missing [pkg]');
   }
 
-  if( typeof pkg.name !== "string" )
+  if( typeof pkg.name !== 'string' )
   {
-    throw new Error("Missing or invalid [pkg.name]");
+    throw new Error('Missing or invalid [pkg.name]');
   }
 
-  if( typeof pkg.version !== "string" )
+  if( typeof pkg.version !== 'string' )
   {
-    throw new Error("Missing or invalid [pkg.version]");
+    throw new Error('Missing or invalid [pkg.version]');
   }
 
-  if( typeof pkg.author !== "string" )
+  if( typeof pkg.author !== 'string' )
   {
-    throw new Error("Missing or invalid [pkg.author]");
+    throw new Error('Missing or invalid [pkg.author]');
   }
 
-  return `/**\n`+
+  return '/**\n'+
         ` * ${pkg.name} (${pkg.version})\n` +
         ` * Date: ${(new Date()).toISOString()}\n` +
         ` * Author: ${pkg.author}\n` +
-        ` * License: see LICENSE.txt\n` +
-        ` */\n\n`;
+        ' * License: see LICENSE.txt\n' +
+        ' */\n\n';
 }
 
 // -------------------------------------------------------------------- Function
@@ -354,10 +349,10 @@ export async function createBannerFromPackageJson( )
  */
 export function onBootstrapReadyBannerCode()
 {
-  return `const onBootstrapReadyFns = [];\n\n` +
-         `function onBootstrapReady( fn ) {\n` +
-         `  onBootstrapReadyFns.push( fn );\n` +
-         `}\n\n`;
+  return 'const onBootstrapReadyFns = [];\n\n' +
+         'function onBootstrapReady( fn ) {\n' +
+         '  onBootstrapReadyFns.push( fn );\n' +
+         '}\n\n';
 }
 
 // -------------------------------------------------------------------- Function
@@ -369,7 +364,7 @@ export function onBootstrapReadyBannerCode()
  */
 export function onBootstrapReadyFooterCode()
 {
-  return `\nfor( const fn of onBootstrapReadyFns ) { fn(); }\n\n`;
+  return '\nfor( const fn of onBootstrapReadyFns ) { fn(); }\n\n';
 }
 
 // -------------------------------------------------------------------- Function
@@ -394,10 +389,10 @@ async function readConfig( { fileName, production=false })
 
   const module_ = await asyncImport( configPath );
 
-  if( typeof module_.createConfig !== "function" )
+  if( typeof module_.createConfig !== 'function' )
   {
     console.log(`- Invalid config file [${configPath}].`);
-    console.log(`  Missing or invalid export: (async) function createConfig.`);
+    console.log('  Missing or invalid export: (async) function createConfig.');
     console.log();
     process.exit(1);
   }
@@ -442,7 +437,7 @@ async function normalizeConfig( config, { production=false } )
   }
   else if( !(config.output instanceof Object) )
   {
-    throw new Error("Invalid config. [config.output] should be an object");
+    throw new Error('Invalid config. [config.output] should be an object');
   }
 
   const output = config.output;
@@ -453,7 +448,7 @@ async function normalizeConfig( config, { production=false } )
   }
   else if( !Array.isArray( config.plugins ) )
   {
-    throw new Error("Invalid config. [config.plugins] should be an array");
+    throw new Error('Invalid config. [config.plugins] should be an array');
   }
 
   const plugins = config.plugins;
@@ -465,9 +460,9 @@ async function normalizeConfig( config, { production=false } )
 
   // == Set output format `ejs`
 
-  if( !("format" in output) )
+  if( !('format' in output) )
   {
-    output.format = "es";
+    output.format = 'es';
   }
 
   // == Production / dev dependent config
@@ -476,22 +471,22 @@ async function normalizeConfig( config, { production=false } )
   {
     // production
 
-    if( !("banner" in output) )
+    if( !('banner' in output) )
     {
       config.banner = await createBannerFromPackageJson();
     }
 
-    if( !("file" in output) )
+    if( !('file' in output) )
     {
-      output.file = "dist/index.mjs";
+      output.file = 'dist/index.mjs';
     }
   }
   else {
     // dev
 
-    if( !("file" in output) )
+    if( !('file' in output) )
     {
-      output.file = "generated/index.mjs";
+      output.file = 'generated/index.mjs';
     }
 
     // == Use `run` plugin to execute the program
@@ -502,9 +497,9 @@ async function normalizeConfig( config, { production=false } )
     } ) );
   }
 
-  let externalPackages = new Set( EXTERNAL_PACKAGES );
+  const externalPackages = new Set( EXTERNAL_PACKAGES );
 
-  if( "external" in config )
+  if( 'external' in config )
   {
     //
     // Generate list of external packages automatically
@@ -520,7 +515,7 @@ async function normalizeConfig( config, { production=false } )
   //
   // Load dependencies defined in `package.json`
   //
-  const pkg = await readJSONFile( resolveProjectPath("package.json") );
+  const pkg = await readJSONFile( resolveProjectPath('package.json') );
 
   const packageJsonDependencyNames =
     pkg.dependencies ? Object.keys( pkg.dependencies ) : [];
@@ -543,7 +538,7 @@ async function normalizeConfig( config, { production=false } )
  */
 async function checkPackageJsonExists()
 {
-  const packageJsonPath = resolveProjectPath("package.json");
+  const packageJsonPath = resolveProjectPath('package.json');
 
   if( !await isFile( packageJsonPath ) )
   {
@@ -572,11 +567,11 @@ async function importDependencies()
     return;
   }
 
-  const rollupModule = await import("rollup");
+  const rollupModule = await import('rollup');
 
   rollup = rollupModule.rollup;
   watch = rollupModule.watch;
 
-  run = (await import( "@rollup/plugin-run" )).default;
-  sourcemaps = (await import("@edugis/rollup-plugin-sourcemaps")).default;
+  run = (await import( '@rollup/plugin-run' )).default;
+  sourcemaps = (await import('@edugis/rollup-plugin-sourcemaps')).default;
 }

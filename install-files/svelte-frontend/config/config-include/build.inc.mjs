@@ -1,7 +1,7 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { resolveDistPath } from "../../hkdigital-jsdevtool/helper/index.mjs";
+import { resolveDistPath } from '../../hkdigital-jsdevtool/helper/index.mjs';
 
 /* ------------------------------------------------------------------ Exports */
 

@@ -19,17 +19,17 @@ module.exports = {
     // @see https://eslint.org/docs/user-guide
     //        /configuring/language-options#specifying-environments
     //
-    "browser": true,
-    "es2021": true,
-    "commonjs": true,
-    "jest": true
+    browser: true,
+    es2021: true,
+    commonjs: true,
+    jest: true
   },
 
   globals: {},
 
   parserOptions: {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+    ecmaVersion: 'latest',
+    sourceType: 'module'
   },
 
   plugins: [
@@ -42,50 +42,50 @@ module.exports = {
     }
   ],
 
-  extends: ["plugin:svelte/recommended"],
+  extends: ['plugin:svelte/recommended'],
 
   rules: {
     //
     // @see https://eslint.org/docs/rules/no-unused-vars
     //
-    "no-unused-vars": [
-      "warn", {
-      "vars": "all",
-      "args": "all",
-      "ignoreRestSiblings": false
+    'no-unused-vars': [
+      'warn', {
+      vars: 'all',
+      args: 'all',
+      ignoreRestSiblings: false
       }
     ],
 
     //
     // Mark undefined functions or variables as error
     //
-    "no-undef": "error",
+    'no-undef': 'error',
 
     //
     // @see https://sveltejs.github.io/eslint-plugin-svelte/rules/valid-compile/
     //
-    "svelte/valid-compile": [
-      "error",
+    'svelte/valid-compile': [
+      'error',
       {
-        "ignoreWarnings": true
+        ignoreWarnings: true
       }
     ],
 
-    "indent": [
-      "off",
+    indent: [
+      'off',
       2
     ],
-    "linebreak-style": [
-      "error",
-      "unix"
+    'linebreak-style': [
+      'error',
+      'unix'
     ],
-    "quotes": [
-      "off",
-      "double"
+    quotes: [
+      'off',
+      'double'
     ],
-    "semi": [
-      "error",
-      "always"
+    semi: [
+      'error',
+      'always'
     ]
   },
 

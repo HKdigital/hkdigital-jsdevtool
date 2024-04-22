@@ -1,51 +1,51 @@
 module.exports = {
-  "env": {
+  env: {
     // @see https://eslint.org/docs/user-guide
     //        /configuring/language-options#specifying-environments
-    "browser": false,
-    "es2021": true,
-    "node": true,
-    "jest": true
+    browser: false,
+    es2021: true,
+    node: true,
+    jest: true
   },
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly'
   },
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
   },
-  "plugins": [],
-  "overrides": [],
-  "extends": "eslint:recommended",
-  "rules": {
+  plugins: [],
+  overrides: [],
+  extends: 'eslint:recommended',
+  rules: {
     // @see https://eslint.org/docs/rules/no-unused-vars
-    "no-unused-vars": [
-      "warn", {
-      "vars": "all",
+    'no-unused-vars': [
+      'warn', {
+      vars: 'all',
       //"args": "after-used",
       // "args": "none",
-      "args": "all",
-      "ignoreRestSiblings": false
+      args: 'all',
+      ignoreRestSiblings: false
       }
     ],
 
-    "indent": [
-      "off",
+    indent: [
+      'off',
       2
     ],
-    "linebreak-style": [
-      "error",
-      "unix"
+    'linebreak-style': [
+      'error',
+      'unix'
     ],
-    "quotes": [
-      "off",
-      "double"
+    quotes: [
+      'off',
+      'double'
     ],
-    "semi": [
-      "error",
-      "always"
+    semi: [
+      'error',
+      'always'
     ]
   },
-  "settings": {}
+  settings: {}
 };

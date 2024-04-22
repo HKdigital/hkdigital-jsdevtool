@@ -1,11 +1,11 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { generatePreviewConfig } from "./config-include/server.preview.inc.mjs";
-import { generatePluginsConfig } from "./config-include/plugins.inc.mjs";
-import { generateBuildConfig } from "./config-include/build.inc.mjs";
+import { generatePreviewConfig } from './config-include/server.preview.inc.mjs';
+import { generatePluginsConfig } from './config-include/plugins.inc.mjs';
+import { generateBuildConfig } from './config-include/build.inc.mjs';
 
-import { generateDefaultResolveConfig }  from "../hkdigital-jsdevtool/helper/index.mjs";
+import { generateDefaultResolveConfig }  from '../hkdigital-jsdevtool/helper/index.mjs';
 
 /* ------------------------------------------------------------------ Exports */
 

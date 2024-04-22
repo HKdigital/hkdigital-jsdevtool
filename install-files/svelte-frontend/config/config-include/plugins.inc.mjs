@@ -23,7 +23,7 @@ export async function generatePluginsConfig()
       // @see https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/config.md
       onwarn(warning, defaultHandler) {
 
-        if( warning.code.startsWith("a11y") )
+        if( warning.code.startsWith('a11y') )
         {
           // Ignore all a11y warnings
           return;
@@ -31,8 +31,8 @@ export async function generatePluginsConfig()
 
         switch( warning.code )
         {
-          case "vite-plugin-svelte-css-no-scopable-elements":
-          case "unused-export-let":
+          case 'vite-plugin-svelte-css-no-scopable-elements':
+          case 'unused-export-let':
             // console.log( warning.code );
             // ignore warning
             return;

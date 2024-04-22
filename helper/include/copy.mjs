@@ -1,13 +1,13 @@
 
 import { resolveProjectPath,
-         resolveDevToolsPath } from "./paths.mjs";
+         resolveDevToolsPath } from './paths.mjs';
 
-import { execAsync } from "./shell.mjs";
+import { execAsync } from './shell.mjs';
 
-import { copyUsingGlobs } from "./glob.mjs";
+import { copyUsingGlobs } from './glob.mjs';
 
-const SVELTE_FRONTEND_INSTALL_FILES_PATH = "install-files/svelte-frontend";
-const NODEJS_BACKEND_INSTALL_FILES_PATH = "install-files/nodejs-backend";
+const SVELTE_FRONTEND_INSTALL_FILES_PATH = 'install-files/svelte-frontend';
+const NODEJS_BACKEND_INSTALL_FILES_PATH = 'install-files/nodejs-backend';
 
 // -------------------------------------------------------------------- Function
 
@@ -19,7 +19,7 @@ export async function copyFrontendFiles( silent=false )
 {
   if( !silent )
   {
-    console.log("* Copy frontend files");
+    console.log('* Copy frontend files');
   }
 
   const projectRootPath = resolveProjectPath();
@@ -51,7 +51,7 @@ export async function copyFrontendFiles( silent=false )
   catch( e )
   {
     console.log(
-      "- Failed to make devtool executable (use node devtool.mjs to run)\n");
+      '- Failed to make devtool executable (use node devtool.mjs to run)\n');
   }
 }
 
@@ -65,13 +65,13 @@ export async function copyBackendFiles( silent=false )
 {
   if( !silent )
   {
-    console.log("* Copy backend files");
+    console.log('* Copy backend files');
   }
 
   const projectRootPath = resolveProjectPath();
 
-  const installFilesFolder =
-    resolveDevToolsPath( NODEJS_BACKEND_INSTALL_FILES_PATH );
+  // const installFilesFolder =
+  //   resolveDevToolsPath( NODEJS_BACKEND_INSTALL_FILES_PATH );
 
   const sourceBasePath =
     resolveDevToolsPath( NODEJS_BACKEND_INSTALL_FILES_PATH );
@@ -98,7 +98,7 @@ export async function copyBackendFiles( silent=false )
   catch( e )
   {
     console.log(
-      "- Failed to make devtool executable (use node devtool.mjs to run)\n");
+      '- Failed to make devtool executable (use node devtool.mjs to run)\n');
   }
 }
 

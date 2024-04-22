@@ -1,11 +1,11 @@
 
-import { resolveProjectPath } from "./paths.mjs";
+import { resolveProjectPath } from './paths.mjs';
 
-import { readFile } from "./fs.mjs";
+// import { readFile } from './fs.mjs';
 
 export async function showHowtoDevTool()
 {
-  const projectPath = resolveProjectPath();
+  // const projectPath = resolveProjectPath();
 
   // const text = await readFile( resolveProjectPath("README-DEVTOOL.md"), 'utf8' );
 
@@ -17,14 +17,14 @@ export async function showHowtoDevTool()
   // console.log();
   // console.log("-------------------------------------------------");
   console.log();
-  console.log("Next steps:");
+  console.log('Next steps:');
   console.log();
-  console.log(`=> Change to project root folder`);
+  console.log('=> Change to project root folder');
   console.log();
-  console.log(`cd ..`);
+  console.log('cd ..');
   console.log();
-  console.log(`=> Run the devtool`);
+  console.log('=> Run the devtool');
   console.log();
-  console.log(`node devtool.mjs`);
+  console.log('node devtool.mjs');
   console.log();
 }

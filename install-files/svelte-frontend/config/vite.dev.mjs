@@ -1,10 +1,10 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { generateServerConfig } from "./config-include/server.dev.inc.mjs";
-import { generatePluginsConfig } from "./config-include/plugins.inc.mjs";
+import { generateServerConfig } from './config-include/server.dev.inc.mjs';
+import { generatePluginsConfig } from './config-include/plugins.inc.mjs';
 
-import { generateDefaultResolveConfig }  from "../hkdigital-jsdevtool/helper/index.mjs";
+import { generateDefaultResolveConfig }  from '../hkdigital-jsdevtool/helper/index.mjs';
 
 
 /* ------------------------------------------------------------------ Exports */

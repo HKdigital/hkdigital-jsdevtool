@@ -8,7 +8,7 @@
  */
 export function expectString( value, errorText )
 {
-  if( typeof value !== "string" )
+  if( typeof value !== 'string' )
   {
     throw new Error( `${errorText} (expected string)`);
   }
@@ -23,7 +23,7 @@ export function expectString( value, errorText )
  */
 export function expectNotEmptyString( value, errorText )
 {
-  if( typeof value !== "string" || 0 === value.length )
+  if( typeof value !== 'string' || 0 === value.length )
   {
     throw new Error( `${errorText} (expected not empty string)`);
   }
@@ -38,7 +38,7 @@ export function expectNotEmptyString( value, errorText )
  */
 export function expectObject( value, errorText )
 {
-  if( !(value instanceof Object || (value && typeof value === "object") ) ||
+  if( !(value instanceof Object || (value && typeof value === 'object') ) ||
       value instanceof Promise )
   {
     throw new Error( `${errorText} (expected object)`);

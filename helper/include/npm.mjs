@@ -3,13 +3,13 @@ import { resolveDevToolsPath,
          resolveProjectPath,
          resolveLibPath,
          listLibNames,
-         stripProjectPath } from "./paths.mjs";
+         stripProjectPath } from './paths.mjs';
 
 import { isFile,
          readFile,
-         writeFile } from "./fs.mjs";
+         writeFile } from './fs.mjs';
 
-import { execAsync } from "./shell.mjs";
+import { execAsync } from './shell.mjs';
 
 
 // -------------------------------------------------------------------- Function
@@ -46,7 +46,7 @@ export async function mergePackageJsons(
 {
   const libNames = await listLibNames();
 
-  const rootPackageJsonPath = resolveProjectPath("package.json" );
+  const rootPackageJsonPath = resolveProjectPath('package.json' );
 
   // let outputPath;
   // let silent = false;
@@ -79,7 +79,7 @@ export async function mergePackageJsons(
 
   for( const libName of libNames )
   {
-    const path = resolveLibPath( libName, "package.json" );
+    const path = resolveLibPath( libName, 'package.json' );
 
     try {
       const contents = await readFile( path, 'utf8' );
@@ -111,7 +111,7 @@ export async function mergePackageJsons(
       }
     }
     catch( e ) {
-      if( e.code !== "ENOENT" )
+      if( e.code !== 'ENOENT' )
       {
         console.log(`Failed to read [${path}]`);
 
@@ -138,7 +138,7 @@ export async function mergePackageJsons(
   {
     if( !silent )
     {
-      console.log("* Write updated [package.json]");
+      console.log('* Write updated [package.json]');
     }
 
     await writeFile( outputPath, newPackageJsonContents, 'utf8' );
@@ -147,7 +147,7 @@ export async function mergePackageJsons(
   }
   else if( !silent )
   {
-    console.log("* No update needed for [package.json]");
+    console.log('* No update needed for [package.json]');
   }
 
   return { updated: false };
@@ -178,7 +178,7 @@ export async function runNpmInstallInDevtoolFolder( { silent=false }={} )
  */
 export async function runNpmInstall( { silent=false, folderPath }={} )
 {
-  let projectRootPath = resolveProjectPath();
+  const projectRootPath = resolveProjectPath();
 
   if( !folderPath )
   {
@@ -189,7 +189,7 @@ export async function runNpmInstall( { silent=false, folderPath }={} )
   // npm install
   {
     // const cmd = `npm install > /dev/null 2>&1`;
-    const cmd = `npm install`;
+    const cmd = 'npm install';
 
     if( !silent )
     {
@@ -225,11 +225,11 @@ export async function runNpmInstall( { silent=false, folderPath }={} )
   // ---------------------------------------------------------------------------
   // npm dedup
   {
-    const cmd = `npm dedup`;
+    const cmd = 'npm dedup';
 
     if( !silent )
     {
-      console.log(`* Running [npm dedup]`);
+      console.log('* Running [npm dedup]');
     }
 
     const { stdout, stderr } =
@@ -259,7 +259,7 @@ export async function runNpmInstall( { silent=false, folderPath }={} )
  */
 export async function packageJsonExists()
 {
-  return await isFile( resolveProjectPath("package.json") );
+  return await isFile( resolveProjectPath('package.json') );
 }
 
 // -------------------------------------------------------------------- Function
@@ -279,8 +279,8 @@ function highest_version( versionA, versionB=null )
     return versionA;
   }
 
-  const numVersionA = versionA.replace(/[^\d]/g, "");
-  const numVersionB = versionB.replace(/[^\d]/g, "");
+  const numVersionA = versionA.replace(/[^\d]/g, '');
+  const numVersionB = versionB.replace(/[^\d]/g, '');
 
   // console.log( "compare", { numVersionA, numVersionB } );
 

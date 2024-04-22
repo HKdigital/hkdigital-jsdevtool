@@ -1,19 +1,19 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { isAbsolute } from "path";
+import { isAbsolute } from 'node:path';
 
-import { expectString, expectObject } from "./expect.mjs";
+import { expectString, expectObject } from './expect.mjs';
 
 import {
   resolveProjectPath,
   joinPaths,
-  sandboxPath } from "./paths.mjs";
+  sandboxPath } from './paths.mjs';
 
 import {
   isFolder,
   ensureFolder,
-  copyFile } from "./fs.mjs";
+  copyFile } from './fs.mjs';
 
 const ROOT_PATH = resolveProjectPath();
 
@@ -28,7 +28,7 @@ async function importDependencies()
 {
   if( !expand_glob )
   {
-    const { globSync } = await import( "glob" );
+    const { globSync } = await import( 'glob' );
 
     expand_glob = globSync;
   }
@@ -93,12 +93,12 @@ export async function expandGlobs( globOrGlobs, options )
   let glob = globOrGlobs;
 
   expectString( glob,
-    "Missing or invalid parameter [globOrGlobs] " +
-    "(expected string or string[])" );
+    'Missing or invalid parameter [globOrGlobs] ' +
+    '(expected string or string[])' );
 
-  let filter = options ? options.filter : null;
+  const filter = options ? options.filter : null;
 
-  let rootPath = options ? options.rootPath : ROOT_PATH;
+  const rootPath = options ? options.rootPath : ROOT_PATH;
 
   if( !isAbsolute( glob ) )
   {
@@ -111,7 +111,7 @@ export async function expandGlobs( globOrGlobs, options )
   {
     for( let j = 0, n = files.length; j < n; j = j + 1 )
     {
-      let path = files[j];
+      const path = files[j];
 
       files[ j ] = sandboxPath( path, options );
     }
@@ -163,7 +163,7 @@ export async function expandGlobs( globOrGlobs, options )
   }
   catch( e )
   {
-    console.log( "Failed to filter paths");
+    console.log( 'Failed to filter paths');
     throw e;
   }
 
@@ -192,7 +192,7 @@ export async function expandGlobs( globOrGlobs, options )
 export async function copyUsingGlobs( params, options )
 {
   expectObject( params,
-    "Missing or invalid parameter [params]" );
+    'Missing or invalid parameter [params]' );
 
   const sourceGlob = params.sourceGlob;
 
@@ -210,7 +210,7 @@ export async function copyUsingGlobs( params, options )
     {
       _params.sourceGlob = sourceGlob[j];
 
-      let result = await copyUsingGlobs( _params, options );
+      const result = await copyUsingGlobs( _params, options );
       results.push( result );
     }
 
@@ -222,8 +222,8 @@ export async function copyUsingGlobs( params, options )
   // >> CASE B: single glob
 
   expectString( sourceGlob,
-    "Missing or invalid parameter [params.sourceGlob] " +
-    "(expected string)" );
+    'Missing or invalid parameter [params.sourceGlob] ' +
+    '(expected string)' );
 
   let sourceBasePath;
 
@@ -236,12 +236,12 @@ export async function copyUsingGlobs( params, options )
   }
 
   expectString( sourceBasePath,
-    "Missing or invalid parameter [params.sourceBasePath] " +
-    "(expected string)" );
+    'Missing or invalid parameter [params.sourceBasePath] ' +
+    '(expected string)' );
 
   expectString( targetFolder,
-    "Missing or invalid parameter [params.targetFolder] " +
-    "(expected string)" );
+    'Missing or invalid parameter [params.targetFolder] ' +
+    '(expected string)' );
 
   options =
     Object.assign(
@@ -252,19 +252,19 @@ export async function copyUsingGlobs( params, options )
 
   targetFolder = sandboxPath( targetFolder, { allowRoot: true } );
 
-  return new Promise( async function( resolve /*, reject*/ )
+  return new Promise( async ( resolve /*, reject*/ ) =>
     {
-      let files = await expandGlobs( sourceGlob );
-      let allTargetPaths = [];
+      const files = await expandGlobs( sourceGlob );
+      const allTargetPaths = [];
 
       // console.log("COPY USING GLOB FILES", files);
 
-      let x = sourceBasePath.length;
+      const x = sourceBasePath.length;
 
       for( let j = 0, n = files.length; j < n; j = j + 1 )
       {
-        let sourcePath = files[j];
-        let targetPath = targetFolder + sourcePath.slice( x );
+        const sourcePath = files[j];
+        const targetPath = targetFolder + sourcePath.slice( x );
 
         // console.log( { sourceBasePath, sourcePath } );
 

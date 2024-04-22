@@ -1,6 +1,6 @@
 
-import { resolveProjectPath } from "./paths.mjs";
-import { execAsync } from "./shell.mjs";
+import { resolveProjectPath } from './paths.mjs';
+import { execAsync } from './shell.mjs';
 
 // ---------------------------------------------------------------------- Method
 
@@ -11,12 +11,12 @@ export async function runGitInit( silent=false )
 {
   if( !silent )
   {
-    console.log("* Run `git init`");
+    console.log('* Run `git init`');
   }
 
   const projectRootPath = resolveProjectPath();
 
-  const cmd = `git init`;
+  const cmd = 'git init';
 
   const { stdout, stderr } = await execAsync( cmd, { cwd: projectRootPath } );
 

@@ -11,14 +11,14 @@
  */
 export async function asyncImport( pathOrURI )
 {
-  if( typeof pathOrURI !== "string" )
+  if( typeof pathOrURI !== 'string' )
   {
-    throw new Error("Missing or invalid parameter [pathOrURI]");
+    throw new Error('Missing or invalid parameter [pathOrURI]');
   }
 
   // console.log( 123, { pathOrURI } );
 
-  if( pathOrURI.charAt(1) === ":" && pathOrURI.charAt(2) === "\\" )
+  if( pathOrURI.charAt(1) === ':' && pathOrURI.charAt(2) === '\\' )
   {
     // on windows pathname looks like `/C:/Users/.../....`
     // => remove first slash
@@ -30,7 +30,7 @@ export async function asyncImport( pathOrURI )
 
     // pathname = "file://" + pathname;
 
-    pathOrURI = "file://" + pathOrURI;
+    pathOrURI = 'file://' + pathOrURI;
   }
 
   // console.log( 789, { pathOrURI } );

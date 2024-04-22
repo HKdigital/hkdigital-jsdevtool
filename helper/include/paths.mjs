@@ -1,11 +1,11 @@
 
-import { default as pathTool, resolve } from "path";
+import { default as pathTool, resolve } from 'node:path';
 
 import { isFolder,
          ensureFolder,
-         listFolderNames } from "./fs.mjs";
+         listFolderNames } from './fs.mjs';
 
-import { expectString } from "./expect.mjs";
+import { expectString } from './expect.mjs';
 
 /* --------------------------------------------------------------- Re-exports */
 
@@ -18,11 +18,11 @@ export const SEPARATOR = pathTool.sep;
 
 /* ---------------------------------------------------------------- Internals */
 
-export const SRC_ROOT_NAME = "src";
-export const LIB_ROOT_NAME = "lib";
-export const DIST_ROOT_NAME = "dist";
-export const DEVTOOLS_ROOT_NAME = "hkdigital-jsdevtool";
-export const CONFIG_ROOT_NAME = "config";
+export const SRC_ROOT_NAME = 'src';
+export const LIB_ROOT_NAME = 'lib';
+export const DIST_ROOT_NAME = 'dist';
+export const DEVTOOLS_ROOT_NAME = 'hkdigital-jsdevtool';
+export const CONFIG_ROOT_NAME = 'config';
 
 export const CURRENT_SCRIPT_RELATIVE_PATH =
   `${DEVTOOLS_ROOT_NAME}/helper/include/paths.mjs`;
@@ -43,7 +43,7 @@ function detectPaths()
   if( !currentFilePath.endsWith( CURRENT_SCRIPT_RELATIVE_PATH ) )
   {
     throw new Error(
-      `Failed to detect project root. ` +
+      'Failed to detect project root. ' +
       `Current file path should end with  [${CURRENT_SCRIPT_RELATIVE_PATH}]`);
   }
 
@@ -51,9 +51,9 @@ function detectPaths()
 
   let pathname = new URL( currentFilePath ).pathname;
 
-  let protoPrefix = "";
+  let protoPrefix = '';
 
-  if( pathname.charAt(0) === "/" && pathname.charAt(2) === ":" )
+  if( pathname.charAt(0) === '/' && pathname.charAt(2) === ':' )
   {
     // on windows pathname looks like `/C:/Users/.../....`
     // => remove first slash
@@ -65,7 +65,7 @@ function detectPaths()
 
     // pathname = "file://" + pathname;
 
-    protoPrefix = "file:////";
+    protoPrefix = 'file:////';
   }
 
   const projectFolder =
@@ -127,9 +127,9 @@ export function resolveProjectPath()
   {
     const part = arguments[ j ];
 
-    if( typeof part === "string" )
+    if( typeof part === 'string' )
     {
-        parts.push( ...part.split( "/" ) );
+        parts.push( ...part.split( '/' ) );
     }
   }
 
@@ -248,7 +248,7 @@ export function stripProjectPath( path )
   {
     path = path.slice( projectPath.length );
 
-    if( path.startsWith("/") || path.startsWith("\\") )
+    if( path.startsWith('/') || path.startsWith('\\') )
     {
       path = path.slice(1);
     }
@@ -287,7 +287,7 @@ export async function ensureLibPath( silent=false )
 {
   if( !silent )
   {
-    console.log("* Ensure lib folder exists");
+    console.log('* Ensure lib folder exists');
   }
 
   const libRoot = resolveLibPath();
@@ -325,9 +325,9 @@ export async function ensureLibPath( silent=false )
 export function sandboxPath( path, options )
 {
   expectString( path,
-    "Missing or invalid parameter [path] (expected string)");
+    'Missing or invalid parameter [path] (expected string)');
 
-  let ROOT_PATH = resolveProjectPath();
+  const ROOT_PATH = resolveProjectPath();
 
   let sandboxPath = ROOT_PATH;
   let prefixPath = ROOT_PATH;
@@ -416,7 +416,7 @@ export function sandboxPath( path, options )
       if( !path.startsWith( expectedStartsWithPath ) )
       {
         throw new Error(
-          "Path ["+path+"] is not inside the sandboxPath ["+sandboxPath+"]");
+          'Path ['+path+'] is not inside the sandboxPath ['+sandboxPath+']');
       }
     }
   }
@@ -441,9 +441,9 @@ export function sandboxPath( path, options )
  */
 export function stripExtension( path )
 {
-  expectString( path, "Missing or invalid parameter [path]" );
+  expectString( path, 'Missing or invalid parameter [path]' );
 
-  const x = path.lastIndexOf(".");
+  const x = path.lastIndexOf('.');
 
   if( x <= 0 )
   {
@@ -476,7 +476,7 @@ export function stripExtension( path )
  */
 export function basename( path, options )
 {
-  expectString( path, "Missing or invalid parameter [path]" );
+  expectString( path, 'Missing or invalid parameter [path]' );
 
   const x = path.lastIndexOf( options ? options.separator : SEPARATOR );
 
