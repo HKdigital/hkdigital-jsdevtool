@@ -2,7 +2,7 @@
 <div align="center" style="text-align: center; ">
   <br>
   <br>
-  <picture>
+  <picture style="height: 100px;">
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/HKdigital/hkdigital-jsdevtool/blob/dev/doc/doc-include/HKdigital-Logo-LightOnDark-RGB.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/HKdigital/hkdigital-jsdevtool/blob/dev/doc/doc-include/HKdigital-Logo-DarkOnLight-RGB.svg">
   <img alt="HKdigital logo" src="https://github.com/HKdigital/hkdigital-jsdevtool/blob/dev/doc/doc-include/HKdigital-Logo-DarkOnLight-RGB.svg">
