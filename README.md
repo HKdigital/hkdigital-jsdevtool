@@ -16,22 +16,22 @@
 
 DevOps is the integration of development and software operations. This project can be used to integrate DevOps functionality into your javascript projects.
 
-The project contains scripts to setup a `NodeJS` (backend) or a `SVELTE` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
+The project contains scripts to setup a `NodeJS` (backend) or a `SVELTE 3.x` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
 
 ## Status
 
 Since both NodeJs and SVELTE and other tools and dependencies are under constant development, this project also is under constant development.
 
-* April 2024
+* April 2024 -
 Especially SVELTE has advanced a lot in version 4 and 5. This devtool currently only supports the "almost classic" version 3 of SVELTE. Please checkout the new ways to install SVELTE 4 and 5 before considering using this devtool.
 
-* April 20234
+* April 2023 -
 The current setup includes a basic setup for the [JEST](https://jestjs.io/) testing framework. Note that SVELTE 4 and 5 now includes Vitest.
 
-* March 2023
+* March 2023 -
 Support for Windows has been added. If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-jsdevtool/issues).
 
-* March 2023
+* March 2023 -
 Dumping and restoring [ArangoDB](https://www.arangodb.com/) databases to and from disk. Note that the devtool requires arangotools (arangodb) to be installed on your system to work.
 
 ## Install dependencies
