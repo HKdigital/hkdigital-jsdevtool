@@ -2,10 +2,10 @@
 <div align="center" style="text-align: center; ">
   <br>
   <br>
-  <picture style="height: 100px;">
+  <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/HKdigital/hkdigital-jsdevtool/blob/dev/doc/doc-include/HKdigital-Logo-LightOnDark-RGB.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/HKdigital/hkdigital-jsdevtool/blob/dev/doc/doc-include/HKdigital-Logo-DarkOnLight-RGB.svg">
-  <img alt="HKdigital logo" src="https://github.com/HKdigital/hkdigital-jsdevtool/blob/dev/doc/doc-include/HKdigital-Logo-DarkOnLight-RGB.svg">
+  <img alt="HKdigital logo" src="https://github.com/HKdigital/hkdigital-jsdevtool/blob/dev/doc/doc-include/HKdigital-Logo-DarkOnLight-RGB.svg" height="150">
   </picture>
   <br>
   <br>
