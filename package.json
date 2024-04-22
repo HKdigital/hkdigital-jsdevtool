@@ -23,6 +23,13 @@
   "homepage": "https://github.com/HKdigital/hkdigital-jsdevtool#readme",
   "dependencies": {
     "cwebp-bin": "^8.0.0",
-    "glob": "^10.3.12"
+    "glob": "^10.3.12",
+    "eslint": "^9.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^28.2.0",
+    "eslint-plugin-unicorn": "^52.0.0",
+    "typescript-eslint": "^7.7.0",
+    "@stylistic/eslint-plugin-js": ">= 1",
+    "globals": "^15.0.0"
   }
 }

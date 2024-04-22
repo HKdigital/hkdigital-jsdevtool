@@ -20,17 +20,17 @@
 
 DevOps is the integration of development and software operations. This project can be used to integrate DevOps functionality into your javascript projects.
 
-The project contains scripts to setup a `NodeJS` (backend) or a `SVELTE 3.x` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
+The project contains scripts to setup a `NodeJS` (backend) or a `SVELTE` (frontend) project. After installation the project will contain a `devtool`, which can be used for running, building and managing your project.
 
 ## Status
 
 Since both NodeJs and SVELTE and other tools and dependencies are under constant development, this project also is under constant development.
 
 * April 2024 -
-Especially SVELTE has advanced a lot in version 4 and 5. This devtool currently only supports the "almost classic" version 3 of SVELTE. Please checkout the new ways to install SVELTE 4 and 5 before considering using this devtool.
+Especially SVELTEKIT has advanced a lot. This devtool currently only supports the "almost classic" version of SVELTE. Because the classic SVELTE is still a very advanced frontend tool that we need for running projects, library projects or small single page projects, we will continue to support it. But SVELTEKIT solves a lot of things that most developers want like routing and server side rendering. So it's definitely worth checking if that's what you need.
 
 * April 2023 -
-The current setup includes a basic setup for the [JEST](https://jestjs.io/) testing framework. Note that SVELTE 4 and 5 now includes Vitest.
+The current setup includes a basic setup for the [JEST](https://jestjs.io/) testing framework. Note that SVELTE 4 and 5 now include Vitest.
 
 * March 2023 -
 Support for Windows has been added. If you encounter problems or have a good idea to make this tool better, please create an [issue](https://github.com/HKdigital/hkdigital-jsdevtool/issues).

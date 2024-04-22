@@ -5,7 +5,7 @@ let rollup;
 let watch;
 
 let run;
-let sourcemaps;
+// let sourcemaps;
 
 // --------------------------------------------------------------------- Imports
 
@@ -107,13 +107,13 @@ export async function rollupRunInDevelopmentMode()
   {
     switch( event.plugin || null )
     {
-      case 'sourcemaps':
-        if( event.message === 'Failed reading file' )
-        {
-          // Ignore, an exception will be thrown on some pther place anyway
-          return;
-        }
-        break;
+      // case 'sourcemaps':
+      //   if( event.message === 'Failed reading file' )
+      //   {
+      //     // Ignore, an exception will be thrown on some other place anyway
+      //     return;
+      //   }
+      //   break;
 
       case null:
         if( 'UNRESOLVED_IMPORT' === event.code )
@@ -458,7 +458,7 @@ async function normalizeConfig( config, { production=false } )
 
   // == Include source map plugin
 
-  plugins.push( sourcemaps() );
+  // plugins.push( sourcemaps() );
   output.sourcemap = true;
 
   // == Set output format `ejs`
@@ -576,5 +576,5 @@ async function importDependencies()
   watch = rollupModule.watch;
 
   run = (await import( '@rollup/plugin-run' )).default;
-  sourcemaps = (await import('@edugis/rollup-plugin-sourcemaps')).default;
+  // sourcemaps = (await import('rollup-plugin-sourcemaps')).default;
 }

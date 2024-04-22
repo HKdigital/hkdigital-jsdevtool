@@ -4,12 +4,15 @@
 // Imports
 
 import { packageJsonExists,
-         runNpmInstallInDevtoolFolder,
+         installPnpm,
+         // runNpmInstallInDevtoolFolder,
+         runPnpmInstallInDevtoolFolder,
          ensureLibPath,
          copyBackendFiles,
          runGitInit,
          mergePackageJsons,
-         runNpmInstall,
+         // runNpmInstall,
+         runPnpmInstall,
          showHowtoDevTool } from '../helper/index.mjs';
 
 // -----------------------------------------------------------------------------
@@ -28,7 +31,10 @@ import { packageJsonExists,
     return;
   }
 
-  await runNpmInstallInDevtoolFolder();
+  await installPnpm();
+
+  // await runNpmInstallInDevtoolFolder();
+  await runPnpmInstallInDevtoolFolder();
 
   await runGitInit();
 
@@ -38,7 +44,8 @@ import { packageJsonExists,
 
   await mergePackageJsons();
 
-  await runNpmInstall();
+  // await runNpmInstall();
+  await runPnpmInstall();
 
   await showHowtoDevTool();
 })();
