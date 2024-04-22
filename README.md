@@ -12,7 +12,7 @@
 </div>
 
 <div align="center" style="text-align: center;">
-<h1>DevOps tool for NodeJS and SVELTE projects</h1>
+<h1>Development tool for NodeJS and SVELTE projects</h1>
   <br>
 </div>
 
