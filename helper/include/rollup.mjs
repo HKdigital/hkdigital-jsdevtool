@@ -118,9 +118,12 @@ export async function rollupRunInDevelopmentMode()
       case null:
         if( 'UNRESOLVED_IMPORT' === event.code )
         {
-          // Show a short warning about unresolved imports
-          console.log();
-          console.log(`Warning: ${event.message}`);
+          if( !event.message.startsWith('"node:') )
+          {
+            // Show a short warning about unresolved imports
+            console.log();
+            console.log(`Warning: ${event.message}`);
+          }
           return;
         }
         else if( 'CIRCULAR_DEPENDENCY' === event.code )
