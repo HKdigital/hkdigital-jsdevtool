@@ -2,7 +2,7 @@
 <div align="center" style="text-align: center; ">
   <br>
   <br>
-  <img alt="HKdigital" src="doc/doc-include/HKdigital-logo.svg" style="height: 100px;" />
+  <img alt="HKdigital" src="doc/doc-include/HKdigital-logo.svg" style="height: 100px;" />  
   <br>
   <br>
 </div>
