@@ -17,9 +17,7 @@
     "sass": "^1.75.0",
     "svelte": "^4.2.15",
     "svelte-preprocess": "^5.1.4",
-    "vite": "^5.2.10"
-  },
-  "peerDependencies": {
+    "vite": "^5.2.10",
     "eslint": "^9.1.0",
     "@sveltejs/eslint-config": "^7.0.1",
     "@sveltejs/vite-plugin-svelte": "^2.5.3",
