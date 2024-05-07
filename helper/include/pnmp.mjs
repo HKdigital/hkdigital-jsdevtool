@@ -5,6 +5,8 @@ import { resolveDevToolsPath,
 
 import { execAsync } from './shell.mjs';
 
+import { mergePackageJsons } from './package-json.mjs';
+
 // -------------------------------------------------------------------- Function
 
 export async function installPnpm( silent=false )
@@ -36,6 +38,17 @@ export async function installPnpm( silent=false )
       }
     }
   }
+}
+
+// -------------------------------------------------------------------- Function
+
+/**
+ * Merge package.json's and run npm install
+ */
+export async function updateDepsPnpm()
+{
+  await mergePackageJsons();
+  await runPnpmInstall();
 }
 
 // -------------------------------------------------------------------- Function

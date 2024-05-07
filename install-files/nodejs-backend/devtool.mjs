@@ -44,7 +44,7 @@ async function importDependencies()
   rollupBuildDist = helperModule.rollupBuildDist;
   rollupPreviewProjectFromDist = helperModule.rollupPreviewProjectFromDist;
 
-  updateDeps = helperModule.updateDeps;
+  updateDeps = helperModule.updateDepsPnpm;
   updateDevtool = helperModule.updateDevtool;
 
   gitAddSubmodule = helperModule.gitAddSubmodule;
