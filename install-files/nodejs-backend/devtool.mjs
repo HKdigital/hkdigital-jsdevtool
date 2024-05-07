@@ -26,6 +26,8 @@ let arangoDump;
 let arangoRestore;
 let arangoRestoreDefault;
 
+let runVitest;
+
 /**
  * Dynamically import dependencies
  */
@@ -58,6 +60,7 @@ async function importDependencies()
   arangoRestore = helperModule.arangoRestore;
   arangoRestoreDefault = helperModule.arangoRestoreDefault;
 
+  runVitest = helperModule.runVitest;
 }
 
 /* --------------------------------------------------------------------- Main */
@@ -89,6 +92,10 @@ async function main()
 
     case 'preview':
       /* async */ rollupPreviewProjectFromDist();
+      break;
+
+    case 'test':
+      /* async */ runVitest();
       break;
 
     case 'update-deps':
@@ -218,6 +225,8 @@ function showUsageAndExit()
                         [config/env.default.js] and [config/env.default.js]
                       - Runs [dist/index.mjs]
 
+  test                Starts vitest test runner
+                      - Uses config/vite.dev.js for e.g. aliases
 
   update-deps         Update dependencies
 
@@ -266,22 +275,23 @@ function showUsageAndExit()
   arango-dump         [<deployment-label>=local]
 
                       Dump the contents of a database to the folder
-                      [databases/arango-<deployment-label>/dump/<timestamp>]
+                      [databases/arango-<deployment-label>/dump/<folder-name>]
+                      The script generates a timestamp to be used as folder-name
 
                       Deployment labels can be configured in
                       [config/deploy.default.js] or [config/deploy.local.js]
 
-  arango-restore      [<deployment-label>=local] [<timestamp>=latest]
+  arango-restore      [<deployment-label>=local] [<folder-name>=latest]
 
                       Restore the database contents from the folder
-                      [databases/arango-<deployment-label>/dump/<timestamp>]
+                      [databases/arango-<deployment-label>/dump/<folder-name>]
 
   arango-restore-default
 
-                      [<deployment-label>=local] [<timestamp>=latest]
+                      [<deployment-label>=local] [<folder-name>=latest]
 
                       Restore the database contents from the folder
-                      [databases/arango-default/<timestamp>]
+                      [databases/arango-default/<folder-name>]
 
                                    ~~ * ~~
 

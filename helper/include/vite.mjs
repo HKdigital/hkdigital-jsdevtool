@@ -199,7 +199,7 @@ export async function viteGetAliasesFromLib( libName )
  *
  * @returns {object} vite config
  */
-async function readViteConfig( configFileName )
+export async function readViteConfig( configFileName )
 {
   const configFilePath = resolveConfigPath( configFileName );
   const configFileURI = resolveConfigPath( configFileName, { returnURI: true } );

@@ -24,6 +24,8 @@ let gitSubmodulesPush;
 
 let generateOptimizedImages;
 
+let runVitest;
+
 /**
  * Dynamically import dependencies
  */
@@ -53,6 +55,8 @@ async function importDependencies()
   gitSubmodulesPush = helperModule.gitSubmodulesPush;
 
   generateOptimizedImages = helperModule.generateOptimizedImages;
+
+  runVitest = helperModule.runVitest;
 }
 
 /* --------------------------------------------------------------------- Main */
@@ -84,6 +88,10 @@ async function main()
 
     case 'preview':
        /* async */  vitePreviewProjectFromDist();
+      break;
+
+    case 'test':
+      /* async */ runVitest();
       break;
 
     case 'update-deps':
@@ -189,6 +197,9 @@ function showUsageAndExit()
                         [config/env.default.js] and [config/env.default.js]
                       - Runs [dist/index.mjs]
 
+
+  test                Starts vitest test runner
+                      - Uses config/vite.dev.js for e.g. aliases
 
   update-deps         Update dependencies
 
