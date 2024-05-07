@@ -42,7 +42,7 @@ async function importDependencies()
   viteBuildDist = helperModule.viteBuildDist;
   vitePreviewProjectFromDist = helperModule.vitePreviewProjectFromDist;
 
-  updateDeps = helperModule.updateDepsupdateDepsPnpm;
+  updateDeps = helperModule.updateDepsPnpm;
   updateDevtool = helperModule.updateDevtool;
 
   gitAddSubmodule = helperModule.gitAddSubmodule;
