@@ -47,13 +47,23 @@ export async function mergePackageJsons(
 
   const packageJson = JSON.parse( rootPackageJsonContents );
 
-  const mergedDependencies = packageJson.dependencies || {};
+  if( !packageJson.dependencies )
+  {
+    packageJson.dependencies = {};
+  }
+
+  const mergedDependencies = packageJson.dependencies;
 
   let mergedDevDependencies;
 
   if( includeDevDependencies )
   {
-    mergedDevDependencies = packageJson.devDependencies || {};
+    if( !packageJson.devDependencies )
+    {
+      packageJson.devDependencies = {};
+    }
+
+    mergedDevDependencies = packageJson.devDependencies;
   }
   else {
     delete packageJson.devDependencies;
