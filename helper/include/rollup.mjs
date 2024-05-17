@@ -24,29 +24,7 @@ import { asyncImport } from './import.mjs';
 
 // ------------------------------------------------------------------- Internals
 
-const EXTERNAL_PACKAGES =
-  [
-    'source-map',
-    'arangojs',
-    '@hapi/hapi',
-    '@hapi/boom',
-    '@hapi/inert',
-    'http2',
-    'os',
-    'susie',
-    'fs',
-    'child_process',
-    'url',
-    'path',
-    'process',
-    'joi',
-    'crypto',
-    'stream',
-    'util',
-    'js-yaml',
-    'jsonwebtoken',
-    'redis'
-  ];
+const UNRESOLVED_IMPORT = 'UNRESOLVED_IMPORT';
 
 // -------------------------------------------------------------------- Function
 
@@ -116,7 +94,7 @@ export async function rollupRunInDevelopmentMode()
       //   break;
 
       case null:
-        if( 'UNRESOLVED_IMPORT' === event.code )
+        if( UNRESOLVED_IMPORT === event.code )
         {
           if( !event.message.startsWith('"node:') )
           {
@@ -224,7 +202,26 @@ export async function rollupBuildDist()
         production: true
       } );
 
-  console.log('DEBUG: rollup config', config);
+  console.log('\nUsing rollup config:\n', config);
+
+  config.onwarn = ( event ) =>
+    {
+      if( UNRESOLVED_IMPORT === event.code )
+      {
+        if( !event.message.startsWith('"node:') )
+        {
+          // Show a short warning about unresolved imports
+          console.log();
+          console.log(`Warning: ${event.message}`);
+        }
+        return;
+      }
+      else if( 'CIRCULAR_DEPENDENCY' === event.code )
+      {
+        // Ignore warnings about circular dependencies
+        return;
+      }
+    };
 
   let bundle;
   const buildFailed = false;
@@ -500,7 +497,7 @@ async function normalizeConfig( config, { production=false } )
     } ) );
   }
 
-  const externalPackages = new Set( EXTERNAL_PACKAGES );
+  const externalPackages = new Set();
 
   if( 'external' in config )
   {
