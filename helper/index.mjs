@@ -14,6 +14,9 @@ export * from './include/pnmp.mjs';
 export * from './include/readme.mjs';
 export * from './include/update.mjs';
 export * from './include/images.mjs';
+export * from './include/package-json.mjs';
+export * from './include/vitest.mjs';
+
 
 // export * from "./include/deploy.mjs";
 export * from './include/arangodb.mjs';

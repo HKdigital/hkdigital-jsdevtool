@@ -1,11 +1,14 @@
 
 /* ------------------------------------------------------------------ Imports */
 
-import { generateBuildConfig } from './config-include/build.inc.mjs';
-import { generatePluginsConfig } from './config-include/plugins.inc.mjs';
+import { generateBuildConfig }
+  from './config-include/build.inc.mjs';
 
-import { generateDefaultResolveConfig }  from '../hkdigital-jsdevtool/helper/index.mjs';
+import { generatePluginsConfig }
+  from './config-include/plugins.inc.mjs';
 
+import { generateDefaultResolveConfig }
+  from '../hkdigital-jsdevtool/helper/index.mjs';
 
 /* ------------------------------------------------------------------ Exports */
 

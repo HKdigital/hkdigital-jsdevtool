@@ -18,7 +18,7 @@ import { isFile, readJSONFile } from './fs.mjs';
 
 import { setEnvVarsFromConfigFiles } from './env.mjs';
 
-import { mergePackageJsons } from './npm.mjs';
+import { mergePackageJsons } from './package-json.mjs';
 
 import { asyncImport } from './import.mjs';
 
